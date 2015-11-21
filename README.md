@@ -8,6 +8,7 @@ La aplicación FrontEnd de la oficina de Geomecánica, esta desarrollada en Ioni
 * Realizar algunos cambios con los datos locales
 * Asegúrese de tener instalado Nodejs, Ionic, Cordova y Gulp.
 * Ejecutar escribiendo en la terminal:
-,,,,,,,,,,,,,,,,,
+
+```
 ionic serve
-,,,,,,,,,,,,,,,,,
+```
