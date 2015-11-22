@@ -1,0 +1,14 @@
+<ion-view title="Home">
+  <ion-content padding="'true'" class="has-header">
+    <form class="list">
+        <button class="button button-calm button-small" ng-click="home.listarLabores()">Listar Labores</button>
+    </form>
+    <div class="spacer" style="height: 40px;"></div>
+    <ion-list>
+        <label class="item item-input" ng-repeat="labor in home.labores track by $index">
+            <span class="input-label">Labor:</span>
+            <input type="text" placeholder="" ng-model="labor.codigo">
+        </label>
+    </ion-list>
+  </ion-content>
+</ion-view>
