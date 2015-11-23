@@ -96,11 +96,14 @@ function(Labor, $scope, $location) {
 
 }])
 
-.controller('createUserCtrl', ['Usuario', '$location', function(Usuario, $location) {
+.controller('createUserCtrl', ['Usuario', '$location', 'Rol',
+function(Usuario, $location, Rol) {
 
   createUser = this;
 
   createUser.usuario = {};
+
+  createUser.roles = Rol.query();
 
   createUser.nuevoUsuario = function() {
     var user = new Usuario();
@@ -108,6 +111,7 @@ function(Labor, $scope, $location) {
     user.dni = createUser.usuario.dni;
     user.nombre = createUser.usuario.nombre;
     user.password = createUser.usuario.password;
+    user.rol_id = createUser.usuario.rol_id;
     user.$save(function() {
       createUser.usuario = {};
       $location.path('/adminUsers/users');

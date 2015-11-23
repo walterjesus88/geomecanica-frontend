@@ -2,6 +2,9 @@ angular.module('app.services', ['ngStorage', 'ngResource'])
 
 
 
+.value('servidorAPI', 'https://localhost:3000')
+
+
 .factory('almacenamientoLocal', ['$localStorage', function($localStorage){
 
   return {
@@ -36,11 +39,12 @@ angular.module('app.services', ['ngStorage', 'ngResource'])
 
 
 
-.factory('Autentificacion', ['$http', '$q', function($http, $q) {
+.factory('Autentificacion', ['$http', '$q', 'servidorAPI',
+function($http, $q, servidorAPI) {
   return {
     loguearse: function(user, password) {
       var defered = $q.defer();
-      $http.post('https://localhost:3000/auth/authenticate', {uid: user, password: password})
+      $http.post(servidorAPI + '/auth/authenticate', {uid: user, password: password})
       .success(function(data) {
         if (data === 'usuario no existe' || data === 'contraseña incorrecta') {
           defered.reject(data);
@@ -58,14 +62,20 @@ angular.module('app.services', ['ngStorage', 'ngResource'])
 
 
 
-.factory('Labor', ['$resource', function($resource) {
-  return $resource('https://localhost:3000/labores/:id', {id:'@id'});
+.factory('Labor', ['$resource', 'servidorAPI', function($resource, servidorAPI) {
+  return $resource(servidorAPI + '/labores/:id', {id:'@id'});
 }])
 
 
 
-.factory('Usuario', ['$resource', function($resource) {
-  return $resource('https://localhost:3000/users/:id', {id: '@id'});
+.factory('Usuario', ['$resource', 'servidorAPI', function($resource, servidorAPI) {
+  return $resource(servidorAPI + '/users/:id', {id: '@id'});
+}])
+
+
+
+.factory('Rol', ['$resource', 'servidorAPI', function($resource, servidorAPI) {
+  return $resource(servidorAPI + '/roles/:id', {id: '@id'});
 }])
 
 

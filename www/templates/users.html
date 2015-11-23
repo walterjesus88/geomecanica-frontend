@@ -7,6 +7,9 @@
       <div class="item item-avatar" ng-repeat="usuario in users.usuarios track by $index">
         <h2>{{usuario.nombre}}</h2>
         <p>
+          {{usuario.rol.nombre_rol}}
+        </p>
+        <p>
           {{usuario.estado}}
         </p>
         <button class="button button-energized button-outline button-small"
