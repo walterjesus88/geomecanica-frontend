@@ -10,13 +10,11 @@ angular.module('app.routes', [])
 
 
 
-  .state('home', {
-    url: '/',
-    templateUrl: 'templates/home.html',
-    controller: 'homeCtrl as home'
-  })
-
-
+    .state('home', {
+      url: '/',
+      templateUrl: 'templates/home.html',
+      controller: 'homeCtrl as home'
+    })
 
 
 
@@ -25,6 +23,39 @@ angular.module('app.routes', [])
       templateUrl: 'templates/login.html',
       controller: 'loginCtrl as login'
     })
+
+
+
+    .state('tabsUsers.users', {
+      url: '/users',
+      views: {
+        'tab1': {
+          templateUrl: 'templates/users.html',
+          controller: 'usersCtrl as users'
+        }
+      }
+    })
+
+
+
+    .state('tabsUsers.create', {
+      url: '/create',
+      views: {
+        'tab2': {
+          templateUrl: 'templates/createUser.html',
+          controller: 'createUserCtrl as createUser'
+        }
+      }
+    })
+
+
+
+    .state('tabsUsers', {
+      url: '/adminUsers',
+      abstract: true,
+      templateUrl: 'templates/tabsUsers.html'
+    })
+
 
 
     ;

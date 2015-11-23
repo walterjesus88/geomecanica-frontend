@@ -1,5 +1,7 @@
 angular.module('app.services', ['ngStorage', 'ngResource'])
 
+
+
 .factory('almacenamientoLocal', ['$localStorage', function($localStorage){
 
   return {
@@ -18,11 +20,21 @@ angular.module('app.services', ['ngStorage', 'ngResource'])
       } else {
         return 'not saved';
       }
+    },
+
+    getUsuario: function() {
+      if ($localStorage.usuario) {
+        return $localStorage.usuario;
+      } else {
+        return 'not saved';
+      }
     }
 
   }
 
 }])
+
+
 
 .factory('Autentificacion', ['$http', '$q', function($http, $q) {
   return {
@@ -44,9 +56,19 @@ angular.module('app.services', ['ngStorage', 'ngResource'])
   }
 }])
 
+
+
 .factory('Labor', ['$resource', function($resource) {
   return $resource('https://localhost:3000/labores/:id', {id:'@id'});
 }])
+
+
+
+.factory('Usuario', ['$resource', function($resource) {
+  return $resource('https://localhost:3000/users/:id', {id: '@id'});
+}])
+
+
 
 .factory('httpInterceptor', ['$localStorage',
 function($localStorage) {

@@ -1,0 +1,19 @@
+<ion-view title="Users">
+  <!--div class="bar bar-header bar-positive">
+    <h1 class="title">Gestionar Usuarios</h1>
+  </div-->
+  <ion-content padding="'true'" class="has-header">
+    <div class="list">
+      <div class="item item-avatar" ng-repeat="usuario in users.usuarios track by $index">
+        <h2>{{usuario.nombre}}</h2>
+        <p>
+          {{usuario.estado}}
+        </p>
+        <button class="button button-energized button-outline button-small"
+        ng-click="users.modificarUsuario(usuario.uid)">Editar</button>
+        <button class="button button-assertive button-outline button-small"
+        ng-click="users.eliminarUsuario(usuario.uid)">Eliminar</button>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
