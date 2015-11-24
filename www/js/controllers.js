@@ -1,7 +1,7 @@
 angular.module('app.controllers', [])
 
-.controller('indexCtrl', ['almacenamientoLocal', '$location', '$rootScope',
-function(almacenamientoLocal, $location, $rootScope) {
+.controller('indexCtrl', ['almacenamientoLocal', '$location',
+function(almacenamientoLocal, $location) {
 
   index = this;
 
@@ -29,17 +29,42 @@ function(Autentificacion, almacenamientoLocal, $location, $scope, $state) {
     $state.go('tab.home');
   }
 
+  if(almacenamientoLocal.getUsuario() !== 'not saved') {
+    login.user = almacenamientoLocal.getUsuario().user;
+    login.password = almacenamientoLocal.getUsuario().password;
+    login.isRemember = true;
+  }
+
   login.ingresar = function() {
     Autentificacion.loguearse(login.user, login.password)
     .then(function(data) {
       almacenamientoLocal.guardarDatos('token', data.token);
       $scope.$parent.index.isAuth = true;
+
       //$location.path('/tab');
       $state.go('tab.home');
 
+
+      login.alerta = '';
+      if (login.isRemember) {
+        almacenamientoLocal.guardarDatos('usuario', {user: login.user, password: login.password});
+      } else {
+        login.user = '';
+        login.password = '';
+        almacenamientoLocal.eliminarDatos('usuario');
+      }
+      $location.path('/');
+
     })
     .catch(function(err) {
-
+      if (err === 'usuario no existe') {
+        login.user = '';
+        login.password = '';
+        login.alerta = err;
+      } else if (err === 'contraseña incorrecta') {
+        login.password = '';
+        login.alerta = err;
+      }
     });
   }
 
@@ -59,6 +84,7 @@ function(Labor, $scope, $location) {
   }
 
 }])
+
 
 .controller('RiesgoCtrl', function($scope,$ionicPopup) {
   $scope.settings = {
@@ -125,4 +151,47 @@ function(Labor, $scope, $location) {
 
   var weekDaysList = ["Sun", "Mon", "Tue", "Wed", "thu", "Fri", "Sat"];
   var monthList = ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
-});
+})
+
+.controller('usersCtrl', ['Usuario', function(Usuario) {
+
+  users = this;
+
+  users.usuarios = Usuario.query();
+
+  users.eliminarUsuario = function(uid) {
+    Usuario.delete({id: uid}, function() {
+      users.usuarios = Usuario.query();
+    });
+  }
+
+  users.modificarUsuario = function() {
+
+  }
+
+}])
+
+.controller('createUserCtrl', ['Usuario', '$location', 'Rol',
+function(Usuario, $location, Rol) {
+
+  createUser = this;
+
+  createUser.usuario = {};
+
+  createUser.roles = Rol.query();
+
+  createUser.nuevoUsuario = function() {
+    var user = new Usuario();
+    user.uid = createUser.usuario.uid;
+    user.dni = createUser.usuario.dni;
+    user.nombre = createUser.usuario.nombre;
+    user.password = createUser.usuario.password;
+    user.rol_id = createUser.usuario.rol_id;
+    user.$save(function() {
+      createUser.usuario = {};
+      $location.path('/adminUsers/users');
+    });
+  }
+
+}])
+

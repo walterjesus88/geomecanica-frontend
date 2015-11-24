@@ -1,0 +1,36 @@
+<ion-view title="Create User">
+  <ion-content padding="'true'" class="has-header">
+    <form class="list">
+        <ion-list>
+            <label class="item item-input">
+                <span class="input-label">Usuario</span>
+                <input type="text" placeholder="nombre.apellido" ng-model="createUser.usuario.uid">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Documento</span>
+                <input type="number" placeholder="Número del DNI" ng-model="createUser.usuario.dni">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Nombre</span>
+                <input type="text" placeholder="Nombre completo" ng-model="createUser.usuario.nombre">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Password</span>
+                <input type="password" placeholder="Combinación de letras y números" ng-model="createUser.usuario.password">
+            </label>
+            <label class="item item-input item-select">
+                <span class="input-label">Rol</span>
+                <select ng-model="createUser.usuario.rol_id"
+                ng-options="rol.rol_id as rol.nombre_rol for rol in createUser.roles">
+                </select>
+            </label>
+            <div class="spacer" style="height: 10px;"></div>
+            <button class="button button-positive button-block" ng-click="createUser.nuevoUsuario()">Crear</button>
+            <div class="spacer" style="height: 20px;"></div>
+            <p>
+              {{createUser.alerta}}
+            </p>
+        </ion-list>
+    </form>
+  </ion-content>
+</ion-view>
