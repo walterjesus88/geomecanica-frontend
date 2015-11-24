@@ -32,9 +32,7 @@ angular.module('app.services', ['ngStorage', 'ngResource'])
         return 'not saved';
       }
     }
-
   }
-
 }])
 
 
@@ -104,7 +102,6 @@ function($localStorage) {
     },
     'responseError': function(response) {
       if(response.status === 401 || response.status === 403) {
-
       }
       return response;
     }

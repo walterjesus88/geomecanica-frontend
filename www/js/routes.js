@@ -10,25 +10,67 @@ angular.module('app.routes', [])
 
 
 
-    .state('home', {
-      url: '/',
-      cache: false,
-      templateUrl: 'templates/home.html',
-      controller: 'homeCtrl as home'
-    })
+  .state('tab', {
+    url: '/tab',
+    abstract: true,
+    templateUrl: 'templates/tabs.html'
+  })
+
+  .state('tab.home', {
+    url: '/home',
+    views: {
+      'home-tab': {
+        templateUrl: "templates/home.html",
+        controller: 'homeCtrl as home'
+      }
+    }
+  })
+
+  .state('tab.riesgo', {
+    url: "/riesgo",
+      views: {
+        'tab-riesgo': {
+        templateUrl: "templates/riesgo.html",
+        controller: 'RiesgoCtrl'
+      }
+    }
+  })
 
 
 
-    .state('login', {
-      url: '/login',
-      cache: false,
-      templateUrl: 'templates/login.html',
-      controller: 'loginCtrl as login'
-    })
+  .state('tab.pregunta', {
+    url: "/preguntas",
+      views: {
+        'tab-pregunta': {
+        templateUrl: "templates/pregunta.html",
+        controller: 'RiesgoCtrl'
+      }
+    }
+  })
 
 
 
-    .state('tabsUsers.users', {
+  .state('tab.responsable', {
+    url: "/responsable",
+      views: {
+        'tab-responsable': {
+        templateUrl: "templates/responsable.html",
+        //controller: 'RiesgoCtrl'
+      }
+    }
+  })
+
+
+  .state('login', {
+    url: '/login',
+    cache: false,
+    templateUrl: 'templates/login.html',
+    controller: 'loginCtrl as login'
+  })
+
+
+
+  .state('tabsUsers.users', {
       url: '/users',
       cache: false,
       views: {
@@ -37,11 +79,9 @@ angular.module('app.routes', [])
           controller: 'usersCtrl as users'
         }
       }
-    })
+  })
 
-
-
-    .state('tabsUsers.create', {
+  .state('tabsUsers.create', {
       url: '/create',
       views: {
         'tab2': {
@@ -49,22 +89,17 @@ angular.module('app.routes', [])
           controller: 'createUserCtrl as createUser'
         }
       }
-    })
+  })
 
-
-
-    .state('tabsUsers', {
+  .state('tabsUsers', {
       url: '/adminUsers',
       abstract: true,
       templateUrl: 'templates/tabsUsers.html'
-    })
+  });
 
-
-
-    ;
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('/login');
 
   $httpProvider.interceptors.push('httpInterceptor');
 
