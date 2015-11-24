@@ -1,31 +1,33 @@
 angular.module('app.controllers', [])
 
-.controller('indexCtrl', ['almacenamientoLocal', '$location',
-function(almacenamientoLocal, $location) {
+
+
+.controller('indexCtrl', ['Autentificacion', '$state',
+function(Autentificacion, $state) {
 
   index = this;
 
-  if (almacenamientoLocal.getToken() === 'saved') {
-    index.isAuth = true;
-  } else {
-    index.isAuth = false;
-  }
+  index.isAuth = true;
 
   index.salir = function() {
-    almacenamientoLocal.eliminarDatos('token');
-    $location.path('/login');
+    Autentificacion.salir();
+    $state.go('login');
     index.isAuth = false;
   }
 
 }])
 
-.controller('loginCtrl', ['Autentificacion', 'almacenamientoLocal', '$location', '$scope',
-function(Autentificacion, almacenamientoLocal, $location, $scope) {
+
+
+.controller('loginCtrl', ['Autentificacion', 'almacenamientoLocal', '$state', '$scope',
+function(Autentificacion, almacenamientoLocal, $state, $scope) {
 
   login = this;
 
-  if($scope.$parent.index.isAuth === true) {
-    $location.path('/');
+  if (Autentificacion.isLoggedIn()) {
+    $state.go('home');
+  } else {
+    $scope.$parent.index.isAuth = false;
   }
 
   if(almacenamientoLocal.getUsuario() !== 'not saved') {
@@ -47,7 +49,7 @@ function(Autentificacion, almacenamientoLocal, $location, $scope) {
         login.password = '';
         almacenamientoLocal.eliminarDatos('usuario');
       }
-      $location.path('/');
+      $state.go('home');
     })
     .catch(function(err) {
       if (err === 'usuario no existe') {
@@ -63,20 +65,22 @@ function(Autentificacion, almacenamientoLocal, $location, $scope) {
 
 }])
 
-.controller('homeCtrl', ['Labor', '$scope', '$location',
-function(Labor, $scope, $location) {
+
+
+.controller('homeCtrl', ['Labor', '$scope', '$state',
+function(Labor, $scope, $state) {
 
   home = this;
 
-  if ($scope.$parent.index.isAuth === false) {
-    $location.path('/login');
-  }
+  $scope.$parent.index.isAuth = true;
 
   home.listarLabores = function() {
     home.labores = Labor.query();
   }
 
 }])
+
+
 
 .controller('usersCtrl', ['Usuario', function(Usuario) {
 
@@ -96,8 +100,10 @@ function(Labor, $scope, $location) {
 
 }])
 
-.controller('createUserCtrl', ['Usuario', '$location', 'Rol',
-function(Usuario, $location, Rol) {
+
+
+.controller('createUserCtrl', ['Usuario', '$state', 'Rol',
+function(Usuario, $state, Rol) {
 
   createUser = this;
 
@@ -114,7 +120,7 @@ function(Usuario, $location, Rol) {
     user.rol_id = createUser.usuario.rol_id;
     user.$save(function() {
       createUser.usuario = {};
-      $location.path('/adminUsers/users');
+      $state.go('tabsUsers.users');
     });
   }
 

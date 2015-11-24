@@ -12,6 +12,7 @@ angular.module('app.routes', [])
 
     .state('home', {
       url: '/',
+      cache: false,
       templateUrl: 'templates/home.html',
       controller: 'homeCtrl as home'
     })
@@ -20,6 +21,7 @@ angular.module('app.routes', [])
 
     .state('login', {
       url: '/login',
+      cache: false,
       templateUrl: 'templates/login.html',
       controller: 'loginCtrl as login'
     })
@@ -28,6 +30,7 @@ angular.module('app.routes', [])
 
     .state('tabsUsers.users', {
       url: '/users',
+      cache: false,
       views: {
         'tab1': {
           templateUrl: 'templates/users.html',
@@ -64,5 +67,11 @@ angular.module('app.routes', [])
   $urlRouterProvider.otherwise('/');
 
   $httpProvider.interceptors.push('httpInterceptor');
+
+
+  // middleware que escucha los eventos de cambio de vista o estado
+  $urlRouterProvider.deferIntercept();
+
+
 
 })

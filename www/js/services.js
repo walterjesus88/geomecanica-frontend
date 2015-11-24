@@ -39,8 +39,8 @@ angular.module('app.services', ['ngStorage', 'ngResource'])
 
 
 
-.factory('Autentificacion', ['$http', '$q', 'servidorAPI',
-function($http, $q, servidorAPI) {
+.factory('Autentificacion', ['$http', '$q', 'servidorAPI', 'almacenamientoLocal',
+function($http, $q, servidorAPI, almacenamientoLocal) {
   return {
     loguearse: function(user, password) {
       var defered = $q.defer();
@@ -56,6 +56,18 @@ function($http, $q, servidorAPI) {
         defered.reject(err);
       });
       return defered.promise;
+    },
+
+    salir: function() {
+      almacenamientoLocal.eliminarDatos('token');
+    },
+
+    isLoggedIn: function() {
+      if (almacenamientoLocal.getToken() === 'saved') {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 }])

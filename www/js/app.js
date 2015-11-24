@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services', 'app.directives'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $rootScope, Autentificacion, $urlRouter, $state) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -15,5 +15,19 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services',
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
+  });
+
+  $rootScope.$on('$locationChangeSuccess', function(e, toState, toParams, fromState, fromParams) {
+
+    e.preventDefault();
+
+    if (!Autentificacion.isLoggedIn()) {
+      $state.go('login');
+      return;
+    }
+
+    $urlRouter.sync();
+
+    $urlRouter.listen();
   });
 })
