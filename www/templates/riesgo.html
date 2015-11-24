@@ -1,0 +1,212 @@
+<ion-view view-title="riesgo">
+  <ion-content>
+
+	<div class="row">
+		<div class="col">
+			<div class="list">
+			  <label class="item item-radio">
+			    <input type="radio" name="group">
+			    <div class="item-content">
+			      Milpo
+			    </div>
+			    <i class="radio-icon ion-checkmark"></i>
+			  </label>
+			</div>
+		</div>
+		<div class="col">
+			<div class="list">
+			  <label class="item item-radio">
+			    <input type="radio" name="group">
+			    <div class="item-content">
+			      E1
+			    </div>			    
+			  </label>
+			</div>
+		</div>
+		<div class="col">
+			<div class="list">
+			  <label class="item item-radio">
+			    <input type="radio" name="group">
+			    <div class="item-content">
+			      E2
+			    </div>
+			    <i class="radio-icon ion-checkmark"></i>
+			  </label>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col">
+			<div class="list">
+			  <label class="item item-radio">
+			    <input type="radio" name="group">
+			    <div class="item-content">
+			      Avance
+			    </div>
+			    <i class="radio-icon ion-checkmark"></i>
+			  </label>
+			</div>
+		</div>
+		<div class="col">
+			<div class="list">
+			  <label class="item item-radio">
+			    <input type="radio" name="group">
+			    <div class="item-content">
+			      Explotacion
+			    </div>			    
+			  </label>
+			</div>
+		</div>	
+	</div>
+
+  	<div class="row">
+		<div class="col col-33">
+	    <ionic-datepicker input-obj="datepickerObject">
+	      <button class="button button-block button-positive"> {{datepickerObject.inputDate | date:'dd - MMMM - yyyy'}}</button>
+	    </ionic-datepicker> 
+		</div>	
+		<div class="col ">
+			<ul class="list">
+				<li class="item item-checkbox">
+				    <label class="checkbox">
+				       <input type="checkbox">
+				    </label>
+				     Dia
+				</li> 
+			</ul>
+		</div>
+		<div class="col ">
+			<ul class="list">
+				<li class="item item-checkbox">
+				    <label class="checkbox">
+				       <input type="checkbox">
+				    </label>
+				     Noche
+				</li> 
+			</ul>
+		</div>
+	</div>
+ 
+    <div class="row">
+	  	<div class="col">
+	  		<div class="list list-inset">
+	        <label class="item item-input">
+	            <input type="text" placeholder="Labor" ng-model="data.labor">
+	        </label>
+    		</div>
+		</div>
+
+		<div class="col">
+			<div class="list list-inset">
+		        <label class="item item-input">
+		            <input type="text" placeholder="Nivel" ng-model="data.nivel">
+		        </label>
+	    	</div>
+		</div>
+	</div>
+
+
+    <div class="row">
+    	<div class="col col-10">
+	  		<label class="item item-input item-stacked-label">
+		    	<span class="input-label">Ancho</span>
+		    	<input type="text" >
+		  	</label>
+	  	</div>
+  		<div class="col">
+	  		<label class="item item-input item-stacked-label">
+		    	<span class="input-label">PROG</span>
+		    	<input type="text" >
+		  	</label>
+	  	</div>
+  		<div class="col">
+		  		<label class="item item-input item-stacked-label">
+		    	<span class="input-label">REAL</span>
+		    	<input type="text" >
+		  	</label>
+	  	</div>
+	   	<div class="col">
+	  		<label class="item item-input item-stacked-label">
+		    	<span class="input-label">% Sobre Exc.-Tabla</span>
+		    	<input type="text" >
+		  	</label>
+	  	</div>
+	  	<div class="col">
+	  		<label class="item item-input item-stacked-label">
+		    	<span class="input-label">% Sobre Exc.-Real</span>
+		    	<input type="text" >
+		  	</label>
+	  	</div>
+	</div>
+
+
+	<div class="row">
+  		<div class="col col-10">
+			<div class="list">
+				<label class="item item-input">
+			    <span class="input-label">Alto</span>
+			    <input type="text">
+			  	</label>
+			</div>
+  		</div>
+  		<div class="col">
+			<div class="list">
+				<label class="item item-input">
+			
+			    <input type="text">
+			  	</label>
+			</div>
+  		</div>
+  		<div class="col">
+			<div class="list">
+				<label class="item item-input">
+		
+			    <input type="text">
+			  	</label>
+			</div>
+  		</div>
+  		<div class="col">
+			<div class="list">
+				<label class="item item-input">
+			    
+			    <input type="text">
+			  	</label>
+			</div>
+  		</div>
+  		<div class="col">
+			<div class="list">
+				<label class="item item-input">
+			   
+			    <input type="text">
+			  	</label>
+			</div>
+  		</div>
+  	</div>
+
+  	<div class="row">
+    	<div class="col col-20">
+	    	<label class="item item-input">
+	    		<input type="text">
+	    	</label>
+    	</div>
+    	<div class="col ">
+	    	<label class="item item-input">
+	    		<input type="text">
+	    	</label>
+    	</div>
+    </div>
+
+  	<div class="row">    
+    	<div class="col ">
+	    	<label class="item item-input item-stacked-label">
+    			<span class="input-label">Comentario</span>
+    			<textarea name="comment" id="comment-textarea"  ng-model="incident.comment">
+				</textarea>
+  			</label>
+    	</div>
+    </div>
+
+  </ion-content>
+</ion-view>
+

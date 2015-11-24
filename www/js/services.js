@@ -19,9 +19,7 @@ angular.module('app.services', ['ngStorage', 'ngResource'])
         return 'not saved';
       }
     }
-
   }
-
 }])
 
 .factory('Autentificacion', ['$http', '$q', function($http, $q) {
@@ -60,7 +58,6 @@ function($localStorage) {
     },
     'responseError': function(response) {
       if(response.status === 401 || response.status === 403) {
-
       }
       return response;
     }
