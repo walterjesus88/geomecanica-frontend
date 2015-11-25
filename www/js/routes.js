@@ -83,6 +83,7 @@ angular.module('app.routes', [])
 
   .state('tabsUsers.create', {
       url: '/create',
+      cache: false,
       views: {
         'tab2': {
           templateUrl: 'templates/createUser.html',

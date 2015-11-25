@@ -1,36 +1,87 @@
 <ion-view title="Create User">
   <ion-content padding="'true'" class="has-header">
-    <form class="list">
+    <div class="row responsive-sm">
+      <div class="col">
+
+      </div>
+      <form class="list col">
+        <div class="bar bar-header-stable">
+          <h1 class="title">Nuevo Usuario</h1>
+        </div>
         <ion-list>
-            <label class="item item-input">
-                <span class="input-label">Usuario</span>
-                <input type="text" placeholder="nombre.apellido" ng-model="createUser.usuario.uid">
-            </label>
-            <label class="item item-input">
-                <span class="input-label">Documento</span>
-                <input type="number" placeholder="Número del DNI" ng-model="createUser.usuario.dni">
-            </label>
-            <label class="item item-input">
-                <span class="input-label">Nombre</span>
-                <input type="text" placeholder="Nombre completo" ng-model="createUser.usuario.nombre">
-            </label>
-            <label class="item item-input">
-                <span class="input-label">Password</span>
-                <input type="password" placeholder="Combinación de letras y números" ng-model="createUser.usuario.password">
-            </label>
-            <label class="item item-input item-select">
-                <span class="input-label">Rol</span>
-                <select ng-model="createUser.usuario.rol_id"
-                ng-options="rol.rol_id as rol.nombre_rol for rol in createUser.roles">
-                </select>
-            </label>
-            <div class="spacer" style="height: 10px;"></div>
-            <button class="button button-positive button-block" ng-click="createUser.nuevoUsuario()">Crear</button>
-            <div class="spacer" style="height: 20px;"></div>
-            <p>
-              {{createUser.alerta}}
-            </p>
+          <div class="spacer" style="height: 80px"></div>
+          <p>
+            Rellene los campos del formulario con los datos correspondientes
+            del nuevo usuario del sistema.
+          </p>
+          <div class="spacer" style="height: 20px"></div>
+          <p>
+            Ingrese los nombres y apellidos de la persona.
+          </p>
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">Nombre y Apellidos:</span>
+            <input type="text" placeholder="ej. Paul Brian" ng-model="createUser.usuario.nombre"
+            ng-change="createUser.verificarNombre()">
+          </label>
+          <div class="spacer" style="height: 20px"></div>
+          <p>
+            Ingrese el nombre de usuario, asegúrese de elegir un nombre único.
+          </p>
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">Usuario</span>
+            <input type="text" placeholder="ej. paul.brian" ng-model="createUser.usuario.uid">
+          </label>
+          <div class="spacer" style="height: 20px"></div>
+          <p>
+            Ingrese el documento de identificación de la persona (DNI).
+          </p>
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">Documento</span>
+            <input type="text" placeholder="ej. 12345678" ng-model="createUser.usuario.dni"
+            ng-change="createUser.verificarDni()">
+          </label>
+          <div class="spacer" style="height: 20px"></div>
+          <p>
+            Ingrese una contraseña para la cuenta, para mayor seguridad utilice
+            una combinación de letras y números.
+          </p>
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">Contraseña</span>
+            <input type="password" placeholder="Contraseña" ng-model="createUser.usuario.password">
+          </label>
+          <div class="spacer" style="height: 20px"></div>
+          <p>
+            Elija el Rol que asignará al nuevo usuario.
+          </p>
+          <label class="item item-input item-select item-stacked-label">
+            <span class="input-label">Rol</span>
+            <select ng-model="createUser.usuario.rol_id"
+            ng-options="rol.rol_id as rol.nombre_rol for rol in createUser.roles">
+            </select>
+          </label>
+          <div class="spacer" style="height: 20px"></div>
+          <p>
+            Ingrese el correo electrónico de la persona.
+          </p>
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">Correo:</span>
+            <input type="text" placeholder="ej. paul.brian@atacocha.com.pe" ng-model="createUser.usuario.correo"
+            ng-model-options="{updateOn: 'blur'}" ng-change="createUser.verificarEmail()">
+          </label>
+          <div class="spacer" style="height: 30px;"></div>
+          <p>
+            Verifique los datos antes de crear el nuevo usuario.
+          </p>
+          <button class="button button-positive button-block" ng-click="createUser.nuevoUsuario()">Crear</button>
+          <div class="spacer" style="height: 20px;"></div>
+          <p>
+            {{createUser.alerta}}
+          </p>
         </ion-list>
-    </form>
+      </form>
+      <div class="col">
+
+      </div>
+    </div>
   </ion-content>
 </ion-view>

@@ -79,7 +79,9 @@ function($http, $q, servidorAPI, almacenamientoLocal) {
 
 
 .factory('Usuario', ['$resource', 'servidorAPI', function($resource, servidorAPI) {
-  return $resource(servidorAPI + '/users/:id', {id: '@id'});
+  return $resource(servidorAPI + '/users/:id', {id: '@id'}, {
+    update: { method: 'PUT' }
+  });
 }])
 
 

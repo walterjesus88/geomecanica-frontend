@@ -154,11 +154,27 @@ function(Labor, $scope, $state) {
 })
 
 
-.controller('usersCtrl', ['Usuario', function(Usuario) {
+.controller('usersCtrl', ['Usuario', 'Rol', '$ionicModal', '$scope',
+function(Usuario, Rol, $ionicModal, $scope) {
 
   users = this;
 
   users.usuarios = Usuario.query();
+  users.roles = Rol.query();
+
+  users.darBaja = function(usuario) {
+    usuario.estado = 'Inactivo';
+    Usuario.update({id: usuario.uid}, usuario, function() {
+      users.usuarios = Usuario.query();
+    });
+  }
+
+  users.darAlta = function(usuario) {
+    usuario.estado = 'Activo';
+    Usuario.update({id: usuario.uid}, usuario, function() {
+      users.usuarios = Usuario.query();
+    });
+  }
 
   users.eliminarUsuario = function(uid) {
     Usuario.delete({id: uid}, function() {
@@ -166,8 +182,28 @@ function(Labor, $scope, $state) {
     });
   }
 
-  users.modificarUsuario = function() {
+  $ionicModal.fromTemplateUrl('edit-user-modal.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    users.modal = modal
+  })
 
+  users.openModal = function(usuario) {
+    users.editUser = usuario;
+    users.modal.show();
+  }
+
+  users.closeModal = function() {
+    users.modal.hide();
+    Usuario.update({id: users.editUser.uid}, users.editUser, function() {
+      users.usuarios = Usuario.query();
+    });
+  };
+
+  users.cancelModal = function() {
+    users.editUser = {};
+    users.modal.hide();
   }
 
 }])
@@ -190,10 +226,31 @@ function(Usuario, $state, Rol) {
     user.nombre = createUser.usuario.nombre;
     user.password = createUser.usuario.password;
     user.rol_id = createUser.usuario.rol_id;
+    user.correo = createUser.usuario.correo;
     user.$save(function() {
-      createUser.usuario = {};
       $state.go('tabsUsers.users');
     });
+  }
+
+  createUser.verificarNombre = function() {
+    if (!/^([a-zA-ZñÑ-áéíóúÁÉÍÓÚ\s])*$/.test(createUser.usuario.nombre)) {
+      createUser.usuario.nombre = createUser.usuario.nombre.slice(0, createUser.usuario.nombre.length - 1);
+    }
+  }
+
+  createUser.verificarEmail = function() {
+    if (!/\S+@\S+\.\S+/.test(createUser.usuario.correo)) {
+      createUser.usuario.correo = '';
+    }
+  }
+
+  createUser.verificarDni = function() {
+    if (!/^([0-9])*$/.test(createUser.usuario.dni)) {
+      createUser.usuario.dni = createUser.usuario.dni.slice(0, createUser.usuario.dni.length - 1);
+    }
+    if (createUser.usuario.dni.length > 8) {
+      createUser.usuario.dni = createUser.usuario.dni.slice(0, createUser.usuario.dni.length - 1);
+    }
   }
 
 }])
