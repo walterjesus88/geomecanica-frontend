@@ -2,7 +2,7 @@
   <ion-content>
 
   	<div class="row">
-		<div class="col ">			      
+		<div class="col ">	      
 
 		    <ion-list>
 			    <ion-toggle ng-repeat="item in preguntasList" ng-model="item.checked"  ng-checked="item.checked"> 
@@ -28,7 +28,7 @@
      </div>
 
 	<div class="row">
-		<div class="col" ng-repeat="item in preguntasList">  
+		<div class="col " ng-repeat="item in preguntasList">  
 			<ul class="list">
 				<li class="item item-checkbox">
 				    <label class="checkbox">
@@ -40,11 +40,12 @@
 		</div>
 	</div>	
 
-	<div ng-repeat="item in preguntasList">  
+	<div ng-repeat="items in preguntasList">  
 		<ul class="flex-container">
 			<li class="flex-item ">			
-			    {{ item.text }}
+			    {{ items.text }}
 			</li> 
+
 		</ul>
 	</div>
 
@@ -57,12 +58,7 @@
 	  <li class="flex-item">6</li>
 	</ul>
 
-	<div class="row responsive-sm">
-  <div class="col">.col</div>
-  <div class="col">.col</div>
-  <div class="col">.col</div>
-  <div class="col">.col</div>
-</div>
+
 
 
 	<div class="row">
@@ -73,11 +69,7 @@
 		</div>
 	</div>
 
-
   </ion-content>
-
-
-
 </ion-view>
 
 

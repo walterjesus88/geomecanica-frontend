@@ -48,14 +48,22 @@ angular.module('app.routes', [])
     }
   })
 
-
-
   .state('tab.responsable', {
     url: "/responsable",
       views: {
         'tab-responsable': {
         templateUrl: "templates/responsable.html",
         //controller: 'RiesgoCtrl'
+      }
+    }
+  })
+
+  .state('tab.web', {
+    url: "/web",
+      views: {
+        'tab-web': {
+        templateUrl: "templates/web.html",
+        controller: 'RiesgoCtrl'
       }
     }
   })
