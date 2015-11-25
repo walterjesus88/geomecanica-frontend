@@ -1,6 +1,347 @@
 <ion-view view-title="Account">
   <ion-content>
 
+<div class="row"> 
+	<div class="col col-20">
+		<div class="list card">
+			<div class="item item-divider">Fecha</div>
+			<div class="col">
+				<div class="col ">
+				    <ionic-datepicker input-obj="datepickerObject">
+				      <button class="button button-block button-positive"> {{datepickerObject.inputDate | date:'dd - MMMM - yyyy'}}</button>
+				    </ionic-datepicker> 
+				</div>
+			</div>
+		  	<div class="col">
+		  		<div class="list list-inset">
+			        <label class="item item-input">
+			            <input type="text" placeholder="Labor" ng-model="data.labor">
+			        </label>	    	
+				    <label class="item item-input">
+				        <input type="text" placeholder="Nivel" ng-model="data.nivel">
+				    </label>
+		    	</div>
+			</div>		
+		</div>
+		<div class="list card">
+			<div class="item item-divider">Guardia</div>
+			<div class="row"> 
+				<div class="col col-50 ">
+					<ul class="list">
+						<li class="item item-checkbox">
+						    <label class="checkbox">
+						       <input type="checkbox">
+						    </label>
+						     Dia
+						</li> 
+					</ul>
+				</div>
+				<div class="col col-50">
+					<ul class="list">
+						<li class="item item-checkbox">
+						    <label class="checkbox">
+						       <input type="checkbox">
+						    </label>
+						     Noche
+						</li> 
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="list card">
+			<div class="item item-divider">Tipo de Labor</div>
+			<div class="row"> 
+				<div class="col col-50 ">
+					<ul class="list">
+						<li class="item item-checkbox">
+						    <label class="checkbox">
+						       <input type="checkbox">
+						    </label>
+						     Avance
+						</li> 
+					</ul>
+				</div>
+				<div class="col col-50">
+					<ul class="list">
+						<li class="item item-checkbox">
+						    <label class="checkbox">
+						       <input type="checkbox">
+						    </label>
+						     Explotacion
+						</li> 
+					</ul>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+    <div class="col col-60">
+		<div class="row">
+
+			<div class="col">
+			<div class="list card">
+				<div class="list">
+				  <label class="item item-radio">
+				    <input type="radio" name="group">
+				    <div class="item-content">
+				      Milpo
+				    </div>
+				    <i class="radio-icon ion-checkmark"></i>
+				  </label>
+				</div>
+			</div>
+			</div>
+
+			<div class="col">
+			<div class="list card">			
+				<div class="list">
+				  <label class="item item-radio">
+				    <input type="radio" name="group">
+				    <div class="item-content">
+				      E1
+				    </div>			    
+				  </label>
+				</div>
+			</div>
+			</div>
+
+			<div class="col">
+			<div class="list card">
+				<div class="list">
+				  <label class="item item-radio">
+				    <input type="radio" name="group">
+				    <div class="item-content">
+				      E2
+				    </div>
+				    <i class="radio-icon ion-checkmark"></i>
+				  </label>
+				</div>
+			</div>		
+			</div>	
+		</div>
+
+	    <div class="row">
+		    <select>
+		     	<option>Blue</option>
+		      	<option selected>Green</option>
+		      	<option>Red</option>
+		    </select>
+		</div>
+
+	    <div class="row">
+	    	<div class="col col-10">
+		  		<label class="item item-input item-stacked-label">
+			    	<span class="input-label">Ancho</span>
+			    	<input type="text" >
+			  	</label>
+		  	</div>
+	  		<div class="col">
+		  		<label class="item item-input item-stacked-label">
+			    	<span class="input-label">PROG</span>
+			    	<input type="text" >
+			  	</label>
+		  	</div>
+	  		<div class="col">
+			  		<label class="item item-input item-stacked-label">
+			    	<span class="input-label">REAL</span>
+			    	<input type="text" >
+			  	</label>
+		  	</div>
+		   	<div class="col">
+		  		<label class="item item-input item-stacked-label">
+			    	<span class="input-label">% Sobre Exc.-Tabla</span>
+			    	<input type="text" >
+			  	</label>
+		  	</div>
+		  	<div class="col">
+		  		<label class="item item-input item-stacked-label">
+			    	<span class="input-label">% Sobre Exc.-Real</span>
+			    	<input type="text" >
+			  	</label>
+		  	</div>
+		</div>
+
+		<div class="row">
+	  		<div class="col col-10">
+				<div class="list">
+					<label class="item item-input">
+				    <span class="input-label">Alto</span>
+				    <input type="text">
+				  	</label>
+				</div>
+	  		</div>
+	  		<div class="col">
+				<div class="list">
+					<label class="item item-input">
+				
+				    <input type="text">
+				  	</label>
+				</div>
+	  		</div>
+	  		<div class="col">
+				<div class="list">
+					<label class="item item-input">
+			
+				    <input type="text">
+				  	</label>
+				</div>
+	  		</div>
+	  		<div class="col">
+				<div class="list">
+					<label class="item item-input">
+				    
+				    <input type="text">
+				  	</label>
+				</div>
+	  		</div>
+	  		<div class="col">
+				<div class="list">
+					<label class="item item-input">
+				   
+				    <input type="text">
+				  	</label>
+				</div>
+	  		</div>
+	  	</div>
+
+	  	<div class="row">
+	    	<div class="col col-20">
+		    	<label class="item item-input">
+		    		<input type="text">
+		    	</label>
+	    	</div>
+	    	<div class="col ">
+		    	<label class="item item-input">
+		    		<input type="text">
+		    	</label>
+	    	</div>
+	    </div>
+
+	  	<div class="row">
+	    	<div class="col ">
+		    	<label class="item item-input item-stacked-label">
+	    			<span class="input-label">Comentario</span>
+	    			<textarea name="comment" id="comment-textarea"  ng-model="incident.comment">
+					</textarea>
+	  			</label>
+	    	</div>	   
+	    </div>	    
+   
+    </div>
+
+    <div class="col col-20">
+		<div class="list card">					 
+			<div class="col ">
+				<ul class="list">
+					<li class="item item-checkbox">
+					    <label class="checkbox">
+					       <input type="checkbox">
+					    </label>
+					     Labor con sostenimiento
+					</li> 
+				</ul>
+			</div>
+			<div class="col ">
+				<ul class="list">
+					<li class="item item-checkbox">
+					    <label class="checkbox">
+					       <input type="checkbox">
+					    </label>
+					     Labor sin sostenimiento
+					</li> 
+				</ul>
+			</div>			
+		</div>
+
+		<div class="list card">	
+		   	<div class="item item-divider">Recomendacion Geomecanica</div>						 
+			<div class="col ">
+				<ul class="list">
+					<li class="item item-checkbox">
+					    <label class="checkbox">
+					       <input type="checkbox">
+					    </label>
+					     Cumplio
+					</li> 
+				</ul>
+			</div>
+			<div class="col ">
+				<ul class="list">
+					<li class="item item-checkbox">
+					    <label class="checkbox">
+					       <input type="checkbox">
+					    </label>
+					     No cumplio
+					</li> 
+				</ul>
+			</div>			
+		</div>
+
+		<div class="list card">	
+		   	<div class="item item-divider">Instalacion</div>						 
+			<div class="col ">
+				<ul class="list">
+					<li class="item item-checkbox">
+					    <label class="checkbox">
+					       <input type="checkbox">
+					    </label>
+					    Correcta
+					</li> 
+				</ul>
+			</div>
+			<div class="col ">
+				<ul class="list">
+					<li class="item item-checkbox">
+					    <label class="checkbox">
+					       <input type="checkbox">
+					    </label>
+					    Incorrecta
+					</li> 
+				</ul>
+			</div>			
+		</div>
+
+
+	</div>
+</div>
+
+<div class="row">
+			<div class="col">
+			    <div class="item item-divider">Responsable de:</div>
+			    <div class="item item-body">        
+			        <input type="text" ng-model="responsable">       
+			    </div>
+			</div>
+			<div class="col">
+			    <div class="item item-divider">Seguridad </div>
+			    <div class="item item-body">        
+			        <input type="text" ng-model="seguridad">       
+			    </div>
+			</div>
+			<div class="col">
+			    <div class="item item-divider">Geomecanico</div>
+			    <div class="item item-body">        
+			        <input type="text" ng-model="geomecanico">       
+			    </div>
+			</div>
+			<div class="col">
+			    <div class="item item-divider">Operaciones</div>
+			    <div class="item item-body">        
+			        <input type="text" ng-model="operaciones">       
+			    </div>
+			</div>
+			<div class="col">			
+				<div class="item item-divider">Nivel de Riesgo</div>
+			    <div class="item item-body">
+			       	<div>
+			           	<input type="text" ng-model="responsable"> 
+			    	</div>
+			    </div>
+			</div>
+		</div>    	
+
+
   	<div class="row">
 		<div class="col ">	      
 
@@ -38,28 +379,7 @@
 				</li> 
 			</ul>
 		</div>
-	</div>	
-
-	<div ng-repeat="items in preguntasList">  
-		<ul class="flex-container">
-			<li class="flex-item ">			
-			    {{ items.text }}
-			</li> 
-
-		</ul>
 	</div>
-
-	<ul class="flex-container">
-	  <li class="flex-item">1</li>
-	  <li class="flex-item">2</li>
-	  <li class="flex-item">3</li>
-	  <li class="flex-item">4</li>
-	  <li class="flex-item">5</li>
-	  <li class="flex-item">6</li>
-	</ul>
-
-
-
 
 	<div class="row">
     	<div class="col col-20">
