@@ -85,10 +85,14 @@ function(Labor, $scope, $state) {
 
 
 
-.controller('RiesgoCtrl', function($scope,$ionicPopup) {
+.controller('RiesgoCtrl', function($scope,$ionicPopup,Questions) {
   $scope.settings = {
     enableFriends: true
   };
+
+  $scope.questionsList=Questions.query;
+
+  console.log($scope.questionsList);
 
   $scope.preguntasList = [
     { text: "Wireless", checked: true },
