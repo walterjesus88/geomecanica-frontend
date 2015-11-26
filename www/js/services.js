@@ -44,7 +44,8 @@ function($http, $q, servidorAPI, almacenamientoLocal) {
       var defered = $q.defer();
       $http.post(servidorAPI + '/auth/authenticate', {uid: user, password: password})
       .success(function(data) {
-        if (data === 'usuario no existe' || data === 'contraseña incorrecta') {
+        if (data === 'usuario no existe' || data === 'contraseña incorrecta' ||
+        data === 'usuario inactivo') {
           defered.reject(data);
         } else {
           defered.resolve(data);

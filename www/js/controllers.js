@@ -59,11 +59,10 @@ function(Autentificacion, almacenamientoLocal, $state, $scope) {
       if (err === 'usuario no existe') {
         login.user = '';
         login.password = '';
-        login.alerta = err;
       } else if (err === 'contraseña incorrecta') {
         login.password = '';
-        login.alerta = err;
       }
+      login.alerta = err;
     });
   }
 
@@ -186,24 +185,48 @@ function(Usuario, Rol, $ionicModal, $scope) {
     scope: $scope,
     animation: 'slide-in-up'
   }).then(function(modal) {
-    users.modal = modal
-  })
+    users.modal_edit = modal;
+  });
 
-  users.openModal = function(usuario) {
+  users.openEditUser = function(usuario) {
     users.editUser = usuario;
-    users.modal.show();
+    users.modal_edit.show();
   }
 
-  users.closeModal = function() {
-    users.modal.hide();
+  users.closeEditUser = function() {
+    users.modal_edit.hide();
     Usuario.update({id: users.editUser.uid}, users.editUser, function() {
       users.usuarios = Usuario.query();
     });
-  };
+  }
 
-  users.cancelModal = function() {
+  users.cancelEditUser = function() {
     users.editUser = {};
-    users.modal.hide();
+    users.modal_edit.hide();
+  }
+
+  $ionicModal.fromTemplateUrl('change-password.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    users.modal_pass = modal;
+  });
+
+  users.openResPass = function(uid) {
+    users.uid_pass = uid;
+    users.modal_pass.show();
+  }
+
+  users.closeResPass = function() {
+    users.modal_pass.hide();
+    Usuario.update({id: users.uid_pass}, {password: users.new_pass}, function() {
+      users.usuarios = Usuario.query();
+    });
+  }
+
+  users.cancelResPass = function() {
+    users.uid_pass = '';
+    users.modal_pass.hide();
   }
 
 }])
