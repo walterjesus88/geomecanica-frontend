@@ -84,15 +84,21 @@ function(Labor, $scope, $state) {
 }])
 
 
-
-.controller('RiesgoCtrl', function($scope,$ionicPopup,Questions) {
+.controller('RiesgoCtrl',['$scope','$ionicPopup','Question',function($scope,$ionicPopup,Question) {
   $scope.settings = {
     enableFriends: true
   };
 
-  $scope.questionsList=Questions.query;
+  home = this;
 
-  console.log($scope.questionsList);
+  $scope.$parent.index.isAuth = true;
+
+  home.questionsList = Question.query();
+  console.log(home.questionsList);
+
+  // home.listarpreguntas = function() {
+  // }
+
 
   $scope.preguntasList = [
     { text: "Wireless", checked: true },
@@ -154,7 +160,7 @@ function(Labor, $scope, $state) {
 
   var weekDaysList = ["Sun", "Mon", "Tue", "Wed", "thu", "Fri", "Sat"];
   var monthList = ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
-})
+}])
 
 
 .controller('usersCtrl', ['Usuario', 'Rol', '$ionicModal', '$scope',
