@@ -36,8 +36,6 @@ angular.module('app.routes', [])
     }
   })
 
-
-
   .state('tab.pregunta', {
     url: "/preguntas",
       views: {
