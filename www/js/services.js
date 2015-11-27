@@ -72,16 +72,15 @@ function($http, $q, servidorAPI, almacenamientoLocal) {
 }])
 
 //traer las preguntas
-.factory('Question', ['$resource', 'servidorAPI', function($resource, servidorAPI) {
+.factory('Pregunta', ['$resource', 'servidorAPI', function($resource, servidorAPI) {
     //return $resource('/Employees/:employeeId/:data');
-   return $resource(servidorAPI + '/questions/:id', {id:'@id'});
+   return $resource(servidorAPI + '/preguntas/:id', {id:'@id'});
 }])
 
 
 .factory('Labor', ['$resource', 'servidorAPI', function($resource, servidorAPI) {
   return $resource(servidorAPI + '/labores/:id', {id:'@id'});
 }])
-
 
 
 .factory('Usuario', ['$resource', 'servidorAPI', function($resource, servidorAPI) {

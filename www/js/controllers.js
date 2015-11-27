@@ -84,30 +84,26 @@ function(Labor, $scope, $state) {
 }])
 
 
-.controller('RiesgoCtrl',['$scope','$ionicPopup','Question',function($scope,$ionicPopup,Question) {
+.controller('RiesgoCtrl',['$scope','$ionicPopup','Pregunta',function($scope,$ionicPopup,Pregunta) {
   $scope.settings = {
     enableFriends: true
   };
 
-  home = this;
+  riesgo = this;
 
   $scope.$parent.index.isAuth = true;
 
-  home.questionsList = Question.query();
-  console.log(home.questionsList);
+  riesgo.preguntasList = Pregunta.query();
+  console.log(riesgo.preguntasList);
 
-  // home.listarpreguntas = function() {
-  // }
-
-
-  $scope.preguntasList = [
-    { text: "Wireless", checked: true },
-    { text: "GPS", checked: false },
-    { text: "GPS1", checked: false },
-    { text: "GPS2", checked: false },
-    { text: "GPS3", checked: false },
-    { text: "Bluetooth", checked: false }
-  ];
+  // $scope.preguntasList = [
+  //   { text: "Wireless", checked: true },
+  //   { text: "GPS", checked: false },
+  //   { text: "GPS1", checked: false },
+  //   { text: "GPS2", checked: false },
+  //   { text: "GPS3", checked: false },
+  //   { text: "Bluetooth", checked: false }
+  // ];
 
   //Para el Datepicker//
   $scope.datepickerObject = {};
