@@ -96,21 +96,28 @@ function(Labor, $scope, $state) {
   // home.questionsList = Question.query();
   // console.log(home.questionsList);
   riesgo.guardarinspeccion = function() {
-    console.log('hoolla');
 
-    //riesgo.inps_id=7;
-    riesgo.periodo='7';
-    riesgo.created='2015-05-05';
-    riesgo.updated='2015-08-08';
-
-    Inspeccion.guardarDatos(riesgo.periodo,riesgo.created,riesgo.updated)
-    .then(function(data) {  
-      console.log('si'); 
-    })
-    .catch(function(err) {
-      console.log('no');   
+    var inspeccion = new Inspeccion();
+    inspeccion.periodo = '5';
+    inspeccion.created = 2015-05-05;
+    inspeccion.updated = 2015-05-05;    
+    inspeccion.fecha = 2015-05-05;    
+    inspeccion.$save(function() {
+      //$state.go('tabsUsers.users');
+      console.log('hoolla');
     });
+    //riesgo.inps_id=7;
+    // riesgo.periodo='7';
+    // riesgo.created='2015-05-05';
+    // riesgo.updated='2015-08-08';
 
+    // Inspeccion.guardarDatos(riesgo.periodo,riesgo.created,riesgo.updated)
+    // .then(function(data) {  
+    //   console.log('si'); 
+    // })
+    // .catch(function(err) {
+    //   console.log('no');   
+    // });
   }
 
   // $scope.preguntasList = [

@@ -85,18 +85,23 @@ function($http, $q, servidorAPI, almacenamientoLocal) {
   });
 }])
 
+// .factory('Inspeccion', ['$http','$q','$resource', 'servidorAPI', function( $http, $q, $resource, servidorAPI) {
+//     return {
+
+//       guardarDatos: function(perid,created,updated) {
+//         var defered = $q.defer();
+//           //console.log(insp_id); 
+//         console.log(perid);
+
+//         $http.post(servidorAPI + '/inspecciones/grabarinspeccion', { periodo: perid, createdAt:created,updatedAt:updated })
+//     }  
+
+// }])
 
 .factory('Inspeccion', ['$http','$q','$resource', 'servidorAPI', function( $http, $q, $resource, servidorAPI) {
-    return {
-
-      guardarDatos: function(perid,created,updated) {
-        var defered = $q.defer();
-          //console.log(insp_id); 
-        console.log(perid);
-
-        $http.post(servidorAPI + '/inspecciones/grabarinspeccion', { periodo: perid, createdAt:created,updatedAt:updated })
-    }  
-
+  return $resource(servidorAPI + '/inspecciones/:id', {id: '@id'}, {
+    update: { method: 'PUT' }
+  });
 }])
 
 
