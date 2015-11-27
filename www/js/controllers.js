@@ -69,12 +69,10 @@ function(Autentificacion, almacenamientoLocal, $state, $scope) {
 }])
 
 
-
 .controller('homeCtrl', ['Labor', '$scope', '$state',
 function(Labor, $scope, $state) {
 
   home = this;
-
   $scope.$parent.index.isAuth = true;
 
   home.listarLabores = function() {
@@ -105,7 +103,7 @@ function(Labor, $scope, $state) {
     .catch(function(err) {
       va.thi = {};
     });
-    
+
   }
 
 
