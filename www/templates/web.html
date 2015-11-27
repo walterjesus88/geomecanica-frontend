@@ -122,11 +122,15 @@
 		</div>
 
 	    <div class="row">
-		    <select>
-		     	<option>Blue</option>
-		      	<option selected>Green</option>
-		      	<option>Red</option>
-		    </select>
+	    	<div class="list">
+	  			<label class="item item-input item-select">
+				    <select>
+				     	<option>Blue</option>
+				      	<option selected>Green</option>
+				      	<option>Red</option>
+				    </select>
+			    </label>
+			</div>
 		</div>
 
 	    <div class="row">
@@ -346,16 +350,16 @@
 		<div class="col ">	      
 
 		    <ion-list>
-			    <ion-toggle ng-repeat="item in preguntasList" ng-model="item.checked"  ng-checked="item.checked"> 
-		        	{{ item.text }}
+			    <ion-toggle ng-repeat="item in riesgo.preguntasList" ng-model="item.checked"  ng-checked="item.checked"> 
+		        	{{ item.descripcion }}
 		        </ion-toggle>        
 		    </ion-list>
 		   
 		</div>
 		<div class="col ">
 		     <ion-list>
-			    <ion-toggle ng-repeat="item in preguntasList" ng-model="item.checked"  ng-checked="item.checked"> 
-		        	{{ item.text }}
+			    <ion-toggle ng-repeat="item in riesgo.preguntasList" ng-model="item.checked"  ng-checked="item.checked"> 
+		        	{{ item.descripcion }}
 		        </ion-toggle>        
 		    </ion-list>
 		   
@@ -383,7 +387,7 @@
 
 	<div class="row">
     	<div class="col col-20">
-			<button class="button button-balanced">
+			<button class="button button-balanced"  ng-click="riesgo.guardarinspeccion()">
 			  Registrar
 			</button>
 		</div>

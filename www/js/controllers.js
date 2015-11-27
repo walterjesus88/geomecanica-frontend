@@ -84,20 +84,56 @@ function(Labor, $scope, $state) {
 }])
 
 
-
-.controller('RiesgoCtrl', function($scope,$ionicPopup) {
+.controller('RiesgoCtrl',['$scope','$ionicPopup','Pregunta',function($scope,$ionicPopup,Pregunta) {
   $scope.settings = {
     enableFriends: true
   };
 
-  $scope.preguntasList = [
-    { text: "Wireless", checked: true },
-    { text: "GPS", checked: false },
-    { text: "GPS1", checked: false },
-    { text: "GPS2", checked: false },
-    { text: "GPS3", checked: false },
-    { text: "Bluetooth", checked: false }
-  ];
+  riesgo = this;
+
+  $scope.$parent.index.isAuth = true;
+
+
+  riesgo.preguntasList = Pregunta.query();
+  console.log(riesgo.preguntasList);
+
+  // home.questionsList = Question.query();
+  // console.log(home.questionsList);
+  riesgo.guardarinspeccion = function() {
+    console.log('hoolla');
+
+    Inspeccion.guardarDatos(proyectoid,revision_cronograma,codigoproy)
+    .then(function(data) {  
+      va.thi=data; 
+    })
+    .catch(function(err) {
+      va.thi = {};
+    });
+    
+  }
+
+
+  // var user = new Usuario();
+  //   user.uid = createUser.usuario.uid;
+  //   user.dni = createUser.usuario.dni;
+  //   user.nombre = createUser.usuario.nombre;
+  //   user.password = createUser.usuario.password;
+  //   user.rol_id = createUser.usuario.rol_id;
+  //   user.correo = createUser.usuario.correo;
+  //   user.$save(function() {
+  //     $state.go('tabsUsers.users');
+  // });
+
+
+
+  // $scope.preguntasList = [
+  //   { text: "Wireless", checked: true },
+  //   { text: "GPS", checked: false },
+  //   { text: "GPS1", checked: false },
+  //   { text: "GPS2", checked: false },
+  //   { text: "GPS3", checked: false },
+  //   { text: "Bluetooth", checked: false }
+  // ];
 
   //Para el Datepicker//
   $scope.datepickerObject = {};
@@ -150,7 +186,7 @@ function(Labor, $scope, $state) {
 
   var weekDaysList = ["Sun", "Mon", "Tue", "Wed", "thu", "Fri", "Sat"];
   var monthList = ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
-})
+}])
 
 
 .controller('usersCtrl', ['Usuario', 'Rol', '$ionicModal', '$scope',

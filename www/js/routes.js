@@ -41,7 +41,7 @@ angular.module('app.routes', [])
       views: {
         'tab-pregunta': {
         templateUrl: "templates/pregunta.html",
-        controller: 'RiesgoCtrl'
+        controller: 'RiesgoCtrl as riesgo'
       }
     }
   })
@@ -61,11 +61,10 @@ angular.module('app.routes', [])
       views: {
         'tab-web': {
         templateUrl: "templates/web.html",
-        controller: 'RiesgoCtrl'
+        controller: 'RiesgoCtrl as riesgo'
       }
     }
   })
-
 
   .state('login', {
     url: '/login',
@@ -73,8 +72,6 @@ angular.module('app.routes', [])
     templateUrl: 'templates/login.html',
     controller: 'loginCtrl as login'
   })
-
-
 
   .state('tabsUsers.users', {
     url: '/users',
