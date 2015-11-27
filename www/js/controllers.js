@@ -93,21 +93,43 @@ function(Labor, $scope, $state) {
 
   $scope.$parent.index.isAuth = true;
 
-  home.questionsList = Question.query();
-  console.log(home.questionsList);
+  // home.questionsList = Question.query();
+  // console.log(home.questionsList);
+  home.guardarinspeccion = function() {
+    console.log('hoolla');
 
-  // home.listarpreguntas = function() {
-  // }
+    Inspeccion.guardarDatos(proyectoid,revision_cronograma,codigoproy)
+    .then(function(data) {  
+      va.thi=data; 
+    })
+    .catch(function(err) {
+      va.thi = {};
+    });
+    
+  }
 
 
-  $scope.preguntasList = [
-    { text: "Wireless", checked: true },
-    { text: "GPS", checked: false },
-    { text: "GPS1", checked: false },
-    { text: "GPS2", checked: false },
-    { text: "GPS3", checked: false },
-    { text: "Bluetooth", checked: false }
-  ];
+  // var user = new Usuario();
+  //   user.uid = createUser.usuario.uid;
+  //   user.dni = createUser.usuario.dni;
+  //   user.nombre = createUser.usuario.nombre;
+  //   user.password = createUser.usuario.password;
+  //   user.rol_id = createUser.usuario.rol_id;
+  //   user.correo = createUser.usuario.correo;
+  //   user.$save(function() {
+  //     $state.go('tabsUsers.users');
+  // });
+
+
+
+  // $scope.preguntasList = [
+  //   { text: "Wireless", checked: true },
+  //   { text: "GPS", checked: false },
+  //   { text: "GPS1", checked: false },
+  //   { text: "GPS2", checked: false },
+  //   { text: "GPS3", checked: false },
+  //   { text: "Bluetooth", checked: false }
+  // ];
 
   //Para el Datepicker//
   $scope.datepickerObject = {};

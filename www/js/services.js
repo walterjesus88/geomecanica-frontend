@@ -73,13 +73,24 @@ function($http, $q, servidorAPI, almacenamientoLocal) {
 
 //traer las preguntas
 .factory('Question', ['$resource', 'servidorAPI', function($resource, servidorAPI) {
-    //return $resource('/Employees/:employeeId/:data');
-   return $resource(servidorAPI + '/questions/:id', {id:'@id'});
+  //return $resource('/Employees/:employeeId/:data');
+  return $resource(servidorAPI + '/questions/:id', {id:'@id'});
 }])
 
 
 .factory('Labor', ['$resource', 'servidorAPI', function($resource, servidorAPI) {
   return $resource(servidorAPI + '/labores/:id', {id:'@id'});
+}])
+
+
+.factory('Inspeccion', ['$resource', 'servidorAPI', function($resource, servidorAPI) {
+    return {
+
+      guardarDatos: function(variable, valor) {
+      
+      }
+
+    }  
 }])
 
 
@@ -90,13 +101,9 @@ function($http, $q, servidorAPI, almacenamientoLocal) {
   });
 }])
 
-
-
 .factory('Rol', ['$resource', 'servidorAPI', function($resource, servidorAPI) {
   return $resource(servidorAPI + '/roles/:id', {id: '@id'});
 }])
-
-
 
 .factory('httpInterceptor', ['$localStorage',
 function($localStorage) {
