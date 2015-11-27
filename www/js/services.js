@@ -36,7 +36,6 @@ angular.module('app.services', ['ngStorage', 'ngResource'])
 }])
 
 
-
 .factory('Autentificacion', ['$http', '$q', 'servidorAPI', 'almacenamientoLocal',
 function($http, $q, servidorAPI, almacenamientoLocal) {
   return {
@@ -72,9 +71,11 @@ function($http, $q, servidorAPI, almacenamientoLocal) {
 }])
 
 //traer las preguntas
-.factory('Question', ['$resource', 'servidorAPI', function($resource, servidorAPI) {
-  //return $resource('/Employees/:employeeId/:data');
-  return $resource(servidorAPI + '/questions/:id', {id:'@id'});
+
+.factory('Pregunta', ['$resource', 'servidorAPI', function($resource, servidorAPI) {
+    //return $resource('/Employees/:employeeId/:data');
+   return $resource(servidorAPI + '/preguntas/:id', {id:'@id'});
+
 }])
 
 
@@ -92,7 +93,6 @@ function($http, $q, servidorAPI, almacenamientoLocal) {
 
     }  
 }])
-
 
 
 .factory('Usuario', ['$resource', 'servidorAPI', function($resource, servidorAPI) {

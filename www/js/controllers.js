@@ -82,18 +82,22 @@ function(Labor, $scope, $state) {
 }])
 
 
-.controller('RiesgoCtrl',['$scope','$ionicPopup','Question',function($scope,$ionicPopup,Question) {
+.controller('RiesgoCtrl',['$scope','$ionicPopup','Pregunta',function($scope,$ionicPopup,Pregunta) {
   $scope.settings = {
     enableFriends: true
   };
 
-  home = this;
+  riesgo = this;
 
   $scope.$parent.index.isAuth = true;
 
+
+  riesgo.preguntasList = Pregunta.query();
+  console.log(riesgo.preguntasList);
+
   // home.questionsList = Question.query();
   // console.log(home.questionsList);
-  home.guardarinspeccion = function() {
+  riesgo.guardarinspeccion = function() {
     console.log('hoolla');
 
     Inspeccion.guardarDatos(proyectoid,revision_cronograma,codigoproy)
