@@ -1,0 +1,78 @@
+<ion-view title="Create User">
+  <ion-content padding="'true'" class="has-header">
+    <div class="row responsive-sm">
+      <div class="col">
+
+      </div>
+      <form class="list col">
+        <div class="bar bar-header-stable">
+          <h1 class="title">Nueva Labor</h1>
+        </div>
+        <ion-list>
+          <div class="spacer" style="height: 80px"></div>
+          <p>
+            Ingrese el código de la labor.
+          </p>
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">Código:</span>
+            <input type="text" placeholder="ej. LAB-001" ng-model="createLabor.labor.codigo">
+          </label>
+          <div class="spacer" style="height: 20px"></div>
+          <p>
+            Ingrese el nombre de la labor.
+          </p>
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">Nombre:</span>
+            <input type="text" placeholder="ej. Labor " ng-model="createLabor.labor.nombre">
+          </label>
+          <div class="spacer" style="height: 20px"></div>
+          <p>
+            Ingrese el nivel de la labor.
+          </p>
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">Nivel:</span>
+            <input type="numeric" placeholder="ej. 3300" ng-model="createLabor.labor.nivel">
+          </label>
+          <div class="spacer" style="height: 20px"></div>
+          <p>
+            Ingrese el alto programado.
+          </p>
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">Alto:</span>
+            <input type="numeric" placeholder="ej. 5" ng-model="createLabor.labor.alto_pro">
+          </label>
+          <div class="spacer" style="height: 20px"></div>
+          <p>
+            Ingrese el ancho programado.
+          </p>
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">Ancho:</span>
+            <input type="numeric" placeholder="ej. 4" ng-model="createLabor.labor.ancho_pro">
+          </label>
+          <div class="spacer" style="height: 20px"></div>
+          <p>
+            Seleccione el tipo de labor.
+          </p>
+          <label class="item item-input item-select item-stacked-label">
+            <span class="input-label">Tipo:</span>
+            <select ng-model="createLabor.labor.tipoTipoId"
+            ng-options="tipo.tipo_id as tipo.nombre for tipo in createLabor.tipos">
+            </select>
+          </label>
+          <div class="spacer" style="height: 30px;"></div>
+          <p>
+            Verifique los datos antes de guardar.
+          </p>
+          <button class="button button-positive button-block" ng-click="createLabor.nuevaLabor()">Guardar</button>
+          <div class="spacer" style="height: 20px;"></div>
+          <p>
+            {{createLabor.alerta}}
+          </p>
+        </ion-list>
+      </form>
+      <div class="col">
+
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

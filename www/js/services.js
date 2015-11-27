@@ -80,7 +80,9 @@ function($http, $q, servidorAPI, almacenamientoLocal) {
 
 
 .factory('Labor', ['$resource', 'servidorAPI', function($resource, servidorAPI) {
-  return $resource(servidorAPI + '/labores/:id', {id:'@id'});
+  return $resource(servidorAPI + '/labores/:id', {id:'@id'}, {
+    update: { method: 'PUT' }
+  });
 }])
 
 
@@ -94,6 +96,7 @@ function($http, $q, servidorAPI, almacenamientoLocal) {
 
         $http.post(servidorAPI + '/inspecciones/grabarinspeccion', { periodo: perid, createdAt:created,updatedAt:updated })
     }  
+
 }])
 
 
@@ -107,6 +110,14 @@ function($http, $q, servidorAPI, almacenamientoLocal) {
 .factory('Rol', ['$resource', 'servidorAPI', function($resource, servidorAPI) {
   return $resource(servidorAPI + '/roles/:id', {id: '@id'});
 }])
+
+
+
+.factory('Tipo', ['$resource', 'servidorAPI', function($resource, servidorAPI) {
+  return $resource(servidorAPI + '/tipos/:id', {id: '@id'});
+}])
+
+
 
 .factory('httpInterceptor', ['$localStorage',
 function($localStorage) {

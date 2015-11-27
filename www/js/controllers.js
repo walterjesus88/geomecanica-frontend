@@ -113,20 +113,6 @@ function(Labor, $scope, $state) {
 
   }
 
-
-  // var user = new Usuario();
-  //   user.uid = createUser.usuario.uid;
-  //   user.dni = createUser.usuario.dni;
-  //   user.nombre = createUser.usuario.nombre;
-  //   user.password = createUser.usuario.password;
-  //   user.rol_id = createUser.usuario.rol_id;
-  //   user.correo = createUser.usuario.correo;
-  //   user.$save(function() {
-  //     $state.go('tabsUsers.users');
-  // });
-
-
-
   // $scope.preguntasList = [
   //   { text: "Wireless", checked: true },
   //   { text: "GPS", checked: false },
@@ -257,6 +243,7 @@ function(Usuario, Rol, $ionicModal, $scope) {
   users.closeResPass = function() {
     users.modal_pass.hide();
     Usuario.update({id: users.uid_pass}, {password: users.new_pass}, function() {
+      users.editUser = {};
       users.usuarios = Usuario.query();
     });
   }
@@ -311,6 +298,75 @@ function(Usuario, $state, Rol) {
     if (createUser.usuario.dni.length > 8) {
       createUser.usuario.dni = createUser.usuario.dni.slice(0, createUser.usuario.dni.length - 1);
     }
+  }
+
+}])
+
+
+
+.controller('laboresCtrl', ['Labor', '$ionicModal', '$scope', 'Tipo',
+function(Labor, $ionicModal, $scope, Tipo) {
+
+  labores = this;
+
+  labores.labores = Labor.query();
+
+  labores.eliminarLabor = function(uid) {
+    Labor.delete({id: uid}, function() {
+      labores.labores = Labor.query();
+    });
+  }
+
+  $ionicModal.fromTemplateUrl('edit-labor-modal.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    labores.modal = modal;
+  });
+
+  labores.openEditLabor = function(labor) {
+    labores.tipos = Tipo.query();
+    labores.editLabor = labor;
+    labores.modal.show();
+  }
+
+  labores.closeEditLabor = function() {
+    labores.modal.hide();
+    Labor.update({id: labores.editLabor.codigo}, labores.editLabor, function() {
+      labores.editLabor = {};
+      labores.labores = Labor.query();
+    });
+  }
+
+  labores.cancelEditLabor = function() {
+    labores.editLabor = {};
+    labores.modal.hide();
+  }
+
+}])
+
+
+
+.controller('createLaborCtrl', ['Labor', 'Tipo', '$state',
+function(Labor, Tipo, $state) {
+
+  createLabor = this;
+
+  createLabor.tipos = Tipo.query();
+
+  createLabor.nuevaLabor = function() {
+
+    var labor = new Labor();
+    labor.codigo = createLabor.labor.codigo;
+    labor.nombre = createLabor.labor.nombre;
+    labor.nivel = createLabor.labor.nivel;
+    labor.alto_pro = createLabor.labor.alto_pro;
+    labor.ancho_pro = createLabor.labor.ancho_pro;
+    labor.tipoTipoId = createLabor.labor.tipoTipoId;
+    labor.$save(function() {
+      $state.go('tabsLabores.labores');
+    });
+
   }
 
 }])
