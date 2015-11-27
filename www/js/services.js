@@ -84,13 +84,15 @@ function($http, $q, servidorAPI, almacenamientoLocal) {
 }])
 
 
-.factory('Inspeccion', ['$resource', 'servidorAPI', function($resource, servidorAPI) {
+.factory('Inspeccion', ['$http','$q','$resource', 'servidorAPI', function( $http, $q, $resource, servidorAPI) {
     return {
 
-      guardarDatos: function(variable, valor) {
-      
-      }
+      guardarDatos: function(perid,created,updated) {
+        var defered = $q.defer();
+          //console.log(insp_id); 
+        console.log(perid);
 
+        $http.post(servidorAPI + '/inspecciones/grabarinspeccion', { periodo: perid, createdAt:created,updatedAt:updated })
     }  
 }])
 
@@ -100,6 +102,7 @@ function($http, $q, servidorAPI, almacenamientoLocal) {
     update: { method: 'PUT' }
   });
 }])
+
 
 .factory('Rol', ['$resource', 'servidorAPI', function($resource, servidorAPI) {
   return $resource(servidorAPI + '/roles/:id', {id: '@id'});
