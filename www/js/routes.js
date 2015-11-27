@@ -77,32 +77,61 @@ angular.module('app.routes', [])
 
 
   .state('tabsUsers.users', {
-      url: '/users',
-      cache: false,
-      views: {
-        'tab1': {
-          templateUrl: 'templates/users.html',
-          controller: 'usersCtrl as users'
-        }
+    url: '/users',
+    cache: false,
+    views: {
+      'tab1': {
+        templateUrl: 'templates/users.html',
+        controller: 'usersCtrl as users'
       }
+    }
   })
 
   .state('tabsUsers.create', {
-      url: '/create',
-      cache: false,
-      views: {
-        'tab2': {
-          templateUrl: 'templates/createUser.html',
-          controller: 'createUserCtrl as createUser'
-        }
+    url: '/create',
+    cache: false,
+    views: {
+      'tab2': {
+        templateUrl: 'templates/createUser.html',
+        controller: 'createUserCtrl as createUser'
       }
+    }
   })
 
   .state('tabsUsers', {
-      url: '/adminUsers',
-      abstract: true,
-      templateUrl: 'templates/tabsUsers.html'
-  });
+    url: '/adminUsers',
+    abstract: true,
+    templateUrl: 'templates/tabsUsers.html'
+  })
+
+
+  .state('tabsLabores.labores', {
+    url: '/labores',
+    cache: false,
+    views: {
+      'tab1': {
+        templateUrl: 'templates/labores.html',
+        controller: 'laboresCtrl as labores'
+      }
+    }
+  })
+
+  .state('tabsLabores.create', {
+    url: '/create',
+    cache: false,
+    views: {
+      'tab2': {
+        templateUrl: 'templates/createLabor.html',
+        controller: 'createLaborCtrl as createLabor'
+      }
+    }
+  })
+
+  .state('tabsLabores', {
+    url: '/adminLabores',
+    abstract: true,
+    templateUrl: 'templates/tabsLabores.html'
+  })
 
 
   // if none of the above states are matched, use this as the fallback
