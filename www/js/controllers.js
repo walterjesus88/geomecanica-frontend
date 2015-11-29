@@ -88,8 +88,7 @@ function(Labor, $scope, $state) {
   createRiesgo = this;
   $scope.$parent.index.isAuth = true;
 
-
-    //Para el Datepicker//
+  //Para el Datepicker
   createRiesgo.datepickerObject = {};
   createRiesgo.datepickerObject.inputDate = new Date;
   $scope.datepickerObject = {
@@ -161,31 +160,31 @@ function(Labor, $scope, $state) {
   createRiesgo.install = [{ text: "Correcta", value:'TRUE'},{text: "Incorrecta", value:'FALSE'}];
   createRiesgo.insp_install = {resp: 'TRUE' };
 
-  createRiesgo.guardarinspeccion = function() {    
-    
-    console.log(createRiesgo.datepickerObject.inputDate);      
+  createRiesgo.guardarinspeccion = function() {
+
+    console.log(createRiesgo.datepickerObject.inputDate);
     fecha = new Date(createRiesgo.datepickerObject.inputDate);
     day=fecha.getDate();
     month=fecha.getMonth()+1;
-    year=fecha.getFullYear();    
-    if (month.toString().length < 2) 
+    year=fecha.getFullYear();
+    if (month.toString().length < 2)
     {
       month = '0' + month;
     }
-    if (day.toString().length < 2) 
+    if (day.toString().length < 2)
     {
       day = '0' + day;
-    }                           
+    }
     fecha=year+"-"+month+"-"+day;
 
-    //console.log(createRiesgo.insp_empresa.empresa);     
+    //console.log(createRiesgo.insp_empresa.empresa);
 
     var inspeccion = new Inspeccion();
 
-    inspeccion.periodo = createRiesgo.insp_guard.guardia;  
-    inspeccion.recomendacion = createRiesgo.insp_recomendacion.rgeo;  
-    inspeccion.instalacion = createRiesgo.insp_install.resp;  
-    inspeccion.tipo = createRiesgo.insp_tlabor.tipolabor;  
+    inspeccion.periodo = createRiesgo.insp_guard.guardia;
+    inspeccion.recomendacion = createRiesgo.insp_recomendacion.rgeo;
+    inspeccion.instalacion = createRiesgo.insp_install.resp;
+    inspeccion.tipo = createRiesgo.insp_tlabor.tipolabor;
     inspeccion.comentario = createRiesgo.comment;
     inspeccion.ancho_real = createRiesgo.ancho_real;
     //createRiesgo.ancho_exc_tabla;
@@ -203,7 +202,7 @@ function(Labor, $scope, $state) {
     inspeccion.RegistroUid=createRiesgo.responsable;
 
     console.log(inspeccion);
-           
+
     inspeccion.$save(function() {
       //$state.go('tabsUsers.users');
       console.log('hoolla');
@@ -411,5 +410,15 @@ function(Labor, Tipo, $state) {
     });
 
   }
+
+}])
+
+
+
+.controller('tablaSostenimientoCtrl', ['Sostenimiento', function(Sostenimiento) {
+
+  tabla = this;
+
+  tabla.sostenimientos = Sostenimiento.query({tipo: 'A'});
 
 }])
