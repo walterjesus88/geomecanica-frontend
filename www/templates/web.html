@@ -26,13 +26,13 @@
 		</div>
 		<div class="list card">
 			<div class="item item-divider">Guardia</div>
-			<div class="row">			 
+				 
 				<ion-radio ng-repeat="item in createRiesgo.guardia"
 			        ng-value="item.value"
 			        ng-model="createRiesgo.insp_guard.guardia" name="group_guardia">
 			          {{ item.text }}
 			    </ion-radio>		
-			</div>
+		
 		</div>
 		<div class="list card">
 			<div class="item item-divider">Tipo de Labor</div>
@@ -196,7 +196,7 @@
 
 			<ion-radio ng-repeat="item in createRiesgo.opcionlabor"
 				    ng-value="item.value"
-				    ng-model="createRiesgo.inps_OL.olabor" name="group_opcionlabor">
+				    ng-model="createRiesgo.inps_OL.sostenimiento" name="group_opcionlabor">
 				          {{ item.text }}
 			</ion-radio>	
 		</div>
@@ -248,13 +248,18 @@
 			    </div>
 			</div>
 			<div class="col">			
-				<div class="item item-divider">Nivel de createRiesgo</div>
+				<div class="item item-divider">Nivel de Riesgo</div>
 			    <div class="item item-body">
 			       	<div>
-			           	<input type="text" ng-model="createRiesgo.nivelcreateRiesgo"> 
+			           	<input type="text" ng-model="createRiesgo.nivelRiesgo"> 
 			    	</div>
-			    </div>
+			    </div>			    
 			</div>
+
+			<div class="col">
+			    <ion-select label="Placa do Veículo" label-field="nmPlaca" provider="veiculos"  ng-model="veiculo"/>
+			</div>
+			
 		</div>    	
 
 

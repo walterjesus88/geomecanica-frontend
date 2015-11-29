@@ -14,9 +14,7 @@ function(Autentificacion, $state) {
     $state.go('login');
     index.isAuth = false;
   }
-
 }])
-
 
 
 .controller('loginCtrl', ['Autentificacion', 'almacenamientoLocal', '$state', '$scope',
@@ -151,11 +149,11 @@ function(Labor, $scope, $state) {
   createRiesgo.insp_guard = {guardia: 'DIA' };
 
 
-  createRiesgo.empresa = [{ text: "MILPO", value:'MILPO'},{text: "E1", value:'E1'},{text: "E2", value:'E2'}];
-  createRiesgo.insp_empresa = {empresa: 'MILPO' };
+  createRiesgo.empresa = [{ text: "MILPO", value:'1'},{text: "E1", value:'2'},{text: "E2", value:'3'}];
+  createRiesgo.insp_empresa = {empresa: '1' };
 
-  createRiesgo.opcionlabor = [{ text: "Labor con sostenimiento", value:'LCS'},{text: "Labor con sostenimiento", value:'LSS'}];
-  createRiesgo.inps_OL = {olabor: 'LCS' };
+  createRiesgo.opcionlabor = [{ text: "Labor con sostenimiento", value:'TRUE'},{text: "Labor con sostenimiento", value:'FALSE'}];
+  createRiesgo.inps_OL = {sostenimiento: 'TRUE' };
 
   createRiesgo.geomecanica = [{ text: "Cumplio", value:'TRUE'},{text: "No Cumplio", value:'FALSE'}];
   createRiesgo.insp_recomendacion = {rgeo: 'TRUE' };
@@ -180,25 +178,37 @@ function(Labor, $scope, $state) {
     }                           
     fecha=year+"-"+month+"-"+day;
 
-    console.log(fecha);     
+    //console.log(createRiesgo.insp_empresa.empresa);     
 
     var inspeccion = new Inspeccion();
+
     inspeccion.periodo = createRiesgo.insp_guard.guardia;  
     inspeccion.recomendacion = createRiesgo.insp_recomendacion.rgeo;  
     inspeccion.instalacion = createRiesgo.insp_install.resp;  
     inspeccion.tipo = createRiesgo.insp_tlabor.tipolabor;  
     inspeccion.comentario = createRiesgo.comment;
-    inspeccion.ancho_real = createRiesgo.ancho_real;  
+    inspeccion.ancho_real = createRiesgo.ancho_real;
+    //createRiesgo.ancho_exc_tabla;
     inspeccion.alto_real= createRiesgo.alto_real;
+    inspeccion.empresaEmpresaid= createRiesgo.insp_empresa.empresa;
     inspeccion.fecha= fecha;
+    inspeccion.laborCodigo=createRiesgo.labor;
+    inspeccion.recomendacion=createRiesgo.insp_recomendacion.rgeo;
+    inspeccion.estado=createRiesgo.inps_OL.sostenimiento;
 
+    inspeccion.ResponsableUid=createRiesgo.responsable;
+    inspeccion.SeguridadUid=createRiesgo.seguridad;
+    inspeccion.GeomecanicoUid=createRiesgo.geomecanico;
+    inspeccion.OperacionesUid=createRiesgo.operaciones;
+    inspeccion.RegistroUid=createRiesgo.responsable;
+
+    console.log(inspeccion);
+           
     inspeccion.$save(function() {
       //$state.go('tabsUsers.users');
       console.log('hoolla');
     });
   }
-
-
 }])
 
 
