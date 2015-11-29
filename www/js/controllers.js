@@ -209,6 +209,13 @@ function(Labor, $scope, $state) {
       console.log('hoolla');
     });
   }
+  // createRiesgo.testa = function() {
+  //   console.log('dddddd');
+  // }
+
+  var data = [{id:1,nmPlaca:'IKC-1394'},{id:2,nmPlaca:'IKY-5437'},{id:3,nmPlaca:'IKC-1393'},{id:4,nmPlaca:'IKI-5437'},{id:5,nmPlaca:'IOC-8749'},{id:6,nmPlaca:'IMG-6509'}];
+  $scope.veiculos = data;
+
 }])
 
 
