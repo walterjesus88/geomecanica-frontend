@@ -14,9 +14,7 @@ function(Autentificacion, $state) {
     $state.go('login');
     index.isAuth = false;
   }
-
 }])
-
 
 
 .controller('loginCtrl', ['Autentificacion', 'almacenamientoLocal', '$state', '$scope',
@@ -87,52 +85,12 @@ function(Labor, $scope, $state) {
     enableFriends: true
   };
 
-  riesgo = this;
+  createRiesgo = this;
   $scope.$parent.index.isAuth = true;
 
-  riesgo.preguntasList = Pregunta.query();
-  console.log(riesgo.preguntasList);
-
-  // home.questionsList = Question.query();
-  // console.log(home.questionsList);
-  riesgo.guardarinspeccion = function() {
-
-    var inspeccion = new Inspeccion();
-    inspeccion.periodo = '5';
-    inspeccion.created = 2015-05-05;
-    inspeccion.updated = 2015-05-05;
-    inspeccion.fecha = 2015-05-05;
-    inspeccion.$save(function() {
-      //$state.go('tabsUsers.users');
-      console.log('hoolla');
-    });
-    //riesgo.inps_id=7;
-    // riesgo.periodo='7';
-    // riesgo.created='2015-05-05';
-    // riesgo.updated='2015-08-08';
-
-    // Inspeccion.guardarDatos(riesgo.periodo,riesgo.created,riesgo.updated)
-    // .then(function(data) {
-    //   console.log('si');
-    // })
-    // .catch(function(err) {
-    //   console.log('no');
-    // });
-  }
-
-  // $scope.preguntasList = [
-  //   { text: "Wireless", checked: true },
-  //   { text: "GPS", checked: false },
-  //   { text: "GPS1", checked: false },
-  //   { text: "GPS2", checked: false },
-  //   { text: "GPS3", checked: false },
-  //   { text: "Bluetooth", checked: false }
-  // ];
-
-  //Para el Datepicker//
-  $scope.datepickerObject = {};
-  $scope.datepickerObject.inputDate = new Date(2015, 6, 30);
-
+  //Para el Datepicker
+  createRiesgo.datepickerObject = {};
+  createRiesgo.datepickerObject.inputDate = new Date;
   $scope.datepickerObject = {
       titleLabel: 'Title',  //Optional
       todayLabel: 'Today',  //Optional
@@ -141,7 +99,7 @@ function(Labor, $scope, $state) {
       setButtonType : 'button-assertive',  //Optional
       todayButtonType : 'button-assertive',  //Optional
       closeButtonType : 'button-assertive',  //Optional
-      inputDate: $scope.datepickerObject.inputDate,   //Optional
+      inputDate: createRiesgo.datepickerObject.inputDate,   //Optional
       mondayFirst: true,  //Optional
       disabledDates: disabledDates, //Optional
       weekDaysList: weekDaysList, //Optional
@@ -155,7 +113,7 @@ function(Labor, $scope, $state) {
       callback: function (val) {  //Mandatory
         datePickerCallback(val);
       },
-      dateFormat: 'dd-MM-yyyy', //Optional
+      dateFormat: 'yyyy-MM-d', //Optional
       closeOnSelect: false, //Optional
   };
 
@@ -164,7 +122,7 @@ function(Labor, $scope, $state) {
       if (typeof(val) === 'undefined') {
         console.log('No date selected');
       } else {
-        $scope.datepickerObject.inputDate = val;
+        createRiesgo.datepickerObject.inputDate = val;
         console.log('Selected date is : ', val)
       }
   };
@@ -180,6 +138,76 @@ function(Labor, $scope, $state) {
 
   var weekDaysList = ["Sun", "Mon", "Tue", "Wed", "thu", "Fri", "Sat"];
   var monthList = ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
+
+  createRiesgo.tipolabor = [{ text: "Avance", value:'AVANCE', },{ text: "Explotacion", value:'EXPLOTACION', }, ];
+  createRiesgo.insp_tlabor= {tipolabor: 'AVANCE' };
+
+  createRiesgo.preguntasList = Pregunta.query();
+
+  createRiesgo.guardia = [{ text: "Dia", value:'DIA', },{ text: "Noche", value:'NOCHE', }, ];
+  createRiesgo.insp_guard = {guardia: 'DIA' };
+
+
+  createRiesgo.empresa = [{ text: "MILPO", value:'1'},{text: "E1", value:'2'},{text: "E2", value:'3'}];
+  createRiesgo.insp_empresa = {empresa: '1' };
+
+  createRiesgo.opcionlabor = [{ text: "Labor con sostenimiento", value:'TRUE'},{text: "Labor con sostenimiento", value:'FALSE'}];
+  createRiesgo.inps_OL = {sostenimiento: 'TRUE' };
+
+  createRiesgo.geomecanica = [{ text: "Cumplio", value:'TRUE'},{text: "No Cumplio", value:'FALSE'}];
+  createRiesgo.insp_recomendacion = {rgeo: 'TRUE' };
+
+  createRiesgo.install = [{ text: "Correcta", value:'TRUE'},{text: "Incorrecta", value:'FALSE'}];
+  createRiesgo.insp_install = {resp: 'TRUE' };
+
+  createRiesgo.guardarinspeccion = function() {
+
+    console.log(createRiesgo.datepickerObject.inputDate);
+    fecha = new Date(createRiesgo.datepickerObject.inputDate);
+    day=fecha.getDate();
+    month=fecha.getMonth()+1;
+    year=fecha.getFullYear();
+    if (month.toString().length < 2)
+    {
+      month = '0' + month;
+    }
+    if (day.toString().length < 2)
+    {
+      day = '0' + day;
+    }
+    fecha=year+"-"+month+"-"+day;
+
+    //console.log(createRiesgo.insp_empresa.empresa);
+
+    var inspeccion = new Inspeccion();
+
+    inspeccion.periodo = createRiesgo.insp_guard.guardia;
+    inspeccion.recomendacion = createRiesgo.insp_recomendacion.rgeo;
+    inspeccion.instalacion = createRiesgo.insp_install.resp;
+    inspeccion.tipo = createRiesgo.insp_tlabor.tipolabor;
+    inspeccion.comentario = createRiesgo.comment;
+    inspeccion.ancho_real = createRiesgo.ancho_real;
+    //createRiesgo.ancho_exc_tabla;
+    inspeccion.alto_real= createRiesgo.alto_real;
+    inspeccion.empresaEmpresaid= createRiesgo.insp_empresa.empresa;
+    inspeccion.fecha= fecha;
+    inspeccion.laborCodigo=createRiesgo.labor;
+    inspeccion.recomendacion=createRiesgo.insp_recomendacion.rgeo;
+    inspeccion.estado=createRiesgo.inps_OL.sostenimiento;
+
+    inspeccion.ResponsableUid=createRiesgo.responsable;
+    inspeccion.SeguridadUid=createRiesgo.seguridad;
+    inspeccion.GeomecanicoUid=createRiesgo.geomecanico;
+    inspeccion.OperacionesUid=createRiesgo.operaciones;
+    inspeccion.RegistroUid=createRiesgo.responsable;
+
+    console.log(inspeccion);
+
+    inspeccion.$save(function() {
+      //$state.go('tabsUsers.users');
+      console.log('hoolla');
+    });
+  }
 }])
 
 
