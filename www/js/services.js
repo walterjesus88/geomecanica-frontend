@@ -90,11 +90,11 @@ function($http, $q, servidorAPI, almacenamientoLocal) {
 
 //       guardarDatos: function(perid,created,updated) {
 //         var defered = $q.defer();
-//           //console.log(insp_id); 
+//           //console.log(insp_id);
 //         console.log(perid);
 
 //         $http.post(servidorAPI + '/inspecciones/grabarinspeccion', { periodo: perid, createdAt:created,updatedAt:updated })
-//     }  
+//     }
 
 // }])
 
@@ -120,6 +120,12 @@ function($http, $q, servidorAPI, almacenamientoLocal) {
 
 .factory('Tipo', ['$resource', 'servidorAPI', function($resource, servidorAPI) {
   return $resource(servidorAPI + '/tipos/:id', {id: '@id'});
+}])
+
+
+
+.factory('Sostenimiento', ['$resource', 'servidorAPI', function($resource, servidorAPI) {
+  return $resource(servidorAPI + '/sostenimientos/:id', {id: '@id'});
 }])
 
 

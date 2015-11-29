@@ -1,0 +1,94 @@
+<ion-view title="Tabla de Sostenimiento">
+  <ion-content padding="'true'" class="has-header">
+
+    <div class="list">
+
+      <div class="item item-avatar" ng-repeat="sost in tabla.sostenimientos track by $index">
+        <img alt="{{sost.codigo}}" style="background: {{sost.color}};">
+        <p>
+          {{sost.descripcion}}
+        </p>
+        <p>
+          Tiempo de colocación: {{sost.tiempo_colocacion}}
+        </p>
+      </div>
+
+    </div>
+
+    <table class="table">
+
+      <tr>
+        <td>
+          Los tipos de sostenimiento
+        </td>
+        <td>
+          BUENA
+        </td>
+        <td>
+          REGULAR
+        </td>
+        <td>
+          POBRE
+        </td>
+        <td>
+          MUY POBRE
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          MODERADAMENTE FRACTURADA
+        </td>
+        <td>
+          F/B
+        </td>
+        <td>
+          F/R
+        </td>
+        <td>
+          F/P
+        </td>
+        <td>
+          F/MP
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          MUY FRACTURADA
+        </td>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          INTENSAMENTE FRACTURADA
+        </td>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+      </tr>
+
+    </table>
+  </ion-content>
+</ion-view>

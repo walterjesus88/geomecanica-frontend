@@ -129,6 +129,16 @@ angular.module('app.routes', [])
   })
 
 
+
+  .state('tablaSostenimiento', {
+    url: '/tablaSostenimiento',
+    cache: false,
+    templateUrl: 'templates/tablaSostenimiento.html',
+    controller: 'tablaSostenimientoCtrl as tabla'
+  })
+
+
+
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
 

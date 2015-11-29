@@ -100,8 +100,8 @@ function(Labor, $scope, $state) {
     var inspeccion = new Inspeccion();
     inspeccion.periodo = '5';
     inspeccion.created = 2015-05-05;
-    inspeccion.updated = 2015-05-05;    
-    inspeccion.fecha = 2015-05-05;    
+    inspeccion.updated = 2015-05-05;
+    inspeccion.fecha = 2015-05-05;
     inspeccion.$save(function() {
       //$state.go('tabsUsers.users');
       console.log('hoolla');
@@ -112,11 +112,11 @@ function(Labor, $scope, $state) {
     // riesgo.updated='2015-08-08';
 
     // Inspeccion.guardarDatos(riesgo.periodo,riesgo.created,riesgo.updated)
-    // .then(function(data) {  
-    //   console.log('si'); 
+    // .then(function(data) {
+    //   console.log('si');
     // })
     // .catch(function(err) {
-    //   console.log('no');   
+    //   console.log('no');
     // });
   }
 
@@ -375,5 +375,15 @@ function(Labor, Tipo, $state) {
     });
 
   }
+
+}])
+
+
+
+.controller('tablaSostenimientoCtrl', ['Sostenimiento', function(Sostenimiento) {
+
+  tabla = this;
+
+  tabla.sostenimientos = Sostenimiento.query({tipo: 'A'});
 
 }])
