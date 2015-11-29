@@ -88,7 +88,7 @@ function(Labor, $scope, $state) {
   createRiesgo = this;
   $scope.$parent.index.isAuth = true;
 
-  //Para el Datepicker
+    //Para el Datepicker//
   createRiesgo.datepickerObject = {};
   createRiesgo.datepickerObject.inputDate = new Date;
   $scope.datepickerObject = {
