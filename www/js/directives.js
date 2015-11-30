@@ -18,22 +18,23 @@ angular.module('app.directives', [])
         require: '?ngModel',
         transclude : false,
         replace: false,
-    	template: 	'<div class="selectContainer">'
-	                    +'<label class="item item-input item-stacked-label">' 
-	                        +'<span class="input-label">{{label}}</span>'
-	                            +'<div class="item item-input-inset">'
-	                                +'<label class="item-input-wrapper">'
-	                                    +'<i class="icon ion-ios7-search placeholder-icon"></i>'
-	                                    +'<input id="filtro" type="search"  ng-model="ngModel" ng-value="ngValue" ng-keydown="onKeyDown()"/>'
-	                                +'</label>'
-	                                +'<button  ng-click="open()">'
-	                                    +'<i class="icon ion-chevron-down"></i>'
-	                                +'</button>'
-	                            +'</div>' 
-	                        +'</label>'
+    	template: 	'<div >'
+	                    +'<label class="item item-input ">'
+	                        +'<div class="item item-input-inset">'
+	                        +'<button  ng-click="open()"  >'
+		                        +'<i class="icon ion-chevron-down"></i>'
+		                    +'</button>'
+	                 
+	                            +'<label class="item-input-wrapper">'
+	                                +'<i class="icon ion-ios7-search placeholder-icon"></i>'
+	                                +'<input id="filtro" type="search"  ng-model="ngModel" ng-value="ngValue" ng-keydown="onKeyDown()"/>'
+	                            +'</label>'
+	                        +'</div>' 
+	                    +'</label>'  
+	                           
 	                    +'<div class="optionList padding-left padding-right" ng-show="showHide" >'
 	        				+'<ion-scroll>'
-	                            +'<ul class="list">'
+	                            +'<ul class="list">'	        					                
 	        						+'<li class="item" ng-click="selecionar(item)" ng-repeat="item in provider | filter:ngModel">{{item[labelField]}}</li>'                    
 	                            +'</ul>'
 	        				+'</ion-scroll>'
@@ -53,12 +54,13 @@ angular.module('app.directives', [])
             scope.open = function(){
             	console.log('estoy en open');
             	scope.ngModel = "";  
-            	return scope.showHide=!scope.showHide;
+            	//scope.showHide = false;
+            	//return
+            	scope.showHide=!scope.showHide;
 	        };
 
-        	element.bind('click',function(){
-                var vc=scope.open(); 
-            	console.log(vc);
+        	element.bind('click',function(){  
+            	console.log('bind');
             });
 
 	            
@@ -70,12 +72,9 @@ angular.module('app.directives', [])
 	                }
 	        };
 	            
-	        scope.$watch('ngModel',function(newValue){
-	        	
-	        	console.log("newvalue"+newValue);
-
+	        scope.$watch('ngModel',function(newValue){ 
 	        	if(newValue)
-	          		element.find('input').val(newValue[scope.labelField]);	               
+	          		element.find('input').val(newValue[scope.labelField]);	 
 	        });
         },
 

@@ -71,32 +71,33 @@ function($http, $q, servidorAPI, almacenamientoLocal) {
 }])
 
 //traer las preguntas
-
-.factory('Pregunta', ['$resource', 'servidorAPI', function($resource, servidorAPI) {
-    //return $resource('/Employees/:employeeId/:data');
-   return $resource(servidorAPI + '/preguntas/:id', {id:'@id'});
-
+.factory('Empresa', ['$resource', 'servidorAPI', function($resource, servidorAPI) {
+   return $resource(servidorAPI + '/empresas/:id', {id:'@id'});
 }])
 
+.factory('Pregunta', ['$resource', 'servidorAPI', function($resource, servidorAPI) {
+   return $resource(servidorAPI + '/preguntas/:id', {id:'@id'});
+}])
 
 .factory('Labor', ['$resource', 'servidorAPI', function($resource, servidorAPI) {
   return $resource(servidorAPI + '/labores/:id', {id:'@id'}, {
-    update: { method: 'PUT' }
+    update: { method: 'PUT' },
+    // query: {
+    //   method: 'GET',
+    //   isArray: true,
+    //   transformResponse: function(data, headersGetter) {
+    //     var items = angular.fromJson(data);
+    //     var models = [];
+    //     angular.forEach(items, function(item) {
+    //       models.push(item);
+    //     });
+        
+    //     return models;
+    //   }
+    //}
   });
 }])
 
-// .factory('Inspeccion', ['$http','$q','$resource', 'servidorAPI', function( $http, $q, $resource, servidorAPI) {
-//     return {
-
-//       guardarDatos: function(perid,created,updated) {
-//         var defered = $q.defer();
-//           //console.log(insp_id);
-//         console.log(perid);
-
-//         $http.post(servidorAPI + '/inspecciones/grabarinspeccion', { periodo: perid, createdAt:created,updatedAt:updated })
-//     }
-
-// }])
 
 .factory('Inspeccion', ['$http','$q','$resource', 'servidorAPI', function( $http, $q, $resource, servidorAPI) {
   return $resource(servidorAPI + '/inspecciones/:id', {id: '@id'}, {

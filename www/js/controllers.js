@@ -80,7 +80,7 @@ function(Labor, $scope, $state) {
 }])
 
 
-.controller('RiesgoCtrl',['$scope','$ionicPopup','Pregunta','Inspeccion',function($scope,$ionicPopup,Pregunta,Inspeccion) {
+.controller('RiesgoCtrl',['$scope','$ionicPopup','Usuario','Empresa','Labor','Pregunta','Inspeccion',function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion) {
   $scope.settings = {
     enableFriends: true
   };
@@ -142,14 +142,38 @@ function(Labor, $scope, $state) {
   createRiesgo.tipolabor = [{ text: "Avance", value:'AVANCE', },{ text: "Explotacion", value:'EXPLOTACION', }, ];
   createRiesgo.insp_tlabor= {tipolabor: 'AVANCE' };
 
-  createRiesgo.preguntasList = Pregunta.query();
+  createRiesgo.preguntasList = Pregunta.query();  
+  //console.log(createRiesgo.preguntasList);
+  
+  $scope.labores = Labor.query();
+  //console.log($scope.labores);
+
+  createRiesgo.usuarios = Usuario.query();
+  //console.log(createRiesgo.usuarios);
+
+  createRiesgo.empresas= Empresa.query();
+  createRiesgo.insp_empresa = {empresa: 'CMA' };
+ // console.log(createRiesgo.empresas);
+
+  // createRiesgo.empresa = [{ text: "MILPO", value:'1'},{text: "E1", value:'2'},{text: "E2", value:'3'}];
+
+  // var items = angular.fromJson($scope.labores);
+  // angular.forEach(items, function(item) {
+  //   //models.push(item);
+  //   console.log(item); 
+  // });
+     
+  // $scope.labores.$promise.then(function(data) {
+  //     console.log(data);    
+  //     //console.log(JSON.stringify(data));
+  // });
+ 
+  // var data = [{id:1,nmPlaca:'IKC-1394'},{id:2,nmPlaca:'IKY-5437'},{id:3,nmPlaca:'IKC-1393'},{id:4,nmPlaca:'IKI-5437'},{id:5,nmPlaca:'IOC-8749'},{id:6,nmPlaca:'IMG-6509'}];
+  // $scope.veiculos = data;
+  // console.log($scope.veiculos);
 
   createRiesgo.guardia = [{ text: "Dia", value:'DIA', },{ text: "Noche", value:'NOCHE', }, ];
   createRiesgo.insp_guard = {guardia: 'DIA' };
-
-
-  createRiesgo.empresa = [{ text: "MILPO", value:'1'},{text: "E1", value:'2'},{text: "E2", value:'3'}];
-  createRiesgo.insp_empresa = {empresa: '1' };
 
   createRiesgo.opcionlabor = [{ text: "Labor con sostenimiento", value:'TRUE'},{text: "Labor con sostenimiento", value:'FALSE'}];
   createRiesgo.inps_OL = {sostenimiento: 'TRUE' };
@@ -162,7 +186,7 @@ function(Labor, $scope, $state) {
 
   createRiesgo.guardarinspeccion = function() {
 
-    console.log(createRiesgo.datepickerObject.inputDate);
+    //console.log(createRiesgo.datepickerObject.inputDate);
     fecha = new Date(createRiesgo.datepickerObject.inputDate);
     day=fecha.getDate();
     month=fecha.getMonth()+1;
@@ -181,6 +205,8 @@ function(Labor, $scope, $state) {
 
     var inspeccion = new Inspeccion();
 
+    //console.log(createRiesgo.responsable);
+
     inspeccion.periodo = createRiesgo.insp_guard.guardia;
     inspeccion.recomendacion = createRiesgo.insp_recomendacion.rgeo;
     inspeccion.instalacion = createRiesgo.insp_install.resp;
@@ -191,7 +217,7 @@ function(Labor, $scope, $state) {
     inspeccion.alto_real= createRiesgo.alto_real;
     inspeccion.empresaEmpresaid= createRiesgo.insp_empresa.empresa;
     inspeccion.fecha= fecha;
-    inspeccion.laborCodigo=createRiesgo.labor;
+    inspeccion.laborCodigo=createRiesgo.labor.codigo;
     inspeccion.recomendacion=createRiesgo.insp_recomendacion.rgeo;
     inspeccion.estado=createRiesgo.inps_OL.sostenimiento;
 
@@ -208,12 +234,9 @@ function(Labor, $scope, $state) {
       console.log('hoolla');
     });
   }
-  // createRiesgo.testa = function() {
-  //   console.log('dddddd');
-  // }
 
-  var data = [{id:1,nmPlaca:'IKC-1394'},{id:2,nmPlaca:'IKY-5437'},{id:3,nmPlaca:'IKC-1393'},{id:4,nmPlaca:'IKI-5437'},{id:5,nmPlaca:'IOC-8749'},{id:6,nmPlaca:'IMG-6509'}];
-  $scope.veiculos = data;
+
+ 
 
 }])
 

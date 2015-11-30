@@ -1,12 +1,6 @@
 <ion-view view-title="Account">
 
 <ion-content>
- 	
-<!--<div class="col">
-	<ion-select label="Placa do Veículo" label-field="nmPlaca" provider="veiculos"  ng-model="veiculo"/>
-</div> -->
-
-
 <div class="row"> 
 	<div class="col col-20">
 		<div class="list card">
@@ -20,18 +14,26 @@
 			</div>
 		  	<div class="col">
 		  		<div class="list list-inset">
-			        <label class="item item-input">
+			     <!--    <label class="item item-input">
 			            <input type="text" placeholder="Labor" ng-model="createRiesgo.labor">
-			        </label>	    	
+			        </label> -->
+			
+					<label class="item item-input item-select">
+					    <div class="input-label">
+					      	<select class="form-control" ng-model="createRiesgo.labor"         
+         					 ng-options="c.codigo for c in labores ">
+        					</select>					  
+					    </div>
+					</label>
+	    	
 				    <label class="item item-input">
-				        <input type="text" placeholder="Nivel" ng-model="createRiesgo.nivel">
+				        <input type="text" placeholder="Nivel" ng-model="createRiesgo.labor.nivel">
 				    </label>
 		    	</div>
 			</div>		
 		</div>
 		<div class="list card">
-			<div class="item item-divider">Guardia</div>
-				 
+			<div class="item item-divider">Guardia</div>				 
 				<ion-radio ng-repeat="item in createRiesgo.guardia"
 			        ng-value="item.value"
 			        ng-model="createRiesgo.insp_guard.guardia" name="group_guardia">
@@ -40,35 +42,23 @@
 		
 		</div>
 		<div class="list card">
-			<div class="item item-divider">Tipo de Labor</div>
-			<div class="row"> 		
-			       	<ion-radio ng-repeat="item in createRiesgo.tipolabor"
-			                   ng-value="item.value"
-			                   ng-model="createRiesgo.insp_tlabor.tipolabor"  name="group_tipolabor">
-			          			{{ item.text }}
-			        </ion-radio>		
-	<!-- 		<div class="col col-50 ">
-					<ul class="list">
-						<li class="item item-checkbox">
-						    <label class="checkbox">
-						       <input type="checkbox">
-						    </label>
-						     Avance
-						</li> 
-					</ul>
-				</div>
-			-->
-			</div>
+			<div class="item item-divider">Tipo de Labor</div>		
+			<ion-radio ng-repeat="item in createRiesgo.tipolabor"
+			        ng-value="item.value"
+			        ng-model="createRiesgo.insp_tlabor.tipolabor"  name="group_tipolabor">
+			        {{ item.text }}
+			</ion-radio>		
 		</div>
 
 	</div>
 
     <div class="col col-60">
 		<div class="row">		
-				<ion-radio ng-repeat="item in createRiesgo.empresa"
-				    ng-value="item.value"
-				    ng-model="createRiesgo.insp_empresa.empresa" name="group_empresa">
-				          {{ item.text }}
+				<ion-radio ng-repeat="item in createRiesgo.empresas"
+				    ng-value="item.empresaid"
+				    ng-model="createRiesgo.insp_empresa.empresa"
+				    name="group_empresa">
+				          {{ item.nombre }}
 				</ion-radio>
 	
 			<!-- <div class="col">			
@@ -83,19 +73,6 @@
 				</div>		
 			</div> -->	
 		</div>
-
-	    <div class="row">
-	    	<div class="list">
-	  			<label class="item item-input item-select">
-				    <select>
-				     	<option>Blue</option>
-				      	<option selected>Green</option>
-				      	<option>Red</option>
-				    </select>
-			    </label>
-			</div>
-		</div>
-
 	    <div class="row">
 	    	<div class="col col-10">
 		  		<label class="item item-input item-stacked-label">
@@ -106,7 +83,7 @@
 	  		<div class="col">
 		  		<label class="item item-input item-stacked-label">
 			    	<span class="input-label">PROG</span>
-			    	<input type="text" ng-model="createRiesgo.ancho_prog" >
+			    	<input type="text" ng-model="createRiesgo.labor.ancho_pro" >
 			  	</label>
 		  	</div>
 	  		<div class="col">
@@ -141,7 +118,7 @@
 				<div class="list">
 					<label class="item item-input">
 				
-				    <input type="text" ng-model="createRiesgo.alto_prog">
+				    <input type="text" ng-model="createRiesgo.labor.alto_pro">
 				  	</label>
 				</div>
 	  		</div>
@@ -229,10 +206,11 @@
 
 <div class="row">
 			<div class="col">
-			    <div class="item item-divider">Responsable de:</div>
-			    <div class="item item-body">        
+			    <div class="item item-divider">Responsable de:</div>        
+				<div class="item item-body">        
 			        <input type="text" ng-model="createRiesgo.responsable">       
 			    </div>
+							 
 			</div>
 			<div class="col">
 			    <div class="item item-divider">Seguridad </div>
@@ -259,12 +237,16 @@
 			           	<input type="text" ng-model="createRiesgo.nivelRiesgo"> 
 			    	</div>
 			    </div>			    
-			</div>
+			</div>	
 
+			<!-- <div >
+				<ion-select label="Placa do Veículo" label-field="nmPlaca" provider="veiculos"  ng-model="veiculo"/>			
+			</div> -->
 
-			
+		<!-- 	<div >
+				<ion-select label="Labores" label-field="nombre" provider="labor"  ng-model="labor"/>			
+			</div> -->
 		</div>    	
-
 
   	<div class="row">
 		<div class="col ">	      
@@ -316,5 +298,3 @@
 
   </ion-content>
 </ion-view>
-
-
