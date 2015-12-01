@@ -165,7 +165,8 @@
 
 			<ion-radio ng-repeat="item in createRiesgo.opcionlabor"
 				    ng-value="item.value"
-				    ng-model="createRiesgo.inps_OL.sostenimiento" name="group_opcionlabor">
+				    ng-model="createRiesgo.inps_OL.sostenimiento" 
+				    name="group_opcionlabor">
 				          {{ item.text }}
 			</ion-radio>	
 		</div>
@@ -174,9 +175,12 @@
 		   	<div class="item item-divider">Recomendacion Geomecanica</div>					
 		   		<ion-radio ng-repeat="item in createRiesgo.geomecanica"
 				    ng-value="item.value"
+				    ng-checked="createRiesgo.ver(createRiesgo.insp_recomendacion.rgeo)"
 				    ng-model="createRiesgo.insp_recomendacion.rgeo" name="group_recomendacion">
 				          {{ item.text }}
 				</ion-radio>
+
+				{{}}
 		</div>
 
 		<div class="list card">	
