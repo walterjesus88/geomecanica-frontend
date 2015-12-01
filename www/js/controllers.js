@@ -153,7 +153,9 @@ function(Labor, $scope, $state) {
 
   createRiesgo.empresas= Empresa.query();
   createRiesgo.insp_empresa = {empresa: 'CMA' };
- // console.log(createRiesgo.empresas);
+  //console.log(createRiesgo.empresas);
+
+
 
   // createRiesgo.empresa = [{ text: "MILPO", value:'1'},{text: "E1", value:'2'},{text: "E2", value:'3'}];
 
@@ -183,6 +185,13 @@ function(Labor, $scope, $state) {
 
   createRiesgo.install = [{ text: "Correcta", value:'TRUE'},{text: "Incorrecta", value:'FALSE'}];
   createRiesgo.insp_install = {resp: 'TRUE' };
+
+  createRiesgo.ver= function(id) {
+    console.log('createRiesgo.insp_recomendacion.rgeo');
+    console.log(id);
+  }
+
+
 
   createRiesgo.guardarinspeccion = function() {
 
