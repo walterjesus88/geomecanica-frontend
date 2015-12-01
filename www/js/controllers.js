@@ -180,22 +180,29 @@ function(Labor, $scope, $state) {
 
   createRiesgo.calcular = function()
   { 
-    switch(createRiesgo.operators.value)
-    { 
-      case "suma":
-          console.log('suma');
-          createRiesgo.resultado = parseInt(createRiesgo.first) + parseInt(createRiesgo.second);
-        break;
-      case "resta":
-          createRiesgo.resultado = parseInt(createRiesgo.first) - parseInt(createRiesgo.second);
-        break;
-      case "mutliplicacion":
-          createRiesgo.resultado = parseInt(createRiesgo.first) * parseInt(createRiesgo.second);
-        break;
-      case "division":
-          createRiesgo.resultado = parseInt(createRiesgo.first) / parseInt(createRiesgo.second);
-        break;      
-    }    
+    //console.log(createRiesgo.insp_install.resp);
+
+    createRiesgo.resultado=createRiesgo.first;    
+    console.log(createRiesgo.resultado);
+    console.log(createRiesgo.operators.value);
+
+    // switch(createRiesgo.operators.value)
+    // { 
+    //   case "suma":
+    //       console.log('suma');
+    //       createRiesgo.resultado = parseInt(createRiesgo.first) + parseInt(createRiesgo.second);
+    //     break;
+    //   case "resta":
+    //       createRiesgo.resultado = parseInt(createRiesgo.first) - parseInt(createRiesgo.second);
+    //     break;
+    //   case "mutliplicacion":
+    //       console.log('mutliplicacion');      
+    //       createRiesgo.resultado = parseInt(createRiesgo.first) * parseInt(createRiesgo.second);
+    //     break;
+    //   case "division":
+    //       createRiesgo.resultado = parseInt(createRiesgo.first) / parseInt(createRiesgo.second);
+    //     break;      
+    // }    
   }
 
    $scope.$watch(createRiesgo.calcular);

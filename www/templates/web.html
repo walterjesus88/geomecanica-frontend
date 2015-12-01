@@ -187,14 +187,16 @@
 		   	<div class="item item-divider">Instalacion</div>
 		   		<ion-radio ng-repeat="item in createRiesgo.install"
 				    ng-value="item.value"
+				    ng-checked="createRiesgo.calcular()"
 				    ng-model="createRiesgo.insp_install.resp" name="group_inst">
 				          {{ item.text }}
 				</ion-radio>		
 		</div>
 
 		<input ng-model="createRiesgo.first">  
-        <select ng-model="operators.value" ng-options="v for v in createRiesgo.operators.values"></select>
+        <select ng-model="createRiesgo.operators.value" ng-options="v for v in createRiesgo.operators.values"></select>
 		<input ng-model="createRiesgo.second">   
+		
 		<div>Resultado: {{createRiesgo.resultado | currency}}</div>
 
 	</div>
