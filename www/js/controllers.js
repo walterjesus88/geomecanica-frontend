@@ -80,7 +80,8 @@ function(Labor, $scope, $state) {
 }])
 
 
-.controller('RiesgoCtrl',['$scope','$ionicPopup','Usuario','Empresa','Labor','Pregunta','Inspeccion',function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion) {
+.controller('RiesgoCtrl',['$scope','$ionicPopup','Usuario','Empresa','Labor','Pregunta','Inspeccion', '$ionicModal', 'Roca', 'Sostenimiento',
+function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicModal, Roca, Sostenimiento) {
   $scope.settings = {
     enableFriends: true
   };
@@ -142,9 +143,9 @@ function(Labor, $scope, $state) {
   createRiesgo.tipolabor = [{ text: "Avance", value:'AVANCE', },{ text: "Explotacion", value:'EXPLOTACION', }, ];
   createRiesgo.insp_tlabor= {tipolabor: 'AVANCE' };
 
-  createRiesgo.preguntasList = Pregunta.query();  
+  createRiesgo.preguntasList = Pregunta.query();
   //console.log(createRiesgo.preguntasList);
-  
+
   $scope.labores = Labor.query();
   console.log($scope.labores);
 
@@ -160,14 +161,14 @@ function(Labor, $scope, $state) {
   // var items = angular.fromJson($scope.labores);
   // angular.forEach(items, function(item) {
   //   //models.push(item);
-  //   console.log(item); 
+  //   console.log(item);
   // });
-     
+
   // $scope.labores.$promise.then(function(data) {
-  //     console.log(data);    
+  //     console.log(data);
   //     //console.log(JSON.stringify(data));
   // });
- 
+
   // var data = [{id:1,nmPlaca:'IKC-1394'},{id:2,nmPlaca:'IKY-5437'},{id:3,nmPlaca:'IKC-1393'},{id:4,nmPlaca:'IKI-5437'},{id:5,nmPlaca:'IOC-8749'},{id:6,nmPlaca:'IMG-6509'}];
   // $scope.veiculos = data;
   // console.log($scope.veiculos);
@@ -236,7 +237,28 @@ function(Labor, $scope, $state) {
   }
 
 
- 
+
+  //modal de tablas de sostenimiento
+  createRiesgo.tipo = 'A';
+  createRiesgo.rocas = Roca.query();
+  createRiesgo.sostenimientos = Sostenimiento.query({tipo: createRiesgo.tipo});
+
+  $ionicModal.fromTemplateUrl('popupSostenimiento.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    createRiesgo.modal = modal;
+  });
+
+  createRiesgo.openTablaSostenimiento = function() {
+    createRiesgo.modal.show();
+  }
+
+  createRiesgo.closeTablaSostenimiento = function() {
+    createRiesgo.modal.hide();
+    createRiesgo.mfr = createRiesgo.tipo_roca;
+    createRiesgo.result = createRiesgo.tipo_sostenimiento;
+  }
 
 }])
 
@@ -433,15 +455,5 @@ function(Labor, Tipo, $state) {
     });
 
   }
-
-}])
-
-
-
-.controller('tablaSostenimientoCtrl', ['Sostenimiento', function(Sostenimiento) {
-
-  tabla = this;
-
-  tabla.sostenimientos = Sostenimiento.query({tipo: 'A'});
 
 }])

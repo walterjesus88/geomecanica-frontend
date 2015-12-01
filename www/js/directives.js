@@ -1,9 +1,5 @@
 angular.module('app.directives', [])
 
-// .directive('blankDirective', [function(){
-
-// }])
-
 .directive('ionSelect',[function(){
 	'use strict';
 	return {
@@ -13,7 +9,7 @@ angular.module('app.directives', [])
             labelField:'@',
             provider:'=',
             ngModel: '=?',
-            ngValue: '=?',         
+            ngValue: '=?',
         },
         require: '?ngModel',
         transclude : false,
@@ -24,27 +20,27 @@ angular.module('app.directives', [])
 	                        +'<button  ng-click="open()"  >'
 		                        +'<i class="icon ion-chevron-down"></i>'
 		                    +'</button>'
-	                 
+
 	                            +'<label class="item-input-wrapper">'
 	                                +'<i class="icon ion-ios7-search placeholder-icon"></i>'
 	                                +'<input id="filtro" type="search"  ng-model="ngModel" ng-value="ngValue" ng-keydown="onKeyDown()"/>'
 	                            +'</label>'
-	                        +'</div>' 
-	                    +'</label>'  
-	                           
+	                        +'</div>'
+	                    +'</label>'
+
 	                    +'<div class="optionList padding-left padding-right" ng-show="showHide" >'
 	        				+'<ion-scroll>'
-	                            +'<ul class="list">'	        					                
-	        						+'<li class="item" ng-click="selecionar(item)" ng-repeat="item in provider | filter:ngModel">{{item[labelField]}}</li>'                    
+	                            +'<ul class="list">'
+	        						+'<li class="item" ng-click="selecionar(item)" ng-repeat="item in provider | filter:ngModel">{{item[labelField]}}</li>'
 	                            +'</ul>'
 	        				+'</ion-scroll>'
-	                    +'</div>'    
+	                    +'</div>'
                 	+'</div>',
 
         link: function (scope, element, attrs,ngModel) {
 
         	scope.ngValue = scope.ngValue !== undefined ? scope.ngValue :'item';
-            
+
             scope.selecionar = function(item){
             	console.log('seleccion');
                 ngModel.$setViewValue(item);
@@ -53,17 +49,17 @@ angular.module('app.directives', [])
 
             scope.open = function(){
             	console.log('estoy en open');
-            	scope.ngModel = "";  
+            	scope.ngModel = "";
             	//scope.showHide = false;
             	//return
             	scope.showHide=!scope.showHide;
 	        };
 
-        	element.bind('click',function(){  
+        	element.bind('click',function(){
             	console.log('bind');
             });
 
-	            
+
 	        scope.onKeyDown = function(){
 	        	console.log('onKeyDown');
 	            scope.showHide = true;
@@ -71,15 +67,39 @@ angular.module('app.directives', [])
 	                    scope.showHide = false;
 	                }
 	        };
-	            
-	        scope.$watch('ngModel',function(newValue){ 
+
+	        scope.$watch('ngModel',function(newValue){
 	        	if(newValue)
-	          		element.find('input').val(newValue[scope.labelField]);	 
+	          		element.find('input').val(newValue[scope.labelField]);
 	        });
         },
 
-   
-
  	 };
 
-}]);
+}])
+
+
+
+//directiva para las tablas de sostenimiento
+.directive('tbSostenimiento', ['Roca', 'Sostenimiento', function(Roca, Sostenimiento) {
+
+	return {
+		restric: 'E',
+		templateUrl: 'templates/tablaSostenimiento.html',
+		scope: {
+			show: '&',
+			sostenimientos: '=',
+			rocas: '=',
+			tiporoca: '=',
+			tiposostenimiento: '='
+		},
+		link: function($scope) {
+			$scope.setTipoSostenimiento = function(id) {
+				$scope.tiposostenimiento = id;
+			}
+		}
+	}
+
+
+
+}])

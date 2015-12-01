@@ -91,7 +91,7 @@ function($http, $q, servidorAPI, almacenamientoLocal) {
     //     angular.forEach(items, function(item) {
     //       models.push(item);
     //     });
-        
+
     //     return models;
     //   }
     //}
@@ -127,6 +127,12 @@ function($http, $q, servidorAPI, almacenamientoLocal) {
 
 .factory('Sostenimiento', ['$resource', 'servidorAPI', function($resource, servidorAPI) {
   return $resource(servidorAPI + '/sostenimientos/:id', {id: '@id'});
+}])
+
+
+
+.factory('Roca', ['$resource', 'servidorAPI', function($resource, servidorAPI) {
+  return $resource(servidorAPI + '/rocas/:id', {id: '@id'});
 }])
 
 
