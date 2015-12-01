@@ -21,6 +21,10 @@ angular.module('app.directives', [])
 		        };
       		};
 
+ 			scope.yearOrder = (attrs.yearOrder && attrs.yearOrder === 'asc') ? false : true;
+      		var endYear = attrs.endYear || new Date().getFullYear(); // default: this year
+      		var startYear = attrs.startYear || startYear - 100; // default: this year - 100
+
       		scope.selects = {
 	       		days: function() {
 		          // Get number of days based on month + year 
@@ -49,7 +53,44 @@ angular.module('app.directives', [])
 		          }
 		          return yearsList;
 		        }
-	      };
+	        };
+
+	        
+	        scope.$watch('date', function(date) {
+		        // IF REQUIRED
+	        	if (attrs.required) {
+
+		          // VALIDATION RULES
+		          var yearIsValid = !!date.year && parseInt(date.year) <= endYear && parseInt(date.year) >= startYear;
+		          var monthIsValid = !!date.month;
+		          var dayIsValid = !!date.day;
+
+		          console.log(yearIsValid, monthIsValid, dayIsValid);
+
+		          // SET INPUT VALIDITY
+		          ngModel.$setValidity('required', yearIsValid || monthIsValid || dayIsValid ? true : false);
+		          ngModel.$setValidity('yearRequired', yearIsValid ? true : false);
+		          ngModel.$setValidity('monthRequired', monthIsValid ? true : false);
+		          ngModel.$setValidity('dayRequired', dayIsValid ? true : false);
+
+		          // UPDATE NG MODEL
+		          if (yearIsValid && monthIsValid && dayIsValid) {
+		            ngModel.$setViewValue(new Date(date.year, date.month - 1, date.day));
+		          }
+		        }
+
+		        // IF NOT REQUIRED (still need the 3 values filled to update the model)
+		        else if (date.year && date.month && date.day) {
+		          ngModel.$setViewValue(new Date(date.year, date.month - 1, date.day));
+		        }
+
+		        // IF NOT REQUIRED (still need the 3 values filled to update the model)
+		        else if (date.year && date.month && date.day) {
+		          ngModel.$setViewValue(new Date(date.year, date.month - 1, date.day));
+		        }
+		    }, true);
+
+
 		}
 	}
 }])
