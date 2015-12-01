@@ -146,7 +146,7 @@ function(Labor, $scope, $state) {
   //console.log(createRiesgo.preguntasList);
   
   $scope.labores = Labor.query();
-  //console.log($scope.labores);
+  console.log($scope.labores);
 
   createRiesgo.usuarios = Usuario.query();
   //console.log(createRiesgo.usuarios);
