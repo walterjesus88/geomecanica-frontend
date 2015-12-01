@@ -14,10 +14,9 @@
 			</div>
 		  	<div class="col">
 		  		<div class="list list-inset">
-			     <!--    <label class="item item-input">
+			     	<!-- <label class="item item-input">
 			            <input type="text" placeholder="Labor" ng-model="createRiesgo.labor">
-			        </label> -->
-			
+			        </label> -->			
 					<label class="item item-input item-select">
 					    <div class="input-label">
 					      	<select class="form-control" ng-model="createRiesgo.labor"         
@@ -60,18 +59,6 @@
 				    name="group_empresa">
 				          {{ item.nombre }}
 				</ion-radio>
-	
-			<!-- <div class="col">			
-				<div class="list">
-				  <label class="item item-radio">
-				    <input type="radio" ng-model="createRiesgo.empresa" value="milpo" name="group">
-				    <div class="item-content">
-				      Milpo
-				    </div>
-				    
-				  </label>
-				</div>		
-			</div> -->	
 		</div>
 	    <div class="row">
 	    	<div class="col col-10">
@@ -249,31 +236,82 @@
 		</div>    	
 
   	<div class="row">
-		<div class="col ">	      
+		<div class="col "> 
+			<div >
+				<ion-list>
+				  	<ion-item ng-repeat="item in createRiesgo.preguntasList | orderBy:'preguntaid' " ng-if="item.preguntaid==1">
+				        <label class="item item-input item-select" >
+							<div class="input-label">
+								{{item.preguntaid}}-{{ item.descripcion }}-{{ item.posicion }}	 
+							</div>
+						  	<select class="form-control" ng-model="createRiesgo.labor"         
+	         					 ng-options="c.codigo for c in labores ">
+	        				</select>					  
+						</label>
+			  		</ion-item>
+				</ion-list>  
+	        	   
+			    <ion-list>
+				    <ion-toggle  ng-repeat="item in createRiesgo.preguntasList | orderBy:'preguntaid' "  ng-if="item.posicion==1"  ng-model="item.checked"  ng-checked="item.checked" > 
+			        	{{item.preguntaid}}-{{ item.descripcion }}-{{ item.posicion }}
+			        </ion-toggle>        
+			    </ion-list>
+			</div>	   
+		</div>
 
-		    <ion-list>
-			    <ion-toggle ng-repeat="item in createRiesgo.preguntasList" ng-model="item.checked"  ng-checked="item.checked"> 
-		        	{{ item.descripcion }}
-		        </ion-toggle>        
-		    </ion-list>
-		   
-		</div>
-		<div class="col ">
-		     <ion-list>
-			    <ion-toggle ng-repeat="item in createRiesgo.preguntasList" ng-model="item.checked"  ng-checked="item.checked"> 
-		        	{{ item.descripcion }}
-		        </ion-toggle>        
-		    </ion-list>
-		   
-		</div>
+		<div class="col" >
+			<div >
+			    <ion-list>
+				  <ion-item ng-repeat="item in createRiesgo.preguntasList | orderBy:'preguntaid' " ng-if="item.preguntaid==9">
+				        <div class="input-label">
+				        	{{item.preguntaid}}-{{ item.descripcion }}
+				        </div>
+				        <label class="item item-input">
+							<input type="text" placeholder="Hastial Izquierdo">
+							<input type="text" placeholder="Hastial Derecho">
+						</label>					  				    
+				  </ion-item>
+				</ion-list> 
+
+			    <ion-list>
+				    <ion-toggle ng-repeat="item in createRiesgo.preguntasList | orderBy:'preguntaid' " ng-if="item.posicion==2" ng-model="item.checked"  ng-checked="item.checked" > 
+			        	{{item.preguntaid}}-{{ item.descripcion }}-{{ item.posicion }}
+			        </ion-toggle>        
+			    </ion-list>
+			    <ion-list>				
+				  	<ion-item ng-repeat="item in createRiesgo.preguntasList  " ng-if="item.preguntaid==16">			
+			        {{item.preguntaid}}-{{ item.descripcion }}-{{ item.posicion }}	          		
+					<input type="radio" ng-model="createRiesgo.name" value="red">					
+	        	  	</ion-item>
+				</ion-list>   	   
+			</div>
+		</div>	
 	</div>
 
-	<div class="list">        
-        <div class="item item-divider"> 
-          Settings
-				<input type="radio" ng-model="createRiesgo.name" value="red">
-        </div>      
-     </div>
+
+<!-- 	<div class="row" ng-repeat="item in createRiesgo.preguntasList">	
+		<div class="col ">
+			<div class="item item-divider" ng-if="item.preguntaid==9"> 
+	        		{{item.preguntaid}}-{{ item.descripcion }}
+				<input type="text" ng-model="createRiesgo.name" value="red">
+				<input type="text" ng-model="createRiesgo.name" value="red">
+	        </div>  
+			<ion-list>
+			    <ion-toggle ng-if="item.posicion==1"   ng-model="item.checked"  ng-checked="item.checked" > 
+			        	{{item.preguntaid}}-{{ item.descripcion }}-{{ item.posicion }}
+			    </ion-toggle>        
+			</ion-list>
+		</div>
+
+		<div class="col">
+			<ion-list>
+			    <ion-toggle ng-if="item.posicion==2"   ng-model="item.checked"  ng-checked="item.checked" > 
+			        	{{item.preguntaid}}-{{ item.descripcion }}-{{ item.posicion }}
+			    </ion-toggle>        
+			</ion-list>
+		
+		</div>
+	</div> -->
 
 	<div class="row">
 		<div class="col " ng-repeat="item in preguntasList">  
