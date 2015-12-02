@@ -143,11 +143,13 @@ function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicMod
   createRiesgo.tipolabor = [{ text: "Avance", value:'AVANCE', },{ text: "Explotacion", value:'EXPLOTACION', }, ];
   createRiesgo.insp_tlabor= {tipolabor: 'AVANCE' };
 
+
   createRiesgo.preguntasList = Pregunta.query();
-  //console.log(createRiesgo.preguntasList);
+  console.log(createRiesgo.preguntasList);
+
 
   $scope.labores = Labor.query();
-  console.log($scope.labores);
+  //console.log($scope.labores);
 
   createRiesgo.usuarios = Usuario.query();
   //console.log(createRiesgo.usuarios);
@@ -155,22 +157,6 @@ function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicMod
   createRiesgo.empresas= Empresa.query();
   createRiesgo.insp_empresa = {empresa: 'CMA' };
   //console.log(createRiesgo.empresas);
-
-
-
-
-  // createRiesgo.items = [1,2,3,4,5];
-
-  // createRiesgo.changeItems = function(){
-  //   createRiesgo.items = [6,7,8,9,10];
-  // }
-
-  // $scope.$watch("items", function(newValue, oldValue){
-  //   if(newValue != oldValue){
-  //     $scope.message = "Items changed !!";
-  //     console.log('mierda');
-  //   }
-  // });
 
 
   createRiesgo.operators =
@@ -182,28 +168,27 @@ function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicMod
   createRiesgo.calcular = function()
   {
     //console.log(createRiesgo.insp_install.resp);
+    //createRiesgo.inps_OL.sostenimiento
+    //createRiesgo.insp_recomendacion.rgeo
 
-    createRiesgo.resultado=createRiesgo.first;
-    console.log(createRiesgo.resultado);
-    console.log(createRiesgo.operators.value);
+    if(createRiesgo.inps_OL.sostenimiento=='FALSE' )
+    {
+      resultado='CRITICO';
+    }
+    else if(createRiesgo.inps_OL.sostenimiento=='TRUE' && createRiesgo.insp_recomendacion.rgeo=='TRUE' && createRiesgo.insp_install.resp=='TRUE')
+    {
+      resultado='BAJO';
+    }
+    else if(createRiesgo.inps_OL.sostenimiento=='TRUE' && (createRiesgo.insp_install.resp=='TRUE' || createRiesgo.insp_recomendacion.rgeo=='TRUE'))
+    {
+      resultado='MEDIO';
+    }
+    else if(createRiesgo.inps_OL.sostenimiento=='TRUE' && createRiesgo.insp_install.resp=='FALSE'  && createRiesgo.insp_recomendacion.rgeo=='FALSE')
+    {
+      resultado='CRITICO';
+    }
 
-    // switch(createRiesgo.operators.value)
-    // {
-    //   case "suma":
-    //       console.log('suma');
-    //       createRiesgo.resultado = parseInt(createRiesgo.first) + parseInt(createRiesgo.second);
-    //     break;
-    //   case "resta":
-    //       createRiesgo.resultado = parseInt(createRiesgo.first) - parseInt(createRiesgo.second);
-    //     break;
-    //   case "mutliplicacion":
-    //       console.log('mutliplicacion');
-    //       createRiesgo.resultado = parseInt(createRiesgo.first) * parseInt(createRiesgo.second);
-    //     break;
-    //   case "division":
-    //       createRiesgo.resultado = parseInt(createRiesgo.first) / parseInt(createRiesgo.second);
-    //     break;
-    // }
+    createRiesgo.nivelRiesgo=resultado;
   }
 
    $scope.$watch(createRiesgo.calcular);
@@ -226,7 +211,7 @@ function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicMod
   createRiesgo.guardia = [{ text: "Dia", value:'DIA', },{ text: "Noche", value:'NOCHE', }, ];
   createRiesgo.insp_guard = {guardia: 'DIA' };
 
-  createRiesgo.opcionlabor = [{ text: "Labor con sostenimiento", value:'TRUE'},{text: "Labor con sostenimiento", value:'FALSE'}];
+  createRiesgo.opcionlabor = [{ text: "Labor con sostenimiento", value:'TRUE'},{text: "Labor sin sostenimiento", value:'FALSE'}];
   createRiesgo.inps_OL = {sostenimiento: 'TRUE' };
 
   createRiesgo.geomecanica = [{ text: "Cumplio", value:'TRUE'},{text: "No Cumplio", value:'FALSE'}];
@@ -235,11 +220,11 @@ function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicMod
   createRiesgo.install = [{ text: "Correcta", value:'TRUE'},{text: "Incorrecta", value:'FALSE'}];
   createRiesgo.insp_install = {resp: 'TRUE' };
 
-  //createRiesgo.ver= function(id) {
-    //console.log('createRiesgo.insp_recomendacion.rgeo');
-    //console.log(id);
-  //}
+  createRiesgo.ver= function(id) {
+       console.log(id);
+  }
 
+  $scope.$watch(createRiesgo.ver);
 
 
   createRiesgo.guardarinspeccion = function() {
