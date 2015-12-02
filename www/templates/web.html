@@ -249,9 +249,8 @@
 
 			<!-- <div >
 				<ion-select label="Placa do Veículo" label-field="nmPlaca" provider="veiculos"  ng-model="veiculo"/>
-			</div> -->
-
-		<!-- 	<div >
+			</div>
+			<div >
 				<ion-select label="Labores" label-field="nombre" provider="labor"  ng-model="labor"/>
 			</div> -->
 		</div>
@@ -271,16 +270,11 @@
 						</label>
 			  		</ion-item>
 
+
 				</ion-list>
 	        	    -->
 			    <ion-list>
-				    <ion-toggle  ng-repeat="item in createRiesgo.preguntasList | orderBy:'preguntaid' "  ng-if="item.posicion==1"  ng-checked="createRiesgo.ver(item.checked)"  ng-model="item.checked" >
-
-				</ion-list>
-
-			    <ion-list>
-				    <ion-toggle  ng-repeat="item in createRiesgo.preguntasList | orderBy:'preguntaid' "  ng-if="item.posicion==1"  ng-model="item.checked"  ng-checked="item.checked" >
-
+				    <ion-toggle  ng-repeat="item in createRiesgo.preguntasList | orderBy:'preguntaid' "  ng-if="item.posicion==1"  ng-model="item.checked"  ng-checked="item.checked"  ng-change="createRiesgo.validate(item)" >
 			        	{{item.preguntaid}}-{{ item.descripcion }}-{{ item.posicion }}
 			        </ion-toggle>
 			    </ion-list>
@@ -300,9 +294,7 @@
 						</label>
 				  </ion-item>
 				</ion-list>
-
 			    <ion-list>
-
 				    <ion-toggle ng-repeat="item in createRiesgo.preguntasList | orderBy:'preguntaid' " ng-if="item.posicion==2" ng-model="item.checked"  ng-checked="item.checked" >
 
 			        	{{item.preguntaid}}-{{ item.descripcion }}-{{ item.posicion }}
