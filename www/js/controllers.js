@@ -154,7 +154,9 @@ function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicMod
 
   createRiesgo.empresas= Empresa.query();
   createRiesgo.insp_empresa = {empresa: 'CMA' };
- // console.log(createRiesgo.empresas);
+  //console.log(createRiesgo.empresas);
+
+
 
   // createRiesgo.empresa = [{ text: "MILPO", value:'1'},{text: "E1", value:'2'},{text: "E2", value:'3'}];
 
@@ -184,6 +186,13 @@ function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicMod
 
   createRiesgo.install = [{ text: "Correcta", value:'TRUE'},{text: "Incorrecta", value:'FALSE'}];
   createRiesgo.insp_install = {resp: 'TRUE' };
+
+  createRiesgo.ver= function(id) {
+    console.log('createRiesgo.insp_recomendacion.rgeo');
+    console.log(id);
+  }
+
+
 
   createRiesgo.guardarinspeccion = function() {
 
@@ -228,6 +237,9 @@ function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicMod
     inspeccion.OperacionesUid=createRiesgo.operaciones;
     inspeccion.RegistroUid=createRiesgo.responsable;
 
+    inspeccion.RocaId = createRiesgo.tipo_roca;
+    iunspeccion.SostenimientoId = createRiesgo.tipo_sostenimiento;
+
     console.log(inspeccion);
 
     inspeccion.$save(function() {
@@ -256,8 +268,6 @@ function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicMod
 
   createRiesgo.closeTablaSostenimiento = function() {
     createRiesgo.modal.hide();
-    createRiesgo.mfr = createRiesgo.tipo_roca;
-    createRiesgo.result = createRiesgo.tipo_sostenimiento;
   }
 
 }])

@@ -141,13 +141,13 @@
 				</div>
 	    	<div class="col col-20">
 		    	<label class="item item-input">
-						<select disabled ng-model="createRiesgo.mfr" ng-options="roca.id as roca.codigo for roca in createRiesgo.rocas">
+						<select disabled ng-model="createRiesgo.tipo_roca" ng-options="roca.rocaid as roca.codigo for roca in createRiesgo.rocas">
 						</select>
 		    	</label>
 	    	</div>
 	    	<div class="col ">
 		    	<label class="item item-input">
-						<select disabled ng-model="createRiesgo.result"
+						<select disabled ng-model="createRiesgo.tipo_sostenimiento"
 						ng-options="sost.sostenimientoid as sost.descripcion for sost in createRiesgo.sostenimientos">
 
 						</select>
@@ -173,7 +173,8 @@
 
 			<ion-radio ng-repeat="item in createRiesgo.opcionlabor"
 				    ng-value="item.value"
-				    ng-model="createRiesgo.inps_OL.sostenimiento" name="group_opcionlabor">
+				    ng-model="createRiesgo.inps_OL.sostenimiento"
+				    name="group_opcionlabor">
 				          {{ item.text }}
 			</ion-radio>
 		</div>
@@ -182,9 +183,12 @@
 		   	<div class="item item-divider">Recomendacion Geomecanica</div>
 		   		<ion-radio ng-repeat="item in createRiesgo.geomecanica"
 				    ng-value="item.value"
+				    ng-checked="createRiesgo.ver(createRiesgo.insp_recomendacion.rgeo)"
 				    ng-model="createRiesgo.insp_recomendacion.rgeo" name="group_recomendacion">
 				          {{ item.text }}
 				</ion-radio>
+
+				{{}}
 		</div>
 
 		<div class="list card">
@@ -342,6 +346,37 @@
 		</div>
 	</div>
 
+
+  <multi-select-date name="birthdate" ng-model="user.birthdate" year-order="desc" start-year="1980" end-year="2000" required></multi-select-date>
+
+
+  <script type="text/ng-template" id="multiSelectDate">
+  <div class="row">
+
+    <div class="col-xs-3">
+      Month
+      <select ng-model="date.month" ng-options="month for month in selects.months()" class="form-control">
+        <option value="" disabled>--</option>
+      </select>
+    </div>
+
+    <div class="col-xs-3">
+      Day
+      <select ng-model="date.day" ng-options="day for day in selects.days()" class="form-control">
+        <option value="" disabled>--</option>
+      </select>
+    </div>
+
+    <div class="col-xs-6">
+      Year
+      <select ng-model="date.year" ng-options="year for year in selects.years() | orderBy: year:yearOrder" class="form-control">
+        <option value="" disabled>----</option>
+      </select>
+    </div>
+
+  </div>
+  </script>
+
   </ion-content>
 </ion-view>
 
@@ -349,16 +384,14 @@
 
 <script id="popupSostenimiento.html" type="text/ng-template">
   <div class="modal">
-    <ion-header-bar class="bar bar-header bar-positive">
-      <h1 class="title">Tabla de sostenimiento</h1>
-    </ion-header-bar>
     <ion-content>
-      <tb-sostenimiento sostenimientos="createRiesgo.sostenimientos"
+			<canvas id="canvas" width="800" height="600" tb-sostenimiento
+			sostenimientos="createRiesgo.sostenimientos"
       rocas="createRiesgo.rocas"
       tiporoca="createRiesgo.tipo_roca"
-      tiposostenimiento="createRiesgo.tipo_sostenimiento"></tb-sostenimiento>
-			<div class="spacer" style="height: 20px"></div>
-			<button type="button" ng-click="createRiesgo.closeTablaSostenimiento()">Aceptar</button>
+      tiposostenimiento="createRiesgo.tipo_sostenimiento">
+
+			</canvas>
     </ion-content>
   </div>
 </script>
