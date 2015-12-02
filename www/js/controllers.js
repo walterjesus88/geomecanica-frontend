@@ -216,10 +216,16 @@ function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicMod
   createRiesgo.insp_install = {resp: 'TRUE' };
 
   createRiesgo.validate= function(item) {
-       console.log(item);
+    createRiesgo.nivelRiesgo='CRITICO';
+    console.log(createRiesgo.nivelRiesgo);
+    // if(item.preguntaid==8)s
+    // {
+    //   createRiesgo.nivelRiesgo='CRITICO';
+    //   console.log(createRiesgo.nivelRiesgo);
+    // }
   }
 
-  $scope.$watch(createRiesgo.ver);
+  //$scope.$watch(createRiesgo.validate);
 
 
   createRiesgo.guardarinspeccion = function() {
@@ -242,23 +248,18 @@ function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicMod
     //console.log(createRiesgo.insp_empresa.empresa);
 
     var inspeccion = new Inspeccion();
-
-    //console.log(createRiesgo.responsable);
-
     inspeccion.periodo = createRiesgo.insp_guard.guardia;
     inspeccion.recomendacion = createRiesgo.insp_recomendacion.rgeo;
     inspeccion.instalacion = createRiesgo.insp_install.resp;
     inspeccion.tipo = createRiesgo.insp_tlabor.tipolabor;
     inspeccion.comentario = createRiesgo.comment;
     inspeccion.ancho_real = createRiesgo.ancho_real;
-    //createRiesgo.ancho_exc_tabla;
     inspeccion.alto_real= createRiesgo.alto_real;
     inspeccion.empresaEmpresaid= createRiesgo.insp_empresa.empresa;
     inspeccion.fecha= fecha;
     inspeccion.laborCodigo=createRiesgo.labor.codigo;
     inspeccion.recomendacion=createRiesgo.insp_recomendacion.rgeo;
     inspeccion.estado=createRiesgo.inps_OL.sostenimiento;
-
     inspeccion.ResponsableUid=createRiesgo.responsable;
     inspeccion.SeguridadUid=createRiesgo.seguridad;
     inspeccion.GeomecanicoUid=createRiesgo.geomecanico;
