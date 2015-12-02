@@ -1,8 +1,5 @@
 angular.module('app.directives', [])
 
-.directive('blankDirective', [function(){
-
-}])
 
 // .directive('multiSelectDate', [function($filter) {
 // 	return {
