@@ -166,10 +166,6 @@ function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicMod
 
   createRiesgo.calcular = function()
   { 
-    //console.log(createRiesgo.insp_install.resp);
-    //createRiesgo.inps_OL.sostenimiento
-    //createRiesgo.insp_recomendacion.rgeo
-
     if(createRiesgo.inps_OL.sostenimiento=='FALSE' )
     {
       resultado='CRITICO';  
@@ -219,8 +215,8 @@ function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicMod
   createRiesgo.install = [{ text: "Correcta", value:'TRUE'},{text: "Incorrecta", value:'FALSE'}];
   createRiesgo.insp_install = {resp: 'TRUE' };
 
-  createRiesgo.ver= function(id) {
-       console.log(id);
+  createRiesgo.validate= function(item) {
+       console.log(item);
   }
 
   $scope.$watch(createRiesgo.ver);
