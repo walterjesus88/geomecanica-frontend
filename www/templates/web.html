@@ -173,12 +173,9 @@
 
 			<ion-radio ng-repeat="item in createRiesgo.opcionlabor"
 				    ng-value="item.value"
-<<<<<<< HEAD
+
 				    ng-checked="createRiesgo.calcular()"
 				    ng-model="createRiesgo.inps_OL.sostenimiento" 
-=======
-				    ng-model="createRiesgo.inps_OL.sostenimiento"
->>>>>>> fce5930ad96d790d6d9a3590b0baa03a437a3ff6
 				    name="group_opcionlabor">
 				          {{ item.text }}
 			</ion-radio>
@@ -188,11 +185,8 @@
 		   	<div class="item item-divider">Recomendacion Geomecanica</div>
 		   		<ion-radio ng-repeat="item in createRiesgo.geomecanica"
 				    ng-value="item.value"
-<<<<<<< HEAD
-				    ng-checked="createRiesgo.calcular()"
-=======
 
->>>>>>> fce5930ad96d790d6d9a3590b0baa03a437a3ff6
+				    ng-checked="createRiesgo.calcular()"
 				    ng-model="createRiesgo.insp_recomendacion.rgeo" name="group_recomendacion">
 				          {{ item.text }}
 				</ion-radio>
@@ -209,16 +203,8 @@
 				          {{ item.text }}
 				</ion-radio>
 		</div>
-<<<<<<< HEAD
-	
-=======
 
-		<input ng-model="createRiesgo.first">
-        <select ng-model="createRiesgo.operators.value" ng-options="v for v in createRiesgo.operators.values"></select>
-		<input ng-model="createRiesgo.second">
 
-		<div>Resultado: {{createRiesgo.resultado | currency}}</div>
->>>>>>> fce5930ad96d790d6d9a3590b0baa03a437a3ff6
 
 	</div>
 </div>
@@ -253,12 +239,11 @@
 				<div class="item item-divider">Nivel de Riesgo</div>
 			    <div class="item item-body">
 			       	<div>
-<<<<<<< HEAD
+
 			           	<input type="text" ng-model="createRiesgo.nivelRiesgo"> 
 					<div>Resultado: {{createRiesgo.nivelRiesgo}}</div>
-=======
-			           	<input type="text" ng-model="createRiesgo.nivelRiesgo">
->>>>>>> fce5930ad96d790d6d9a3590b0baa03a437a3ff6
+
+
 			    	</div>
 			    </div>
 			</div>
@@ -291,12 +276,12 @@
 	        	    -->
 			    <ion-list>
 				    <ion-toggle  ng-repeat="item in createRiesgo.preguntasList | orderBy:'preguntaid' "  ng-if="item.posicion==1"  ng-checked="createRiesgo.ver(item.checked)"  ng-model="item.checked" > 
-=======
+
 				</ion-list>
 
 			    <ion-list>
 				    <ion-toggle  ng-repeat="item in createRiesgo.preguntasList | orderBy:'preguntaid' "  ng-if="item.posicion==1"  ng-model="item.checked"  ng-checked="item.checked" >
->>>>>>> fce5930ad96d790d6d9a3590b0baa03a437a3ff6
+
 			        	{{item.preguntaid}}-{{ item.descripcion }}-{{ item.posicion }}
 			        </ion-toggle>
 			    </ion-list>
@@ -335,9 +320,9 @@
 			</div>
 <<<<<<< HEAD
 		</div> -->	
-=======
+
 		</div>
->>>>>>> fce5930ad96d790d6d9a3590b0baa03a437a3ff6
+
 	</div>
 
 	<div class="row">
