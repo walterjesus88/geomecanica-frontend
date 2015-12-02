@@ -1,7 +1,7 @@
 <ion-view view-title="Account">
 
 <ion-content>
-<div class="row"> 
+<div class="row">
 	<div class="col col-20">
 		<div class="list card">
 			<div class="item item-divider">Fecha</div>
@@ -9,50 +9,50 @@
 				<div class="col ">
 				    <ionic-datepicker input-obj="datepickerObject" ng-model="createRiesgo.datepickerObject.inputDate">
 				      <button class="button button-block button-positive"> {{createRiesgo.datepickerObject.inputDate | date:'dd - MMMM - yyyy'}}</button>
-				    </ionic-datepicker> 
+				    </ionic-datepicker>
 				</div>
 			</div>
 		  	<div class="col">
 		  		<div class="list list-inset">
 			     	<!-- <label class="item item-input">
 			            <input type="text" placeholder="Labor" ng-model="createRiesgo.labor">
-			        </label> -->			
+			        </label> -->
 					<label class="item item-input item-select">
 					    <div class="input-label">
-					      	<select class="form-control" ng-model="createRiesgo.labor"         
+					      	<select class="form-control" ng-model="createRiesgo.labor"
          					 ng-options="c.codigo for c in labores ">
-        					</select>					  
+        					</select>
 					    </div>
 					</label>
-	    	
+
 				    <label class="item item-input">
 				        <input type="text" placeholder="Nivel" ng-model="createRiesgo.labor.nivel">
 				    </label>
 		    	</div>
-			</div>		
+			</div>
 		</div>
 		<div class="list card">
-			<div class="item item-divider">Guardia</div>				 
+			<div class="item item-divider">Guardia</div>
 				<ion-radio ng-repeat="item in createRiesgo.guardia"
 			        ng-value="item.value"
 			        ng-model="createRiesgo.insp_guard.guardia" name="group_guardia">
 			          {{ item.text }}
-			    </ion-radio>		
-		
+			    </ion-radio>
+
 		</div>
 		<div class="list card">
-			<div class="item item-divider">Tipo de Labor</div>		
+			<div class="item item-divider">Tipo de Labor</div>
 			<ion-radio ng-repeat="item in createRiesgo.tipolabor"
 			        ng-value="item.value"
 			        ng-model="createRiesgo.insp_tlabor.tipolabor"  name="group_tipolabor">
 			        {{ item.text }}
-			</ion-radio>		
+			</ion-radio>
 		</div>
 
 	</div>
 
     <div class="col col-60">
-		<div class="row">		
+		<div class="row">
 				<ion-radio ng-repeat="item in createRiesgo.empresas"
 				    ng-value="item.empresaid"
 				    ng-model="createRiesgo.insp_empresa.empresa"
@@ -64,7 +64,7 @@
 	    	<div class="col col-10">
 		  		<label class="item item-input item-stacked-label">
 			    	<span class="input-label">Ancho</span>
-			    
+
 			  	</label>
 		  	</div>
 	  		<div class="col">
@@ -97,14 +97,14 @@
 	  		<div class="col col-10">
 				<div class="list">
 					<label class="item item-input">
-				    <span class="input-label">Alto</span>				  
+				    <span class="input-label">Alto</span>
 				  	</label>
 				</div>
 	  		</div>
 	  		<div class="col">
 				<div class="list">
 					<label class="item item-input">
-				
+
 				    <input type="text" ng-model="createRiesgo.labor.alto_pro">
 				  	</label>
 				</div>
@@ -112,7 +112,7 @@
 	  		<div class="col">
 				<div class="list">
 					<label class="item item-input">
-			
+
 				    <input type="text" ng-model="createRiesgo.alto_real">
 				  	</label>
 				</div>
@@ -120,7 +120,7 @@
 	  		<div class="col">
 				<div class="list">
 					<label class="item item-input">
-				    
+
 				    <input type="text" ng-model="createRiesgo.alto_exc_tabla">
 				  	</label>
 				</div>
@@ -128,7 +128,7 @@
 	  		<div class="col">
 				<div class="list">
 					<label class="item item-input">
-				   
+
 				    <input type="text" ng-model="createRiesgo.alto_exc_real">
 				  	</label>
 				</div>
@@ -136,13 +136,21 @@
 	  	</div>
 
 	  	<div class="row">
+				<div class="col col-10">
+					<button class="button" ng-click="createRiesgo.openTablaSostenimiento()">TR</button>
+				</div>
 	    	<div class="col col-20">
 		    	<label class="item item-input">
-		    		<input type="text" ng-model="createRiesgo.mfr" placeholder="tipo mfr">
+						<select disabled ng-model="createRiesgo.tipo_roca" ng-options="roca.rocaid as roca.codigo for roca in createRiesgo.rocas">
+						</select>
 		    	</label>
 	    	</div>
 	    	<div class="col ">
 		    	<label class="item item-input">
+						<select disabled ng-model="createRiesgo.tipo_sostenimiento"
+						ng-options="sost.sostenimientoid as sost.descripcion for sost in createRiesgo.sostenimientos">
+
+						</select>
 		    		<input type="text" ng-model="createRiesgo.result" placeholder="tipo result">
 		    	</label>
 	    	</div>
@@ -155,9 +163,9 @@
 	    			<textarea name="comment" id="comment-textarea"  ng-model="createRiesgo.comment">
 					</textarea>
 	  			</label>
-	    	</div>	   
-	    </div>	    
-   
+	    	</div>
+	    </div>
+
     </div>
 
     <div class="col col-20">
@@ -165,18 +173,26 @@
 
 			<ion-radio ng-repeat="item in createRiesgo.opcionlabor"
 				    ng-value="item.value"
+<<<<<<< HEAD
 				    ng-checked="createRiesgo.calcular()"
 				    ng-model="createRiesgo.inps_OL.sostenimiento" 
+=======
+				    ng-model="createRiesgo.inps_OL.sostenimiento"
+>>>>>>> fce5930ad96d790d6d9a3590b0baa03a437a3ff6
 				    name="group_opcionlabor">
 				          {{ item.text }}
-			</ion-radio>	
+			</ion-radio>
 		</div>
 
-		<div class="list card">	
-		   	<div class="item item-divider">Recomendacion Geomecanica</div>					
+		<div class="list card">
+		   	<div class="item item-divider">Recomendacion Geomecanica</div>
 		   		<ion-radio ng-repeat="item in createRiesgo.geomecanica"
 				    ng-value="item.value"
+<<<<<<< HEAD
 				    ng-checked="createRiesgo.calcular()"
+=======
+
+>>>>>>> fce5930ad96d790d6d9a3590b0baa03a437a3ff6
 				    ng-model="createRiesgo.insp_recomendacion.rgeo" name="group_recomendacion">
 				          {{ item.text }}
 				</ion-radio>
@@ -184,87 +200,107 @@
 				{{}}
 		</div>
 
-		<div class="list card">	
+		<div class="list card">
 		   	<div class="item item-divider">Instalacion</div>
 		   		<ion-radio ng-repeat="item in createRiesgo.install"
 				    ng-value="item.value"
 				    ng-checked="createRiesgo.calcular()"
 				    ng-model="createRiesgo.insp_install.resp" name="group_inst">
 				          {{ item.text }}
-				</ion-radio>		
+				</ion-radio>
 		</div>
+<<<<<<< HEAD
 	
+=======
+
+		<input ng-model="createRiesgo.first">
+        <select ng-model="createRiesgo.operators.value" ng-options="v for v in createRiesgo.operators.values"></select>
+		<input ng-model="createRiesgo.second">
+
+		<div>Resultado: {{createRiesgo.resultado | currency}}</div>
+>>>>>>> fce5930ad96d790d6d9a3590b0baa03a437a3ff6
 
 	</div>
 </div>
 
 <div class="row">
 			<div class="col">
-			    <div class="item item-divider">Responsable de:</div>        
-				<div class="item item-body">        
-			        <input type="text" ng-model="createRiesgo.responsable">       
+			    <div class="item item-divider">Responsable de:</div>
+				<div class="item item-body">
+			        <input type="text" ng-model="createRiesgo.responsable">
 			    </div>
-							 
+
 			</div>
 			<div class="col">
 			    <div class="item item-divider">Seguridad </div>
-			    <div class="item item-body">        
-			        <input type="text" ng-model="createRiesgo.seguridad">       
+			    <div class="item item-body">
+			        <input type="text" ng-model="createRiesgo.seguridad">
 			    </div>
 			</div>
 			<div class="col">
 			    <div class="item item-divider">Geomecanico</div>
-			    <div class="item item-body">        
-			        <input type="text" ng-model="createRiesgo.geomecanico">       
+			    <div class="item item-body">
+			        <input type="text" ng-model="createRiesgo.geomecanico">
 			    </div>
 			</div>
 			<div class="col">
 			    <div class="item item-divider">Operaciones</div>
-			    <div class="item item-body">        
-			        <input type="text" ng-model="createRiesgo.operaciones">       
+			    <div class="item item-body">
+			        <input type="text" ng-model="createRiesgo.operaciones">
 			    </div>
 			</div>
-			<div class="col">			
+			<div class="col">
 				<div class="item item-divider">Nivel de Riesgo</div>
 			    <div class="item item-body">
 			       	<div>
+<<<<<<< HEAD
 			           	<input type="text" ng-model="createRiesgo.nivelRiesgo"> 
 					<div>Resultado: {{createRiesgo.nivelRiesgo}}</div>
+=======
+			           	<input type="text" ng-model="createRiesgo.nivelRiesgo">
+>>>>>>> fce5930ad96d790d6d9a3590b0baa03a437a3ff6
 			    	</div>
-			    </div>			    
-			</div>	
+			    </div>
+			</div>
 
 			<!-- <div >
-				<ion-select label="Placa do Veículo" label-field="nmPlaca" provider="veiculos"  ng-model="veiculo"/>			
+				<ion-select label="Placa do Veículo" label-field="nmPlaca" provider="veiculos"  ng-model="veiculo"/>
 			</div> -->
 
 		<!-- 	<div >
-				<ion-select label="Labores" label-field="nombre" provider="labor"  ng-model="labor"/>			
+				<ion-select label="Labores" label-field="nombre" provider="labor"  ng-model="labor"/>
 			</div> -->
-		</div>    	
+		</div>
 
   	<div class="row">
-		<div class="col "> 
+		<div class="col ">
 			<div >
 		<!-- 		<ion-list>
 				  	<ion-item ng-repeat="item in createRiesgo.preguntasList | orderBy:'preguntaid' " ng-if="item.preguntaid==1">
 				        <label class="item item-input item-select" >
 							<div class="input-label">
-								{{item.preguntaid}}-{{ item.descripcion }}-{{ item.posicion }}	 
+								{{item.preguntaid}}-{{ item.descripcion }}-{{ item.posicion }}
 							</div>
-						  	<select class="form-control" ng-model="createRiesgo.labor"         
+						  	<select class="form-control" ng-model="createRiesgo.labor"
 	         					 ng-options="c.codigo for c in labores ">
-	        				</select>					  
+	        				</select>
 						</label>
 			  		</ion-item>
+<<<<<<< HEAD
 				</ion-list>  
 	        	    -->
 			    <ion-list>
 				    <ion-toggle  ng-repeat="item in createRiesgo.preguntasList | orderBy:'preguntaid' "  ng-if="item.posicion==1"  ng-checked="createRiesgo.ver(item.checked)"  ng-model="item.checked" > 
+=======
+				</ion-list>
+
+			    <ion-list>
+				    <ion-toggle  ng-repeat="item in createRiesgo.preguntasList | orderBy:'preguntaid' "  ng-if="item.posicion==1"  ng-model="item.checked"  ng-checked="item.checked" >
+>>>>>>> fce5930ad96d790d6d9a3590b0baa03a437a3ff6
 			        	{{item.preguntaid}}-{{ item.descripcion }}-{{ item.posicion }}
-			        </ion-toggle>        
+			        </ion-toggle>
 			    </ion-list>
-			</div>	   
+			</div>
 		</div>
 
 		<!-- <div class="col" >
@@ -277,35 +313,42 @@
 				        <label class="item item-input">
 							<input type="text" placeholder="Hastial Izquierdo">
 							<input type="text" placeholder="Hastial Derecho">
-						</label>					  				    
+						</label>
 				  </ion-item>
-				</ion-list> 
+				</ion-list>
 
 			    <ion-list>
+<<<<<<< HEAD
 				    <ion-toggle ng-repeat="item in createRiesgo.preguntasList | orderBy:'preguntaid' " ng-if="item.posicion==2" ng-model="item.checked"  ng-checked="createRiesgo.ver(item.checked)" > 
+=======
+				    <ion-toggle ng-repeat="item in createRiesgo.preguntasList | orderBy:'preguntaid' " ng-if="item.posicion==2" ng-model="item.checked"  ng-checked="item.checked" >
+>>>>>>> fce5930ad96d790d6d9a3590b0baa03a437a3ff6
 			        	{{item.preguntaid}}-{{ item.descripcion }}-{{ item.posicion }}
-			        </ion-toggle>        
+			        </ion-toggle>
 			    </ion-list>
-			    <ion-list>				
-				  	<ion-item ng-repeat="item in createRiesgo.preguntasList  " ng-if="item.preguntaid==16">			
-			        {{item.preguntaid}}-{{ item.descripcion }}-{{ item.posicion }}	          		
-					<input type="radio" ng-model="createRiesgo.name" value="red">					
+			    <ion-list>
+				  	<ion-item ng-repeat="item in createRiesgo.preguntasList  " ng-if="item.preguntaid==16">
+			        {{item.preguntaid}}-{{ item.descripcion }}-{{ item.posicion }}
+					<input type="radio" ng-model="createRiesgo.name" value="red">
 	        	  	</ion-item>
-				</ion-list>   	   
+				</ion-list>
 			</div>
+<<<<<<< HEAD
 		</div> -->	
+=======
+		</div>
+>>>>>>> fce5930ad96d790d6d9a3590b0baa03a437a3ff6
 	</div>
 
-
 	<div class="row">
-		<div class="col " ng-repeat="item in preguntasList">  
+		<div class="col " ng-repeat="item in preguntasList">
 			<ul class="list">
 				<li class="item item-checkbox">
 				    <label class="checkbox">
-        				<input type="checkbox" ng-click="clickItem(item); $event.stopPropagation();" ng-model="item.checked">				       
+        				<input type="checkbox" ng-click="clickItem(item); $event.stopPropagation();" ng-model="item.checked">
 				    </label>
 				    {{ item.text }}
-				</li> 
+				</li>
 			</ul>
 		</div>
 	</div>
@@ -324,30 +367,46 @@
 
   <script type="text/ng-template" id="multiSelectDate">
 	  // <div class="row">
-	    
+
 	  //   <div class="col-xs-3">
 	  //     Month
 	  //     <select ng-model="date.month" ng-options="month for month in selects.months()" class="form-control">
 	  //       <option value="" disabled>--</option>
 	  //     </select>
 	  //   </div>
-	    
+
 	  //   <div class="col-xs-3">
 	  //     Day
 	  //     <select ng-model="date.day" ng-options="day for day in selects.days()" class="form-control">
 	  //       <option value="" disabled>--</option>
 	  //     </select>
 	  //   </div>
-	    
+
 	  //   <div class="col-xs-6">
 	  //     Year
 	  //     <select ng-model="date.year" ng-options="year for year in selects.years() | orderBy: year:yearOrder" class="form-control">
 	  //       <option value="" disabled>----</option>
 	  //     </select>
 	  //   </div>
-	      
+
 	  // </div>
   </script>
 
   </ion-content>
 </ion-view>
+
+
+
+<script id="popupSostenimiento.html" type="text/ng-template">
+  <div class="modal">
+    <ion-content>
+			<canvas id="canvas" width="800" height="600" tb-sostenimiento
+			sostenimientos="createRiesgo.sostenimientos"
+      rocas="createRiesgo.rocas"
+      tiporoca="createRiesgo.tipo_roca"
+      tiposostenimiento="createRiesgo.tipo_sostenimiento">
+
+			</canvas>
+    </ion-content>
+  </div>
+</script>
