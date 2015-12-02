@@ -158,7 +158,55 @@ function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicMod
 
 
 
-  // createRiesgo.empresa = [{ text: "MILPO", value:'1'},{text: "E1", value:'2'},{text: "E2", value:'3'}];
+
+  // createRiesgo.items = [1,2,3,4,5];
+
+  // createRiesgo.changeItems = function(){
+  //   createRiesgo.items = [6,7,8,9,10];   
+  // }
+
+  // $scope.$watch("items", function(newValue, oldValue){
+  //   if(newValue != oldValue){
+  //     $scope.message = "Items changed !!";
+  //     console.log('mierda');
+  //   }
+  // });
+
+
+  createRiesgo.operators = 
+  {   
+    "value": "suma", 
+    "values": ["suma", "resta", "mutliplicacion", "division"] 
+  };
+
+  createRiesgo.calcular = function()
+  { 
+    //console.log(createRiesgo.insp_install.resp);
+
+    createRiesgo.resultado=createRiesgo.first;    
+    console.log(createRiesgo.resultado);
+    console.log(createRiesgo.operators.value);
+
+    // switch(createRiesgo.operators.value)
+    // { 
+    //   case "suma":
+    //       console.log('suma');
+    //       createRiesgo.resultado = parseInt(createRiesgo.first) + parseInt(createRiesgo.second);
+    //     break;
+    //   case "resta":
+    //       createRiesgo.resultado = parseInt(createRiesgo.first) - parseInt(createRiesgo.second);
+    //     break;
+    //   case "mutliplicacion":
+    //       console.log('mutliplicacion');      
+    //       createRiesgo.resultado = parseInt(createRiesgo.first) * parseInt(createRiesgo.second);
+    //     break;
+    //   case "division":
+    //       createRiesgo.resultado = parseInt(createRiesgo.first) / parseInt(createRiesgo.second);
+    //     break;      
+    // }    
+  }
+
+   $scope.$watch(createRiesgo.calcular);
 
   // var items = angular.fromJson($scope.labores);
   // angular.forEach(items, function(item) {
@@ -187,10 +235,10 @@ function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicMod
   createRiesgo.install = [{ text: "Correcta", value:'TRUE'},{text: "Incorrecta", value:'FALSE'}];
   createRiesgo.insp_install = {resp: 'TRUE' };
 
-  createRiesgo.ver= function(id) {
-    console.log('createRiesgo.insp_recomendacion.rgeo');
-    console.log(id);
-  }
+  //createRiesgo.ver= function(id) {
+    //console.log('createRiesgo.insp_recomendacion.rgeo');
+    //console.log(id);
+  //}
 
 
 
