@@ -170,41 +170,34 @@
 
     <div class="col col-20">
 		<div class="list card">
-
-			<ion-radio ng-repeat="item in createRiesgo.opcionlabor"
+			<ion-radio ng-disabled="createRiesgo.slark==='C'" ng-repeat="item in createRiesgo.opcionlabor"
 				    ng-value="item.value"
-
-				    ng-checked="createRiesgo.calcular()"
+				    ng-change="createRiesgo.calculariesgo(item)"
 				    ng-model="createRiesgo.inps_OL.sostenimiento" 
 				    name="group_opcionlabor">
 				          {{ item.text }}
 			</ion-radio>
 		</div>
 
-		<div class="list card">
-		   	<div class="item item-divider">Recomendacion Geomecanica</div>
-		   		<ion-radio ng-repeat="item in createRiesgo.geomecanica"
+		<div class="list card" >
+		   	<div class="item item-divider" ng-class="{'pending-delete': createRiesgo.slark==='C'}">Recomendacion Geomecanica</div>
+		   		<ion-radio  ng-disabled="createRiesgo.slark==='C'" ng-repeat="item in createRiesgo.geomecanica"
 				    ng-value="item.value"
-
-				    ng-checked="createRiesgo.calcular()"
+				    ng-change="createRiesgo.calculariesgo(item)"
 				    ng-model="createRiesgo.insp_recomendacion.rgeo" name="group_recomendacion">
 				          {{ item.text }}
 				</ion-radio>
-
-				{{}}
 		</div>
 
 		<div class="list card">
 		   	<div class="item item-divider">Instalacion</div>
-		   		<ion-radio ng-repeat="item in createRiesgo.install"
+		   		<ion-radio ng-disabled="createRiesgo.slark==='C'" ng-repeat="item in createRiesgo.install"
 				    ng-value="item.value"
-				    ng-checked="createRiesgo.calcular()"
+				    ng-change="createRiesgo.calculariesgo(item)"
 				    ng-model="createRiesgo.insp_install.resp" name="group_inst">
 				          {{ item.text }}
 				</ion-radio>
 		</div>
-
-
 
 	</div>
 </div>
@@ -240,7 +233,7 @@
 			    <div class="item item-body">
 			       	<div>
 			           	<input type="text" ng-model="createRiesgo.nivelRiesgo"> 
-						<div>Resultado: {{createRiesgo.nivelRiesgo}}</div>
+						<div >Resultado: {{createRiesgo.nivelRiesgo}}</div>		
 			    	</div>
 			    </div>
 			</div>
@@ -271,12 +264,13 @@
 				</ion-list>  
 	        	    -->		
 			    <ion-list>
-				    <ion-toggle  ng-repeat="item in createRiesgo.preguntasList | orderBy:'preguntaid' "  ng-if="item.posicion==1"  ng-model="item.checked"  ng-checked="item.checked"  ng-change="createRiesgo.validate(item)" >
-			        	{{item.preguntaid}}-{{ item.descripcion }}-{{ item.posicion }}
+				    <ion-toggle  ng-repeat="preg in createRiesgo.preguntasList | orderBy:'preguntaid' "  ng-if="preg.posicion==1"  ng-model="preg.checked"  ng-checked="preg.checked"  ng-change="createRiesgo.calculariesgo(preg)" >
+			        	{{preg.preguntaid}}-{{ preg.descripcion }}-{{ preg.posicion }}
 			        </ion-toggle>
 			    </ion-list>
 			</div>
 		</div>
+
 
 		<!-- <div class="col" >
 			<div >
@@ -311,7 +305,7 @@
 
 	</div>
 
-	<div class="row">
+<!-- 	<div class="row">
 		<div class="col " ng-repeat="item in preguntasList">
 			<ul class="list">
 				<li class="item item-checkbox">
@@ -322,7 +316,7 @@
 				</li>
 			</ul>
 		</div>
-	</div>
+	</div> -->
 
 	<div class="row">
     	<div class="col col-20">
@@ -331,6 +325,10 @@
 			</button>
 		</div>
 	</div>
+
+	<div>
+	</div>
+
 
 
   <!-- <multi-select-date name="birthdate" ng-model="user.birthdate" year-order="desc" start-year="1980" end-year="2050" required>aqujjjjjjjjjjjjjjjjjjjjjjjjjjjji</multi-select-date> -->
@@ -381,3 +379,7 @@
     </ion-content>
   </div>
 </script>
+
+<style type="text/css">
+.ng-delete { background-color: pink }
+</style>
