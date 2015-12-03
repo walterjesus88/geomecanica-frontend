@@ -31,6 +31,7 @@
 			    {{ item.text }}
 			</ion-radio>
 		</div>
+
 		<div class="list card stable-bg">
 	
 			<div class="item item-divider">Tipo de Labor</div>
@@ -40,16 +41,15 @@
 			    {{ item.text }}
 			</ion-radio>
 		</div>
-
 	</div>
 
     <div class="col col-60">
-		<div class="list card stable-bg">							
+		<div class="list card stable-bg">
 			<div class="row">
 				<ion-radio ng-repeat="item in createRiesgo.empresas"
 				    ng-value="item.empresaid"
 				    ng-model="createRiesgo.insp_empresa.empresa"
-				    name="group_empresa">				
+				    name="group_empresa">
 				          {{ item.nombre }}
 				</ion-radio>
 			</div>
@@ -77,7 +77,7 @@
 			   	<div class="col">
 			  		<label class="item item-input item-stacked-label">
 				    	<span class="input-label">% Sobre Exc.-Tabla</span>
-				    	<input type="text" ng-model="createRiesgo.ancho_exc_tabla" >
+				    	<input type="text" ng-model="createRiesgo.porcentaje_tabla" >
 				  	</label>
 			  	</div>
 			  	<div class="col">
@@ -115,7 +115,7 @@
 					<div class="list">
 						<label class="item item-input">
 
-					    <input type="text" ng-model="createRiesgo.alto_exc_tabla">
+					    <input type="text" ng-model="createRiesgo.porcentaje_tabla">
 					  	</label>
 					</div>
 		  		</div>
@@ -159,7 +159,7 @@
 		    </div>
 		</div>
 
-		<div class="list card stable-bg">		
+		<div class="list card stable-bg">
 		    <div class="row">
 				<div class="col">
 				    <div class="item item-divider">Responsable de:</div>
@@ -260,7 +260,7 @@
 
 
 <div class="row">
-	
+
 			<div class="col ">
 				<div class="card card-gallery item item-text-wrap">
 					<ion-list>
@@ -275,7 +275,7 @@
 							</label>
 				  		</ion-item>
 					</ion-list>
-		        	   
+
 				    <ion-list>
 					    <ion-toggle  ng-repeat="preg in createRiesgo.preguntasList | orderBy:'preguntaid' "  ng-if="preg.posicion==1"  ng-model="preg.checked"  ng-checked="preg.checked"  ng-change="createRiesgo.calculariesgo(preg)" >
 				        	{{preg.preguntaid}}-{{ preg.descripcion }}-{{ preg.posicion }}
@@ -283,9 +283,9 @@
 				    </ion-list>
 				</div>
 			</div>
-		
 
-	
+
+
 			<div class="col" >
 				<div class="card card-gallery item item-text-wrap">
 				    <ion-list>
@@ -311,7 +311,7 @@
 		        	  	</ion-item>
 					</ion-list>
 				</div>
-			</div>		
+			</div>
 		</div>
 	</div>
 
@@ -377,13 +377,14 @@
 
 
 <script id="popupSostenimiento.html" type="text/ng-template">
-  <div class="modal">
+  <div class="modal" style="height: 620px; top: 5%;">
     <ion-content>
 			<canvas id="canvas" width="800" height="600" tb-sostenimiento
 			sostenimientos="createRiesgo.sostenimientos"
       rocas="createRiesgo.rocas"
       tiporoca="createRiesgo.tipo_roca"
       tiposostenimiento="createRiesgo.tipo_sostenimiento"
+			porcentaje="createRiesgo.porcentaje_tabla"
 			close="createRiesgo.closeTablaSostenimiento()">
 			Utilice un navegador que soporte canvas para visualizar la tabla de sostenimiento.
 			</canvas>
