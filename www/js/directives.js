@@ -4,6 +4,7 @@ angular.module('app.directives', [])
 
 }])
 
+
 // .directive('multiSelectDate', [function($filter) {
 // 	return {
 // 		restrict:'E',
@@ -176,7 +177,7 @@ angular.module('app.directives', [])
 
 
 //directiva para las tablas de sostenimiento
-.directive('tbSostenimiento', ['Roca', 'Sostenimiento', function(Roca, Sostenimiento) {
+.directive('tbSostenimiento', ['Roca', 'Sostenimiento', '$q', function(Roca, Sostenimiento,$q) {
 
 	return {
 		restric: 'A',
@@ -184,7 +185,8 @@ angular.module('app.directives', [])
 			sostenimientos: '=',
 			rocas: '=',
 			tiporoca: '=',
-			tiposostenimiento: '='
+			tiposostenimiento: '=',
+			close: '&'
 		},
 		link: function($scope, element) {
 
@@ -202,8 +204,11 @@ angular.module('app.directives', [])
 
 				var ctx = element[0].getContext('2d');
 
+				dibujarContenedor(ctx);
 				dibujarAreas(ctx, colores);
 				dibujarLineas(ctx);
+				dibujarSostenimientos(ctx);
+				dibujarRocas(ctx);
 
 			});
 
@@ -211,6 +216,8 @@ angular.module('app.directives', [])
 				var ejex = event.offsetX;
 				var ejey = event.offsetY;
 				var ctx = element[0].getContext('2d');
+				var defered = $q.defer();
+				var defered1 = $q.defer();
 				if (ejex >= 450 && ejex <= 650 && ejey >= 250 && ejey <= 520) {
 					//verificar en que cuadradito se hizo click
 					var cuadro = getCuadro(ctx, ejex, ejey);
@@ -218,6 +225,7 @@ angular.module('app.directives', [])
 						rocas.forEach(function(roca) {
 							if (roca.codigo === cuadro) {
 								$scope.tiporoca = roca.rocaid;
+								defered.resolve();
 							}
 						});
 					});
@@ -227,11 +235,16 @@ angular.module('app.directives', [])
 						sostenimientos.forEach(function(sost) {
 							if (sost.color === color) {
 								$scope.tiposostenimiento = sost.sostenimientoid;
+								defered1.resolve();
 							}
 						});
 					});
 				}
-
+				defered.promise.then(function() {
+					defered1.promise.then(function() {
+						$scope.close();
+					});
+				});
 			});
 
 			function getCuadro(ctx, x, y) {
@@ -278,6 +291,165 @@ angular.module('app.directives', [])
 				}
 				if (canales[0] === 255 && canales[1] === 0 && canales[2] === 0) {
 					return 'RED';
+				}
+			}
+
+			function dibujarSostenimientos(ctx) {
+				$scope.sostenimientos.$promise.then(function(sostenimientos) {
+					var i = 40;
+					sostenimientos.forEach(function(item) {
+						ctx.fillStyle = item.color;
+						ctx.fillRect(210, i, 25, 20);
+						ctx.strokeStyle = '#000';
+						ctx.strokeRect(210, i, 25, 20);
+						ctx.fillStyle = '#000';
+						ctx.font = "bold 16px Arial";
+						ctx.fillText(item.codigo, 217, i + 15);
+						ctx.font = "8px Arial";
+						dibujarTextoNormal(ctx, item.descripcion, 240, i + 5, 40);
+						ctx.fillText(item.tiempo_colocacion, 240, i + 25);
+						i = i + 34;
+					});
+				});
+			}
+
+			function dibujarRocas(ctx) {
+				$scope.rocas.$promise.then(function(rocas) {
+					var cf = 0;
+					var cmf = 0;
+					var cif = 0;
+					var cb = 0;
+					var cr = 0;
+					var cp = 0;
+					var cmp = 0;
+					rocas.forEach(function(item) {
+						var x = 0;
+						var y = 0;
+						var c = 0;
+						ctx.font = "bold 14px Arial";
+						if (item.codigo.length === 5) {
+							c = 5;
+						} else if (item.codigo.length === 4) {
+							c = 3;
+						} else if (item.codigo.length === 3) {
+							c = -3;
+						}
+						if (item.Estructura.codigo === 'F') {
+							y = 300;
+						}
+						if (item.Estructura.codigo === 'MF') {
+							y = 390;
+						}
+						if (item.Estructura.codigo === 'IF') {
+							y = 480;
+						}
+
+						if (item.Superficie.codigo === 'B') {
+							x = 460 - c;
+						}
+						if (item.Superficie.codigo === 'R') {
+							x = 510 - c;
+						}
+						if (item.Superficie.codigo === 'P') {
+							x = 560 - c;
+						}
+						if (item.Superficie.codigo === 'MP') {
+							x = 610 - c;
+						}
+						ctx.fillStyle = '#000';
+						ctx.fillText(item.codigo, x, y);
+						ctx.strokeStyle = '#fff';
+						ctx.strokeText(item.codigo, x, y);
+						console.log(item);
+						ctx.font = "10px Arial";
+						if (item.Estructura.codigo === 'F' && cf === 0) {
+							cf = 1;
+							ctx.fillStyle = 'PURPLE';
+							ctx.fillText(item.Estructura.condicion, 205, y - 30);
+							ctx.fillStyle = '#000';
+							dibujarTextoNormal(ctx, item.Estructura.descripcion, 205, y - 20, 35);
+						} else if (item.Estructura.codigo === 'MF' && cmf === 0) {
+							cmf = 1;
+							ctx.fillStyle = 'PURPLE';
+							ctx.fillText(item.Estructura.condicion, 205, y - 30);
+							ctx.fillStyle = '#000';
+							dibujarTextoNormal(ctx, item.Estructura.descripcion, 205, y - 20, 35);
+						} else if (item.Estructura.codigo === 'IF' && cif === 0) {
+							cif = 1;
+							ctx.fillStyle = 'PURPLE';
+							ctx.fillText(item.Estructura.condicion, 205, y - 30);
+							ctx.fillStyle = '#000';
+							dibujarTextoNormal(ctx, item.Estructura.descripcion, 205, y - 20, 35);
+						}
+
+						if (item.Superficie.codigo === 'B' && cb === 0) {
+							cb = 1;
+							ctx.fillStyle = 'PURPLE';
+							ctx.save();
+							ctx.translate(x + c, 240);
+							ctx.rotate(-0.5*Math.PI);
+							ctx.fillText(item.Superficie.condicion, 0, 0);
+							ctx.restore();
+							ctx.fillStyle = '#000';
+							dibujarTextoVertical(ctx, item.Superficie.descripcion, x + c + 10, 240, 40);
+						} else if (item.Superficie.codigo === 'R' && cr === 0) {
+							cr = 1;
+							ctx.fillStyle = 'PURPLE';
+							ctx.save();
+							ctx.translate(x + c, 240);
+							ctx.rotate(-0.5*Math.PI);
+							ctx.fillText(item.Superficie.condicion, 0, 0);
+							ctx.restore();
+							ctx.fillStyle = '#000';
+							dibujarTextoVertical(ctx, item.Superficie.descripcion, x + c + 10, 240, 40);
+						} else if (item.Superficie.codigo === 'P' && cp === 0) {
+							cp = 1;
+							ctx.fillStyle = 'PURPLE';
+							ctx.save();
+							ctx.translate(x + c, 240);
+							ctx.rotate(-0.5*Math.PI);
+							ctx.fillText(item.Superficie.condicion, 0, 0);
+							ctx.restore();
+							ctx.fillStyle = '#000';
+							dibujarTextoVertical(ctx, item.Superficie.descripcion, x + c + 10, 240, 40);
+						} else if (item.Superficie.codigo === 'MP' && cmp === 0) {
+							cmp = 1;
+							ctx.fillStyle = 'PURPLE';
+							ctx.save();
+							ctx.translate(x + c, 240);
+							ctx.rotate(-0.5*Math.PI);
+							ctx.fillText(item.Superficie.condicion, 0, 0);
+							ctx.restore();
+							ctx.fillStyle = '#000';
+							dibujarTextoVertical(ctx, item.Superficie.descripcion, x + c + 10, 240, 40);
+						}
+					});
+				});
+			}
+
+			function dibujarTextoNormal(ctx, texto, x, y, largo) {
+				var tam = texto.length;
+				while (tam > 0) {
+					imp = texto.slice(0, largo);
+					texto = texto.slice(largo, tam);
+					ctx.fillText(imp, x, y);
+					tam = texto.length;
+					y = y + 10;
+				}
+			}
+
+			function dibujarTextoVertical(ctx, texto, x, y, largo) {
+				var tam = texto.length;
+				while (tam > 0) {
+					imp = texto.slice(0, largo);
+					texto = texto.slice(largo, tam);
+					ctx.save();
+					ctx.translate(x, y);
+					ctx.rotate(-0.5*Math.PI);
+					ctx.fillText(imp, 0, 0);
+					ctx.restore();
+					tam = texto.length;
+					x = x + 10;
 				}
 			}
 
@@ -344,8 +516,6 @@ angular.module('app.directives', [])
 
 			function dibujarLineas(ctx) {
 
-				ctx.strokeRect(200,20,450,500);
-
 				ctx.beginPath();
 
 				ctx.moveTo(200, 250);
@@ -366,6 +536,12 @@ angular.module('app.directives', [])
 
 				ctx.stroke();
 				ctx.closePath();
+			}
+
+			function dibujarContenedor(ctx) {
+				ctx.strokeRect(200, 20, 450, 500);
+				ctx.fillStyle = '#fff';
+				ctx.fillRect(200, 20, 450, 500);
 			}
 		}
 	}

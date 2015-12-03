@@ -1,8 +1,8 @@
-<ion-view view-title="Account">
+<ion-view view-title="Formulario Inspecciones">
 
 <ion-content>
 <div class="row">
-	<div class="col col-20">
+	<div class="col col-15">
 		<div class="list card">
 			<div class="item item-divider">Fecha</div>
 			<div class="col">
@@ -14,12 +14,10 @@
 			</div>
 		  	<div class="col">
 		  		<div class="list list-inset">
-			     	<!-- <label class="item item-input">
-			            <input type="text" placeholder="Labor" ng-model="createRiesgo.labor">
-			        </label> -->
+			    
 					<label class="item item-input item-select">
 					    <div class="input-label">
-					      	<select class="form-control" ng-model="createRiesgo.labor"
+					      	<select class="form-control" ng-model="createRiesgo.labor" ng-change="createRiesgo.cargarTipo()"
          					 ng-options="c.codigo for c in labores ">
         					</select>
 					    </div>
@@ -44,7 +42,7 @@
 			<div class="item item-divider">Tipo de Labor</div>
 			<ion-radio ng-repeat="item in createRiesgo.tipolabor"
 			        ng-value="item.value"
-			        ng-model="createRiesgo.insp_tlabor.tipolabor"  name="group_tipolabor">
+			        ng-model="createRiesgo.labor.tipoTipoId"  name="group_tipolabor">
 			        {{ item.text }}
 			</ion-radio>
 		</div>
@@ -137,7 +135,7 @@
 
 	  	<div class="row">
 				<div class="col col-10">
-					<button class="button" ng-click="createRiesgo.openTablaSostenimiento()">TR</button>
+					<input type="text" ng-model="createRiesgo.labor.tipo.nombre" ng-click="createRiesgo.openTablaSostenimiento()">
 				</div>
 	    	<div class="col col-20">
 		    	<label class="item item-input">
@@ -149,9 +147,7 @@
 		    	<label class="item item-input">
 						<select disabled ng-model="createRiesgo.tipo_sostenimiento"
 						ng-options="sost.sostenimientoid as sost.descripcion for sost in createRiesgo.sostenimientos">
-
 						</select>
-		    		<input type="text" ng-model="createRiesgo.result" placeholder="tipo result">
 		    	</label>
 	    	</div>
 	    </div>
@@ -166,9 +162,70 @@
 	    	</div>
 	    </div>
 
+	    <div class="row">
+			<div class="col">
+			    <div class="item item-divider">Responsable de:</div>
+			    <label class="item item-input item-select">
+					<div class="input-label">
+					   	<select class="form-control" ng-model="createRiesgo.responsable"
+	         				 ng-options="c.nombre for c in createRiesgo.usuarios ">
+	        			</select>
+					</div>
+				</label>
+			</div>
+			<div class="col">
+			    <div class="item item-divider">Seguridad </div>			    
+			    <label class="item item-input item-select">
+				    <div class="input-label">
+				     	<select class="form-control" ng-model="createRiesgo.seguridad"
+         				 ng-options="c.nombre for c in createRiesgo.usuarios ">
+        				</select>
+				    </div>
+				</label>
+			</div>
+			<div class="col">
+			    <div class="item item-divider">Geomecanico</div>			
+			    <label class="item item-input item-select">
+				    <div class="input-label">
+				     	<select class="form-control" ng-model="createRiesgo.geomecanico"
+         				 ng-options="c.nombre for c in createRiesgo.usuarios ">
+        				</select>
+				    </div>
+				</label>
+			</div>
+			<div class="col">
+			    <div class="item item-divider">Operaciones</div>			   
+			    <label class="item item-input item-select">
+				    <div class="input-label">
+				     	<select class="form-control" ng-model="createRiesgo.operaciones"
+         				 ng-options="c.nombre for c in createRiesgo.usuarios ">
+        				</select>
+				    </div>
+				</label>
+			</div>
+			<div class="col">
+				<div class="item item-divider">Nivel de Riesgo</div>
+			    <div class="item item-body">
+			       	<div>
+
+			           	<input type="text" ng-model="createRiesgo.nivelRiesgo">
+						<div>Resultado: {{createRiesgo.nivelRiesgo}}</div>
+
+			    	</div>
+			    </div>
+			</div>
+			<!-- <div >
+				<ion-select label="Placa do Veículo" label-field="nmPlaca" provider="veiculos"  ng-model="veiculo"/>
+			</div>
+			<div >
+				<ion-select label="Labores" label-field="nombre" provider="labor"  ng-model="labor"/>
+			</div> -->
+		</div>
+
+
     </div>
 
-    <div class="col col-20">
+    <div class="col col-15">
 		<div class="list card">
 			<ion-radio ng-disabled="createRiesgo.slark==='C'" ng-repeat="item in createRiesgo.opcionlabor"
 				    ng-value="item.value"
@@ -202,51 +259,8 @@
 	</div>
 </div>
 
+
 <div class="row">
-			<div class="col">
-			    <div class="item item-divider">Responsable de:</div>
-				<div class="item item-body">
-			        <input type="text" ng-model="createRiesgo.responsable">
-			    </div>
-
-			</div>
-			<div class="col">
-			    <div class="item item-divider">Seguridad </div>
-			    <div class="item item-body">
-			        <input type="text" ng-model="createRiesgo.seguridad">
-			    </div>
-			</div>
-			<div class="col">
-			    <div class="item item-divider">Geomecanico</div>
-			    <div class="item item-body">
-			        <input type="text" ng-model="createRiesgo.geomecanico">
-			    </div>
-			</div>
-			<div class="col">
-			    <div class="item item-divider">Operaciones</div>
-			    <div class="item item-body">
-			        <input type="text" ng-model="createRiesgo.operaciones">
-			    </div>
-			</div>
-			<div class="col">
-				<div class="item item-divider">Nivel de Riesgo</div>
-			    <div class="item item-body">
-			       	<div>
-			           	<input type="text" ng-model="createRiesgo.nivelRiesgo"> 
-						<div >Resultado: {{createRiesgo.nivelRiesgo}}</div>		
-			    	</div>
-			    </div>
-			</div>
-
-			<!-- <div >
-				<ion-select label="Placa do Veículo" label-field="nmPlaca" provider="veiculos"  ng-model="veiculo"/>
-			</div>
-			<div >
-				<ion-select label="Labores" label-field="nombre" provider="labor"  ng-model="labor"/>
-			</div> -->
-		</div>
-
-  	<div class="row">
 		<div class="col ">
 			<div >
 		<!-- 		<ion-list>
@@ -261,8 +275,9 @@
 						</label>
 			  		</ion-item>
 
-				</ion-list>  
-	        	    -->		
+
+				</ion-list>
+	        	    -->
 			    <ion-list>
 				    <ion-toggle  ng-repeat="preg in createRiesgo.preguntasList | orderBy:'preguntaid' "  ng-if="preg.posicion==1"  ng-model="preg.checked"  ng-checked="preg.checked"  ng-change="createRiesgo.calculariesgo(preg)" >
 			        	{{preg.preguntaid}}-{{ preg.descripcion }}-{{ preg.posicion }}
@@ -299,7 +314,7 @@
 				</ion-list>
 			</div>
 
-		</div> -->	
+		</div> -->
 
 		</div>
 
@@ -373,8 +388,9 @@
 			sostenimientos="createRiesgo.sostenimientos"
       rocas="createRiesgo.rocas"
       tiporoca="createRiesgo.tipo_roca"
-      tiposostenimiento="createRiesgo.tipo_sostenimiento">
-
+      tiposostenimiento="createRiesgo.tipo_sostenimiento"
+			close="createRiesgo.closeTablaSostenimiento()">
+			Utilice un navegador que soporte canvas para visualizar la tabla de sostenimiento.
 			</canvas>
     </ion-content>
   </div>

@@ -11,6 +11,7 @@ angular.module('app.services', ['ngStorage', 'ngResource'])
 
     guardarDatos: function(variable, valor) {
       $localStorage[variable] = valor;
+      console.log($localStorage[variable]);
     },
 
     eliminarDatos: function(variable) {
