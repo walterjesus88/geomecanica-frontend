@@ -29,7 +29,7 @@ angular.module('app.routes', [])
       views: {
         'tab-riesgo': {
         templateUrl: "templates/riesgo.html",
-        controller: 'RiesgoCtrl'
+        //controller: 'RiesgoCtrl as createRiesgo '
       }
     }
   })
@@ -39,7 +39,7 @@ angular.module('app.routes', [])
       views: {
         'tab-pregunta': {
         templateUrl: "templates/pregunta.html",
-        controller: 'RiesgoCtrl '
+        //controller: 'RiesgoCtrl as createRiesgo '
       }
     }
   })
