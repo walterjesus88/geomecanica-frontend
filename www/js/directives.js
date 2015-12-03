@@ -204,11 +204,26 @@ angular.module('app.directives', [])
 
 				var ctx = element[0].getContext('2d');
 
-				dibujarContenedor(ctx);
-				dibujarAreas(ctx, colores);
-				dibujarLineas(ctx);
-				dibujarSostenimientos(ctx);
-				dibujarRocas(ctx);
+				var inicialx = 200;
+				var inicialy = 20;
+				var ancho = 450;
+				var alto = 560;
+				var columna = 50;
+				var fila = 90;
+				var verticales = [];
+				for (var i = 0; i < 4; i++) {
+					verticales.push(inicialx + ancho - columna * (4 - i));
+				}
+				var horizontales = [];
+				for (var i = 0; i < 3; i++) {
+					horizontales.push(inicialy + alto - fila * (3 - i));
+				}
+
+				dibujarContenedor(ctx, inicialx, inicialy, alto, ancho);
+				dibujarAreas(ctx, colores, inicialx, inicialy, alto, ancho, horizontales, verticales);
+				dibujarLineas(ctx, inicialx, inicialy, ancho, alto, verticales, horizontales);
+				dibujarSostenimientos(ctx, inicialx, inicialy);
+				dibujarRocas(ctx, inicialx, inicialy, ancho, alto, verticales, horizontales);
 
 			});
 
@@ -216,11 +231,28 @@ angular.module('app.directives', [])
 				var ejex = event.offsetX;
 				var ejey = event.offsetY;
 				var ctx = element[0].getContext('2d');
+
 				var defered = $q.defer();
 				var defered1 = $q.defer();
-				if (ejex >= 450 && ejex <= 650 && ejey >= 250 && ejey <= 520) {
+
+				var inicialx = 200;
+				var inicialy = 20;
+				var ancho = 450;
+				var alto = 560;
+				var columna = 50;
+				var fila = 90;
+				var verticales = [];
+				for (var i = 0; i < 4; i++) {
+					verticales.push(inicialx + ancho - columna * (4 - i));
+				}
+				var horizontales = [];
+				for (var i = 0; i < 3; i++) {
+					horizontales.push(inicialy + alto - fila * (3 - i));
+				}
+
+				if (ejex >= verticales[0] && ejex <= inicialx + ancho && ejey >= horizontales[0] && ejey <= inicialy + alto) {
 					//verificar en que cuadradito se hizo click
-					var cuadro = getCuadro(ctx, ejex, ejey);
+					var cuadro = getCuadro(ctx, ejex, ejey, inicialx, inicialy, alto, ancho, verticales, horizontales);
 					$scope.rocas.$promise.then(function(rocas) {
 						rocas.forEach(function(roca) {
 							if (roca.codigo === cuadro) {
@@ -247,23 +279,23 @@ angular.module('app.directives', [])
 				});
 			});
 
-			function getCuadro(ctx, x, y) {
+			function getCuadro(ctx, x, y, inix, iniy, alto, ancho, ver, hor) {
 				var sup = '';
 				var est = '';
-				if (y >= 250 && y <= 340) {
+				if (y >= hor[0] && y <= hor[1]) {
 					est = 'F';
-				} else if (y >= 340 && y <= 430) {
+				} else if (y >= hor[1] && y <= hor[2]) {
 					est = 'MF';
-				} else if (y >= 430 && y <= 520) {
+				} else if (y >= hor[2] && y <= iniy + alto) {
 					est = 'IF';
 				}
-				if (x >= 450 && x <= 500) {
+				if (x >= ver[0] && x <= ver[1]) {
 					sup = 'B';
-				} else if (x >= 500 && x <= 550) {
+				} else if (x >= ver[1] && x <= ver[2]) {
 					sup = 'R';
-				} else if (x >= 550 && x <= 600) {
+				} else if (x >= ver[2] && x <= ver[3]) {
 					sup = 'P';
-				} else if (x >= 600 && x <= 650) {
+				} else if (x >= ver[3] && x <= inix + ancho) {
 					sup = 'MP';
 				}
 				return est + '/' + sup;
@@ -294,26 +326,26 @@ angular.module('app.directives', [])
 				}
 			}
 
-			function dibujarSostenimientos(ctx) {
+			function dibujarSostenimientos(ctx, inix, iniy) {
 				$scope.sostenimientos.$promise.then(function(sostenimientos) {
 					var i = 40;
 					sostenimientos.forEach(function(item) {
 						ctx.fillStyle = item.color;
-						ctx.fillRect(210, i, 25, 20);
+						ctx.fillRect(inix + 10, i, 25, 20);
 						ctx.strokeStyle = '#000';
-						ctx.strokeRect(210, i, 25, 20);
+						ctx.strokeRect(inix + 10, i, 25, 20);
 						ctx.fillStyle = '#000';
 						ctx.font = "bold 16px Arial";
-						ctx.fillText(item.codigo, 217, i + 15);
+						ctx.fillText(item.codigo, inix + 17, i + 15);
 						ctx.font = "8px Arial";
-						dibujarTextoNormal(ctx, item.descripcion, 240, i + 5, 40);
-						ctx.fillText(item.tiempo_colocacion, 240, i + 25);
-						i = i + 34;
+						dibujarTextoNormal(ctx, item.descripcion, inix + 40, i + 5, 40);
+						ctx.fillText(item.tiempo_colocacion, inix + 40, i + 25);
+						i = i + 40;
 					});
 				});
 			}
 
-			function dibujarRocas(ctx) {
+			function dibujarRocas(ctx, inix, iniy, ancho, alto, ver, hor) {
 				$scope.rocas.$promise.then(function(rocas) {
 					var cf = 0;
 					var cmf = 0;
@@ -335,93 +367,92 @@ angular.module('app.directives', [])
 							c = -3;
 						}
 						if (item.Estructura.codigo === 'F') {
-							y = 300;
+							y = hor[0] + 50;
 						}
 						if (item.Estructura.codigo === 'MF') {
-							y = 390;
+							y = hor[1] + 50;
 						}
 						if (item.Estructura.codigo === 'IF') {
-							y = 480;
+							y = hor[2] + 50;
 						}
 
 						if (item.Superficie.codigo === 'B') {
-							x = 460 - c;
+							x = ver[0] + 10 - c;
 						}
 						if (item.Superficie.codigo === 'R') {
-							x = 510 - c;
+							x = ver[1] + 10 - c;
 						}
 						if (item.Superficie.codigo === 'P') {
-							x = 560 - c;
+							x = ver[2] + 10 - c;
 						}
 						if (item.Superficie.codigo === 'MP') {
-							x = 610 - c;
+							x = ver[3] + 10 - c;
 						}
 						ctx.fillStyle = '#000';
 						ctx.fillText(item.codigo, x, y);
 						ctx.strokeStyle = '#fff';
 						ctx.strokeText(item.codigo, x, y);
-						console.log(item);
 						ctx.font = "10px Arial";
 						if (item.Estructura.codigo === 'F' && cf === 0) {
 							cf = 1;
 							ctx.fillStyle = 'PURPLE';
-							ctx.fillText(item.Estructura.condicion, 205, y - 30);
+							ctx.fillText(item.Estructura.condicion, inix + 5, y - 30);
 							ctx.fillStyle = '#000';
-							dibujarTextoNormal(ctx, item.Estructura.descripcion, 205, y - 20, 35);
+							dibujarTextoNormal(ctx, item.Estructura.descripcion, inix + 5, y - 20, 35);
 						} else if (item.Estructura.codigo === 'MF' && cmf === 0) {
 							cmf = 1;
 							ctx.fillStyle = 'PURPLE';
-							ctx.fillText(item.Estructura.condicion, 205, y - 30);
+							ctx.fillText(item.Estructura.condicion, inix + 5, y - 30);
 							ctx.fillStyle = '#000';
-							dibujarTextoNormal(ctx, item.Estructura.descripcion, 205, y - 20, 35);
+							dibujarTextoNormal(ctx, item.Estructura.descripcion, inix + 5, y - 20, 35);
 						} else if (item.Estructura.codigo === 'IF' && cif === 0) {
 							cif = 1;
 							ctx.fillStyle = 'PURPLE';
-							ctx.fillText(item.Estructura.condicion, 205, y - 30);
+							ctx.fillText(item.Estructura.condicion, inix + 5, y - 30);
 							ctx.fillStyle = '#000';
-							dibujarTextoNormal(ctx, item.Estructura.descripcion, 205, y - 20, 35);
+							dibujarTextoNormal(ctx, item.Estructura.descripcion, inix + 5, y - 20, 35);
 						}
 
 						if (item.Superficie.codigo === 'B' && cb === 0) {
 							cb = 1;
 							ctx.fillStyle = 'PURPLE';
 							ctx.save();
-							ctx.translate(x + c, 240);
+							ctx.translate(x + c, hor[0] - 10);
 							ctx.rotate(-0.5*Math.PI);
 							ctx.fillText(item.Superficie.condicion, 0, 0);
 							ctx.restore();
 							ctx.fillStyle = '#000';
-							dibujarTextoVertical(ctx, item.Superficie.descripcion, x + c + 10, 240, 40);
+							dibujarTextoVertical(ctx, item.Superficie.descripcion, x + c + 10, hor[0] - 10, 40);
 						} else if (item.Superficie.codigo === 'R' && cr === 0) {
 							cr = 1;
 							ctx.fillStyle = 'PURPLE';
 							ctx.save();
-							ctx.translate(x + c, 240);
+							ctx.translate(x + c, hor[0] - 10);
 							ctx.rotate(-0.5*Math.PI);
 							ctx.fillText(item.Superficie.condicion, 0, 0);
 							ctx.restore();
 							ctx.fillStyle = '#000';
-							dibujarTextoVertical(ctx, item.Superficie.descripcion, x + c + 10, 240, 40);
+							dibujarTextoVertical(ctx, item.Superficie.descripcion, x + c + 10, hor[0] - 10, 40);
 						} else if (item.Superficie.codigo === 'P' && cp === 0) {
 							cp = 1;
 							ctx.fillStyle = 'PURPLE';
 							ctx.save();
-							ctx.translate(x + c, 240);
+							ctx.translate(x + c, hor[0] - 10);
 							ctx.rotate(-0.5*Math.PI);
 							ctx.fillText(item.Superficie.condicion, 0, 0);
 							ctx.restore();
 							ctx.fillStyle = '#000';
-							dibujarTextoVertical(ctx, item.Superficie.descripcion, x + c + 10, 240, 40);
+							dibujarTextoVertical(ctx, item.Superficie.descripcion, x + c + 10, hor[0] - 10, 40);
 						} else if (item.Superficie.codigo === 'MP' && cmp === 0) {
 							cmp = 1;
 							ctx.fillStyle = 'PURPLE';
 							ctx.save();
-							ctx.translate(x + c, 240);
+							ctx.translate(x + c, hor[0] - 10);
 							ctx.rotate(-0.5*Math.PI);
 							ctx.fillText(item.Superficie.condicion, 0, 0);
 							ctx.restore();
 							ctx.fillStyle = '#000';
-							dibujarTextoVertical(ctx, item.Superficie.descripcion, x + c + 10, 240, 40);
+							dibujarTextoVertical(ctx, item.Superficie.descripcion, x + c + 10, hor[0] - 10, 40);
 						}
 					});
 				});
@@ -453,95 +484,74 @@ angular.module('app.directives', [])
 				}
 			}
 
-			function dibujarAreas(ctx, colores) {
+			function dibujarAreas(ctx, colores, inix, iniy, alto, ancho, hor, ver) {
 
-				ctx.beginPath();
-				ctx.fillStyle = colores[0];
-				ctx.moveTo(450, 250);
-				ctx.lineTo(550, 250);
-				ctx.lineTo(450, 430);
-				ctx.lineTo(450, 250);
-				ctx.closePath();
-				ctx.fill();
-
-				ctx.beginPath();
-				ctx.fillStyle = colores[1];
-				ctx.moveTo(550, 250);
-				ctx.lineTo(600, 250);
-				ctx.lineTo(450, 520);
-				ctx.lineTo(450, 430);
-				ctx.lineTo(550, 250);
-				ctx.closePath();
-				ctx.fill();
-
-				ctx.beginPath();
-				ctx.fillStyle = colores[2];
-				ctx.moveTo(600, 250);
-				ctx.lineTo(650, 250);
-				ctx.lineTo(500, 520);
-				ctx.lineTo(450, 520);
-				ctx.lineTo(600, 250);
-				ctx.closePath();
-				ctx.fill();
-
-				ctx.beginPath();
-				ctx.fillStyle = colores[3];
-				ctx.moveTo(650, 250);
-				ctx.lineTo(650, 340);
-				ctx.lineTo(550, 520);
-				ctx.lineTo(500, 520);
-				ctx.lineTo(650, 250);
-				ctx.closePath();
-				ctx.fill();
-
-				ctx.beginPath();
-				ctx.fillStyle = colores[4];
-				ctx.moveTo(650, 340);
-				ctx.lineTo(650, 430);
-				ctx.lineTo(600, 520);
-				ctx.lineTo(550, 520);
-				ctx.lineTo(650, 340);
-				ctx.closePath();
-				ctx.fill();
-
-				ctx.beginPath();
-				ctx.fillStyle = colores[5];
-				ctx.moveTo(650, 430);
-				ctx.lineTo(650, 520);
-				ctx.lineTo(600, 520);
-				ctx.lineTo(650, 430);
-				ctx.closePath();
-				ctx.fill();
+				for (var i = 0; i < colores.length; i++) {
+					ctx.beginPath();
+					ctx.fillStyle = colores[i];
+					if (i === 0) {
+						ctx.moveTo(ver[0], hor[0]);
+						ctx.lineTo(ver[2], hor[0]);
+						ctx.lineTo(ver[0], hor[2]);
+						ctx.lineTo(ver[0], hor[0]);
+					} else if (i === 1) {
+						ctx.moveTo(ver[2], hor[0]);
+						ctx.lineTo(ver[3], hor[0]);
+						ctx.lineTo(ver[0], iniy + alto);
+						ctx.lineTo(ver[0], hor[2]);
+						ctx.lineTo(ver[2], hor[0]);
+					} else if (i === 2) {
+						ctx.moveTo(ver[3], hor[0]);
+						ctx.lineTo(inix + ancho, hor[0]);
+						ctx.lineTo(ver[1], iniy + alto);
+						ctx.lineTo(ver[0], iniy + alto);
+						ctx.lineTo(ver[3], hor[0]);
+					} else if (i === 3) {
+						ctx.moveTo(inix + ancho, hor[0]);
+						ctx.lineTo(inix + ancho, hor[1]);
+						ctx.lineTo(ver[2], iniy + alto);
+						ctx.lineTo(ver[1], iniy + alto);
+						ctx.lineTo(inix + ancho, hor[0]);
+					} else if (i === 4) {
+						ctx.moveTo(inix + ancho, hor[1]);
+						ctx.lineTo(inix + ancho, hor[2]);
+						ctx.lineTo(ver[3], iniy + alto);
+						ctx.lineTo(ver[2], iniy + alto);
+						ctx.lineTo(inix + ancho, hor[1]);
+					} else if (i === 5) {
+						ctx.moveTo(inix + ancho, hor[2]);
+						ctx.lineTo(inix + ancho, iniy + alto);
+						ctx.lineTo(ver[3], iniy + alto);
+						ctx.lineTo(inix + ancho, hor[2]);
+					}
+					ctx.closePath();
+					ctx.fill();
+				}
 			}
 
-			function dibujarLineas(ctx) {
+			function dibujarLineas(ctx, inix, iniy, ancho, alto, ver, hor) {
 
 				ctx.beginPath();
 
-				ctx.moveTo(200, 250);
-				ctx.lineTo(650, 250);
-				ctx.moveTo(200, 340);
-				ctx.lineTo(650, 340);
-				ctx.moveTo(200, 430);
-				ctx.lineTo(650, 430);
+				for (var i = 0; i < hor.length; i++) {
+					ctx.moveTo(inix, hor[i]);
+					ctx.lineTo(inix + ancho, hor[i]);
+				}
 
-				ctx.moveTo(600, 20);
-				ctx.lineTo(600, 520);
-				ctx.moveTo(550, 20);
-				ctx.lineTo(550, 520);
-				ctx.moveTo(500, 20);
-				ctx.lineTo(500, 520);
-				ctx.moveTo(450, 20);
-				ctx.lineTo(450, 520);
+				for (var i = 0; i < ver.length; i++) {
+					ctx.moveTo(ver[i], iniy);
+					ctx.lineTo(ver[i], iniy + alto);
+				}
 
 				ctx.stroke();
 				ctx.closePath();
 			}
 
-			function dibujarContenedor(ctx) {
-				ctx.strokeRect(200, 20, 450, 500);
+			function dibujarContenedor(ctx, x, y, alto, ancho) {
+				ctx.strokeStyle = '#000';
+				ctx.strokeRect(x, y, ancho, alto);
 				ctx.fillStyle = '#fff';
-				ctx.fillRect(200, 20, 450, 500);
+				ctx.fillRect(x, y, ancho, alto);
 			}
 		}
 	}
