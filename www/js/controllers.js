@@ -29,6 +29,7 @@ function(Autentificacion, almacenamientoLocal, $state, $scope) {
   }
 
   if(almacenamientoLocal.getUsuario() !== 'not saved') {
+    consoele.log('kkkk');
     login.user = almacenamientoLocal.getUsuario().user;
     login.password = almacenamientoLocal.getUsuario().password;
     login.isRemember = true;
@@ -37,12 +38,12 @@ function(Autentificacion, almacenamientoLocal, $state, $scope) {
   login.ingresar = function() {
     Autentificacion.loguearse(login.user, login.password)
     .then(function(data) {
+      //console.log(data);
+      $scope.$parent.dato=data;
       almacenamientoLocal.guardarDatos('token', data.token);
       $scope.$parent.index.isAuth = true;
 
       $state.go('tab.home');
-
-
       login.alerta = '';
       if (login.isRemember) {
         almacenamientoLocal.guardarDatos('usuario', {user: login.user, password: login.password});
@@ -80,14 +81,17 @@ function(Labor, $scope, $state) {
 }])
 
 
-.controller('RiesgoCtrl',['$scope','$ionicPopup','Usuario','Empresa','Labor','Pregunta','Inspeccion', '$ionicModal', 'Roca', 'Sostenimiento',
-function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicModal, Roca, Sostenimiento) {
+.controller('RiesgoCtrl',['$scope','almacenamientoLocal','$ionicPopup','Usuario','Empresa','Labor','Pregunta','Inspeccion', '$ionicModal', 'Roca', 'Sostenimiento',
+function($scope,almacenamientoLocal,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicModal, Roca, Sostenimiento) {
   $scope.settings = {
     enableFriends: true
   };
 
   createRiesgo = this;
   $scope.$parent.index.isAuth = true;
+
+  //createRiesgo.user =  almacenamientoLocal.getUsuario();
+  //console.log(createRiesgo.user);
 
     //Para el Datepicker//
   createRiesgo.datepickerObject = {};
@@ -140,8 +144,8 @@ function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicMod
   var weekDaysList = ["Sun", "Mon", "Tue", "Wed", "thu", "Fri", "Sat"];
   var monthList = ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
-  createRiesgo.tipolabor = [{ text: "Avance", value:'AVANCE', },{ text: "Explotacion", value:'EXPLOTACION', }, ];
-  createRiesgo.insp_tlabor= {tipolabor: 'AVANCE' };
+  createRiesgo.tipolabor = [{ text: "Avance", value:'A', },{ text: "Explotacion", value:'E', }, ];
+  createRiesgo.labor= {tipoTipoId: 'A' };
 
 
   createRiesgo.preguntasList = Pregunta.query();  
@@ -225,30 +229,18 @@ function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicMod
   createRiesgo.guardarinspeccion = function() {
 
     //console.log(createRiesgo.datepickerObject.inputDate);
-    fecha = new Date(createRiesgo.datepickerObject.inputDate);
-    day=fecha.getDate();
-    month=fecha.getMonth()+1;
-    year=fecha.getFullYear();
-    if (month.toString().length < 2)
-    {
-      month = '0' + month;
-    }
-    if (day.toString().length < 2)
-    {
-      day = '0' + day;
-    }
-    fecha=year+"-"+month+"-"+day;
-
+    //fecha = new Date(createRiesgo.datepickerObject.inputDate);
+    fecha = createRiesgo.datepickerObject.inputDate;
     //console.log(createRiesgo.insp_empresa.empresa);
 
     var inspeccion = new Inspeccion();
 
-    //console.log(createRiesgo.responsable);
+    //console.log(createRiesgo.responsable.uid);
 
     inspeccion.periodo = createRiesgo.insp_guard.guardia;
     inspeccion.recomendacion = createRiesgo.insp_recomendacion.rgeo;
     inspeccion.instalacion = createRiesgo.insp_install.resp;
-    inspeccion.tipo = createRiesgo.insp_tlabor.tipolabor;
+    //inspeccion.tipo = createRiesgo.insp_tlabor.tipolabor;
     inspeccion.comentario = createRiesgo.comment;
     inspeccion.ancho_real = createRiesgo.ancho_real;
     //createRiesgo.ancho_exc_tabla;
@@ -259,14 +251,14 @@ function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicMod
     inspeccion.recomendacion=createRiesgo.insp_recomendacion.rgeo;
     inspeccion.estado=createRiesgo.inps_OL.sostenimiento;
 
-    inspeccion.ResponsableUid=createRiesgo.responsable;
-    inspeccion.SeguridadUid=createRiesgo.seguridad;
-    inspeccion.GeomecanicoUid=createRiesgo.geomecanico;
-    inspeccion.OperacionesUid=createRiesgo.operaciones;
-    inspeccion.RegistroUid=createRiesgo.responsable;
+    inspeccion.ResponsableUid=createRiesgo.responsable.uid;
+    inspeccion.SeguridadUid=createRiesgo.seguridad.uid;
+    inspeccion.GeomecanicoUid=createRiesgo.geomecanico.uid;
+    inspeccion.OperacionesUid=createRiesgo.operaciones.uid;
+    //inspeccion.RegistroUid=createRiesgo.responsable.uid;
 
     inspeccion.RocaId = createRiesgo.tipo_roca;
-    iunspeccion.SostenimientoId = createRiesgo.tipo_sostenimiento;
+    inspeccion.SostenimientoId = createRiesgo.tipo_sostenimiento;
 
     console.log(inspeccion);
 
@@ -275,8 +267,6 @@ function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicMod
       console.log('hoolla');
     });
   }
-
-
 
   //modal de tablas de sostenimiento
   createRiesgo.tipo = 'A';
