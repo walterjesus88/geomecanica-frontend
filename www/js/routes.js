@@ -8,10 +8,16 @@ angular.module('app.routes', [])
   // Each state's controller can be found in controllers.js
   $stateProvider
 
+  // .state('tab', {
+  //   url: '/tab',
+  //   abstract: true,
+  //   templateUrl: 'templates/tabs.html'
+  // })
+
   .state('tab', {
     url: '/tab',
     abstract: true,
-    templateUrl: 'templates/tabs.html'
+    templateUrl: 'templates/menu.html'
   })
 
   .state('tab.home', {
@@ -57,10 +63,18 @@ angular.module('app.routes', [])
   .state('tab.web', {
     url: "/web",
       views: {
-        'tab-web': {
-        templateUrl: "templates/web.html",
-        controller: 'RiesgoCtrl as createRiesgo'
-      }
+        'menuContent': {        
+          templateUrl: "templates/web.html",
+          controller: 'RiesgoCtrl as createRiesgo'
+        },
+        'fabContent': {
+          template: '<button id="fab-activity" class="button button-fab button-fab-top-right expanded button-energized-900 flap"><i class="icon ion-paper-airplane"></i></button>',
+            controller: function ($timeout) {
+              $timeout(function () {
+                document.getElementById('fab-activity').classList.toggle('on');
+            }, 200);
+          }
+        }
     }
   })
 
