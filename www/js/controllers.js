@@ -29,7 +29,7 @@ function(Autentificacion, almacenamientoLocal, $state, $scope) {
   }
 
   if(almacenamientoLocal.getUsuario() !== 'not saved') {
-    consoele.log('kkkk');
+    console.log('kkkk');
     login.user = almacenamientoLocal.getUsuario().user;
     login.password = almacenamientoLocal.getUsuario().password;
     login.isRemember = true;
@@ -143,7 +143,7 @@ function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicMod
   createRiesgo.tipolabor = [{ text: "Avance", value:'A', },{ text: "Explotacion", value:'E', }, ];
   createRiesgo.labor= {tipoTipoId: 'A' };
 
-  createRiesgo.preguntasList = Pregunta.query();  
+  createRiesgo.preguntasList = Pregunta.query();
   //console.log(createRiesgo.preguntasList);
 
   $scope.labores = Labor.query();
@@ -164,36 +164,36 @@ function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicMod
     "values": ["suma", "resta", "mutliplicacion", "division"]
   };
 
-  createRiesgo.nivelRiesgo='BAJO'; 
+  createRiesgo.nivelRiesgo='BAJO';
 
   createRiesgo.calculariesgo = function(item)
-  {   
-    console.log(item);  
+  {
+    console.log(item);
     if(item.preguntaid==8 && item.checked==false)
-    {        
+    {
         console.log('ohhhh');
         resultado='gg'
-        createRiesgo.slark='C';       
-    } 
+        createRiesgo.slark='C';
+    }
     else if(createRiesgo.inps_OL.sostenimiento=='FALSE' )
     {
       createRiesgo.slark='B';
-      resultado='CRITICO';  
-    }     
+      resultado='CRITICO';
+    }
     else if(createRiesgo.inps_OL.sostenimiento=='TRUE' && createRiesgo.insp_recomendacion.rgeo=='TRUE' && createRiesgo.insp_install.resp=='TRUE')
     {
-      createRiesgo.slark='B';      
-      resultado='BAJO';  
-    } 
+      createRiesgo.slark='B';
+      resultado='BAJO';
+    }
 
     else if(createRiesgo.inps_OL.sostenimiento=='TRUE' && (createRiesgo.insp_install.resp=='TRUE' || createRiesgo.insp_recomendacion.rgeo=='TRUE'))
     {
-      createRiesgo.slark='B';      
+      createRiesgo.slark='B';
       resultado='MEDIO';
     }
     else if(createRiesgo.inps_OL.sostenimiento=='TRUE' && createRiesgo.insp_install.resp=='FALSE'  && createRiesgo.insp_recomendacion.rgeo=='FALSE')
     {
-      createRiesgo.slark='B';           
+      createRiesgo.slark='B';
       resultado='CRITICO';
     }
 
@@ -253,8 +253,9 @@ function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicMod
     inspeccion.ResponsableUid=createRiesgo.responsable.uid;
     inspeccion.SeguridadUid=createRiesgo.seguridad.uid;
     inspeccion.GeomecanicoUid=createRiesgo.geomecanico.uid;
-    inspeccion.OperacionesUid=createRiesgo.operaciones.uid;  
+    inspeccion.OperacionesUid=createRiesgo.operaciones.uid;
 
+    inspeccion.tipo = createRiesgo.labor.tipoTipoId;
     inspeccion.RocaId = createRiesgo.tipo_roca;
     inspeccion.SostenimientoId = createRiesgo.tipo_sostenimiento;
 
