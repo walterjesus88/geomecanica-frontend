@@ -20,14 +20,12 @@ angular.module('app', ['ionic','ionic-datepicker','app.controllers', 'app.routes
   $rootScope.$on('$locationChangeSuccess', function(e, toState, toParams, fromState, fromParams) {
 
     e.preventDefault();
-
     if (!Autentificacion.isLoggedIn()) {
       $state.go('login');
       return;
     }
 
     $urlRouter.sync();
-
     $urlRouter.listen();
   });
 })
