@@ -80,8 +80,8 @@ function(Labor, $scope, $state) {
 }])
 
 
-.controller('RiesgoCtrl',['$scope','$ionicPopup','Usuario','Empresa','Labor','Pregunta','Inspeccion', '$ionicModal', 'Roca', 'Sostenimiento',
-function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicModal, Roca, Sostenimiento) {
+.controller('RiesgoCtrl',['$scope','$ionicPopup','Usuario','Empresa','Labor','Pregunta','Inspeccion', '$ionicModal', 'Roca', 'Sostenimiento', 'Tipo',
+function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicModal, Roca, Sostenimiento, Tipo) {
   $scope.settings = {
     enableFriends: true
   };
@@ -145,10 +145,11 @@ function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicMod
 
 
   createRiesgo.preguntasList = Pregunta.query();
-  console.log(createRiesgo.preguntasList);
+  //console.log(createRiesgo.preguntasList);
 
 
   $scope.labores = Labor.query();
+  createRiesgo.tipos = Tipo.query();
   //console.log($scope.labores);
 
   createRiesgo.usuarios = Usuario.query();
@@ -167,7 +168,7 @@ function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicMod
 
   createRiesgo.calcular = function()
 
-  { 
+  {
     if(createRiesgo.inps_OL.sostenimiento=='FALSE' )
     {
       resultado='CRITICO';
@@ -250,7 +251,7 @@ function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicMod
     inspeccion.periodo = createRiesgo.insp_guard.guardia;
     inspeccion.recomendacion = createRiesgo.insp_recomendacion.rgeo;
     inspeccion.instalacion = createRiesgo.insp_install.resp;
-    inspeccion.tipo = createRiesgo.insp_tlabor.tipolabor;
+    inspeccion.tipo = createRiesgo.labor.tipoTipoId;
     inspeccion.comentario = createRiesgo.comment;
     inspeccion.ancho_real = createRiesgo.ancho_real;
     //createRiesgo.ancho_exc_tabla;
@@ -268,7 +269,7 @@ function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicMod
     inspeccion.RegistroUid=createRiesgo.responsable;
 
     inspeccion.RocaId = createRiesgo.tipo_roca;
-    iunspeccion.SostenimientoId = createRiesgo.tipo_sostenimiento;
+    inspeccion.SostenimientoId = createRiesgo.tipo_sostenimiento;
 
     console.log(inspeccion);
 
@@ -281,16 +282,20 @@ function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicMod
 
 
   //modal de tablas de sostenimiento
-  createRiesgo.tipo = 'A';
-  createRiesgo.rocas = Roca.query();
-  createRiesgo.sostenimientos = Sostenimiento.query({tipo: createRiesgo.tipo});
 
-  $ionicModal.fromTemplateUrl('popupSostenimiento.html', {
-    scope: $scope,
-    animation: 'slide-in-up'
-  }).then(function(modal) {
-    createRiesgo.modal = modal;
-  });
+  createRiesgo.cargarTipo = function() {
+    createRiesgo.rocas = Roca.query();
+    createRiesgo.sostenimientos = Sostenimiento.query({tipo: createRiesgo.labor.tipoTipoId});
+
+    $ionicModal.fromTemplateUrl('popupSostenimiento.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      createRiesgo.modal = modal;
+    });
+  }
+
+
 
   createRiesgo.openTablaSostenimiento = function() {
     createRiesgo.modal.show();

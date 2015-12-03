@@ -1,5 +1,9 @@
 angular.module('app.directives', [])
 
+.directive('blankDirective', [function(){
+
+}])
+
 
 // .directive('multiSelectDate', [function($filter) {
 // 	return {
@@ -199,8 +203,11 @@ angular.module('app.directives', [])
 
 				var ctx = element[0].getContext('2d');
 
+				dibujarContenedor(ctx);
 				dibujarAreas(ctx, colores);
 				dibujarLineas(ctx);
+				dibujarSostenimientos(ctx);
+				dibujarRocas(ctx);
 
 			});
 
@@ -278,6 +285,69 @@ angular.module('app.directives', [])
 				}
 			}
 
+			function dibujarSostenimientos(ctx) {
+				$scope.sostenimientos.$promise.then(function(sostenimientos) {
+					var i = 40;
+					sostenimientos.forEach(function(item) {
+						ctx.fillStyle = item.color;
+						ctx.fillRect(210, i, 25, 20);
+						ctx.strokeStyle = '#000';
+						ctx.strokeRect(210, i, 25, 20);
+						ctx.fillStyle = '#000';
+						ctx.font = "bold 16px Arial";
+						ctx.fillText(item.codigo, 217, i + 15);
+						ctx.font = "8px Arial";
+						ctx.fillText(item.descripcion, 240, i + 5);
+						ctx.fillText(item.tiempo_colocacion, 240, i + 20);
+						i = i + 32;
+					});
+				});
+			}
+
+			function dibujarRocas(ctx) {
+				$scope.rocas.$promise.then(function(rocas) {
+					ctx.font = "bold 14px Arial";
+					rocas.forEach(function(item) {
+						var x = 0;
+						var y = 0;
+						var c = 0;
+						if (item.codigo.length === 5) {
+							c = 5;
+						} else if (item.codigo.length === 4) {
+							c = 3;
+						} else if (item.codigo.length === 3) {
+							c = -3;
+						}
+						if (item.Estructura.codigo === 'F') {
+							y = 300;
+						}
+						if (item.Estructura.codigo === 'MF') {
+							y = 390;
+						}
+						if (item.Estructura.codigo === 'IF') {
+							y = 480;
+						}
+
+						if (item.Superficie.codigo === 'B') {
+							x = 460 - c;
+						}
+						if (item.Superficie.codigo === 'R') {
+							x = 510 - c;
+						}
+						if (item.Superficie.codigo === 'P') {
+							x = 560 - c;
+						}
+						if (item.Superficie.codigo === 'MP') {
+							x = 610 - c;
+						}
+						ctx.fillStyle = '#000';
+						ctx.fillText(item.codigo, x, y);
+						ctx.strokeStyle = '#fff';
+						ctx.strokeText(item.codigo, x, y);
+					});
+				});
+			}
+
 			function dibujarAreas(ctx, colores) {
 
 				ctx.beginPath();
@@ -341,8 +411,6 @@ angular.module('app.directives', [])
 
 			function dibujarLineas(ctx) {
 
-				ctx.strokeRect(200,20,450,500);
-
 				ctx.beginPath();
 
 				ctx.moveTo(200, 250);
@@ -363,6 +431,12 @@ angular.module('app.directives', [])
 
 				ctx.stroke();
 				ctx.closePath();
+			}
+
+			function dibujarContenedor(ctx) {
+				ctx.strokeRect(200, 20, 450, 500);
+				ctx.fillStyle = '#fff';
+				ctx.fillRect(200, 20, 450, 500);
 			}
 		}
 	}
