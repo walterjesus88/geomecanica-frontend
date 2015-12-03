@@ -81,8 +81,10 @@ function(Labor, $scope, $state) {
 }])
 
 
-.controller('RiesgoCtrl',['$scope','almacenamientoLocal','$ionicPopup','Usuario','Empresa','Labor','Pregunta','Inspeccion', '$ionicModal', 'Roca', 'Sostenimiento',
-function($scope,almacenamientoLocal,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicModal, Roca, Sostenimiento) {
+
+.controller('RiesgoCtrl',['$scope','$ionicPopup','Usuario','Empresa','Labor','Pregunta','Inspeccion', '$ionicModal', 'Roca', 'Sostenimiento', 'Tipo',
+function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicModal, Roca, Sostenimiento, Tipo) {
+
   $scope.settings = {
     enableFriends: true
   };
@@ -148,11 +150,12 @@ function($scope,almacenamientoLocal,$ionicPopup,Usuario,Empresa,Labor,Pregunta,I
   createRiesgo.labor= {tipoTipoId: 'A' };
 
 
-  createRiesgo.preguntasList = Pregunta.query();  
-  console.log(createRiesgo.preguntasList);
+  createRiesgo.preguntasList = Pregunta.query();
+  //console.log(createRiesgo.preguntasList);
 
 
   $scope.labores = Labor.query();
+  createRiesgo.tipos = Tipo.query();
   //console.log($scope.labores);
 
   createRiesgo.usuarios = Usuario.query();
@@ -162,22 +165,24 @@ function($scope,almacenamientoLocal,$ionicPopup,Usuario,Empresa,Labor,Pregunta,I
   createRiesgo.insp_empresa = {empresa: 'CMA' };
   //console.log(createRiesgo.empresas);
 
-  createRiesgo.operators = 
-  {   
-    "value": "suma", 
-    "values": ["suma", "resta", "mutliplicacion", "division"] 
+
+  createRiesgo.operators =
+  {
+    "value": "suma",
+    "values": ["suma", "resta", "mutliplicacion", "division"]
   };
 
   createRiesgo.calcular = function()
-  { 
+
+  {
     if(createRiesgo.inps_OL.sostenimiento=='FALSE' )
     {
-      resultado='CRITICO';  
-    }     
+      resultado='CRITICO';
+    }
     else if(createRiesgo.inps_OL.sostenimiento=='TRUE' && createRiesgo.insp_recomendacion.rgeo=='TRUE' && createRiesgo.insp_install.resp=='TRUE')
     {
-      resultado='BAJO';  
-    } 
+      resultado='BAJO';
+    }
     else if(createRiesgo.inps_OL.sostenimiento=='TRUE' && (createRiesgo.insp_install.resp=='TRUE' || createRiesgo.insp_recomendacion.rgeo=='TRUE'))
     {
       resultado='MEDIO';
@@ -186,7 +191,7 @@ function($scope,almacenamientoLocal,$ionicPopup,Usuario,Empresa,Labor,Pregunta,I
     {
       resultado='CRITICO';
     }
-    
+
     createRiesgo.nivelRiesgo=resultado;
   }
 
@@ -240,7 +245,9 @@ function($scope,almacenamientoLocal,$ionicPopup,Usuario,Empresa,Labor,Pregunta,I
     inspeccion.periodo = createRiesgo.insp_guard.guardia;
     inspeccion.recomendacion = createRiesgo.insp_recomendacion.rgeo;
     inspeccion.instalacion = createRiesgo.insp_install.resp;
+
     //inspeccion.tipo = createRiesgo.insp_tlabor.tipolabor;
+
     inspeccion.comentario = createRiesgo.comment;
     inspeccion.ancho_real = createRiesgo.ancho_real;
     //createRiesgo.ancho_exc_tabla;
@@ -269,16 +276,20 @@ function($scope,almacenamientoLocal,$ionicPopup,Usuario,Empresa,Labor,Pregunta,I
   }
 
   //modal de tablas de sostenimiento
-  createRiesgo.tipo = 'A';
-  createRiesgo.rocas = Roca.query();
-  createRiesgo.sostenimientos = Sostenimiento.query({tipo: createRiesgo.tipo});
 
-  $ionicModal.fromTemplateUrl('popupSostenimiento.html', {
-    scope: $scope,
-    animation: 'slide-in-up'
-  }).then(function(modal) {
-    createRiesgo.modal = modal;
-  });
+  createRiesgo.cargarTipo = function() {
+    createRiesgo.rocas = Roca.query();
+    createRiesgo.sostenimientos = Sostenimiento.query({tipo: createRiesgo.labor.tipoTipoId});
+
+    $ionicModal.fromTemplateUrl('popupSostenimiento.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      createRiesgo.modal = modal;
+    });
+  }
+
+
 
   createRiesgo.openTablaSostenimiento = function() {
     createRiesgo.modal.show();

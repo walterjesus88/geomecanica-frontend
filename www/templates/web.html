@@ -17,7 +17,7 @@
 			    
 					<label class="item item-input item-select">
 					    <div class="input-label">
-					      	<select class="form-control" ng-model="createRiesgo.labor"
+					      	<select class="form-control" ng-model="createRiesgo.labor" ng-change="createRiesgo.cargarTipo()"
          					 ng-options="c.codigo for c in labores ">
         					</select>
 					    </div>
@@ -135,7 +135,7 @@
 
 	  	<div class="row">
 				<div class="col col-10">
-					<button class="button" ng-click="createRiesgo.openTablaSostenimiento()">TR</button>
+					<input type="text" ng-model="createRiesgo.labor.tipo.nombre" ng-click="createRiesgo.openTablaSostenimiento()">
 				</div>
 	    	<div class="col col-20">
 		    	<label class="item item-input">
@@ -149,7 +149,6 @@
 						ng-options="sost.sostenimientoid as sost.descripcion for sost in createRiesgo.sostenimientos">
 
 						</select>
-		    		<input type="text" ng-model="createRiesgo.result" placeholder="tipo result">
 		    	</label>
 	    	</div>
 	    </div>
@@ -173,7 +172,7 @@
 				    ng-value="item.value"
 
 				    ng-checked="createRiesgo.calcular()"
-				    ng-model="createRiesgo.inps_OL.sostenimiento" 
+				    ng-model="createRiesgo.inps_OL.sostenimiento"
 				    name="group_opcionlabor">
 				          {{ item.text }}
 			</ion-radio>
@@ -252,8 +251,16 @@
 				<div class="item item-divider">Nivel de Riesgo</div>
 			    <div class="item item-body">
 			       	<div>
+<<<<<<< HEAD
 			           	<input type="text" ng-model="createRiesgo.nivelRiesgo">
 						<div>Resultado: {{createRiesgo.nivelRiesgo}}</div>
+=======
+
+			           	<input type="text" ng-model="createRiesgo.nivelRiesgo">
+					<div>Resultado: {{createRiesgo.nivelRiesgo}}</div>
+
+
+>>>>>>> 0a080bb6d4f42ae27bd6f92a3d7a38df2cee66ac
 			    	</div>
 			    </div>
 			</div>
@@ -281,8 +288,9 @@
 						</label>
 			  		</ion-item>
 
-				</ion-list>  
-	        	    -->		
+
+				</ion-list>
+	        	    -->
 			    <ion-list>
 				    <ion-toggle  ng-repeat="item in createRiesgo.preguntasList | orderBy:'preguntaid' "  ng-if="item.posicion==1"  ng-model="item.checked"  ng-checked="item.checked"  ng-change="createRiesgo.validate(item)" >
 			        	{{item.preguntaid}}-{{ item.descripcion }}-{{ item.posicion }}
@@ -318,7 +326,7 @@
 				</ion-list>
 			</div>
 
-		</div> -->	
+		</div> -->
 
 		</div>
 
