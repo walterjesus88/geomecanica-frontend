@@ -14,7 +14,7 @@
 				<label class="item item-input item-select">
 					<div class="input-label">
 					    <select class="form-control" ng-model="createRiesgo.labor" ng-change="createRiesgo.cargarTipo()"
-         					 ng-options="c.codigo for c in labores ">
+         					 ng-options="c.codigo for c in createRiesgo.labores ">
         				</select>
 					</div>
 				</label>
@@ -48,7 +48,7 @@
 			<div class="row">
 				<ion-radio ng-repeat="item in createRiesgo.empresas"
 				    ng-value="item.empresaid"
-				    ng-model="createRiesgo.insp_empresa.empresa"
+				    ng-model="createRiesgo.labor.empresaEmpresaid"
 				    name="group_empresa">
 				          {{ item.nombre }}
 				</ion-radio>
@@ -159,59 +159,47 @@
 		    </div>
 		</div>
 
-		<div class="list card stable-bg">
+		<div class="list card">
 		    <div class="row">
-				<div class="col">
-				    <div class="item item-divider">Responsable de:</div>
+				<div class="col " >		
 				    <label class="item item-input item-select">
 						<div class="input-label">
-						   	<select class="form-control" ng-model="createRiesgo.responsable"
-		         				 ng-options="c.nombre for c in createRiesgo.usuarios ">
-		        			</select>
+							Responsable de:
 						</div>
+						<select class="form-control" ng-model="createRiesgo.responsable"
+		         				 ng-options="c.nombre for c in createRiesgo.usuarios ">
+		        		</select>
 					</label>
-				</div>
-				<div class="col">
-				    <div class="item item-divider">Seguridad </div>
+						
 				    <label class="item item-input item-select">
 					    <div class="input-label">
-					     	<select class="form-control" ng-model="createRiesgo.seguridad"
-	         				 ng-options="c.nombre for c in createRiesgo.usuarios ">
-	        				</select>
+					    	Seguridad
 					    </div>
+					    <select class="form-control" ng-model="createRiesgo.seguridad"
+	         				 ng-options="c.nombre for c in createRiesgo.usuarios ">
+	        			</select>
 					</label>
 				</div>
-				<div class="col">
-				    <div class="item item-divider">Geomecanico</div>
+				<div class="col">				
 				    <label class="item item-input item-select">
 					    <div class="input-label">
-					     	<select class="form-control" ng-model="createRiesgo.geomecanico"
-	         				 ng-options="c.nombre for c in createRiesgo.usuarios ">
-	        				</select>
+					    	Geomecanico
 					    </div>
+					  	<select class="form-control" ng-model="createRiesgo.geomecanico"
+	         				 ng-options="c.nombre for c in createRiesgo.usuarios ">
+	        			</select>
 					</label>
-				</div>
-				<div class="col">
-				    <div class="item item-divider">Operaciones</div>
+						    
 				    <label class="item item-input item-select">
 					    <div class="input-label">
-					     	<select class="form-control" ng-model="createRiesgo.operaciones"
-	         				 ng-options="c.nombre for c in createRiesgo.usuarios ">
-	        				</select>
+					    	 Operaciones 
 					    </div>
+					    <select class="form-control" ng-model="createRiesgo.operaciones"
+	         				ng-options="c.nombre for c in createRiesgo.usuarios ">
+	        			</select>
 					</label>
 				</div>
-				<div class="col">
-					<div class="item item-divider">Nivel de Riesgo</div>
-				    <div class="item item-body">
-				       	<div>
 
-				           	<input type="text" ng-model="createRiesgo.nivelRiesgo">
-							<div>Resultado: {{createRiesgo.nivelRiesgo}}</div>
-
-				    	</div>
-				    </div>
-				</div>
 				<!-- <div >
 					<ion-select label="Placa do Veículo" label-field="nmPlaca" provider="veiculos"  ng-model="veiculo"/>
 				</div>
@@ -255,7 +243,15 @@
 				</ion-radio>
 		</div>
 
-	</div>
+		<div class="list card">
+			<div class="item item-divider">Nivel de Riesgo</div>
+				 <div class="item item-body">
+				    <div>
+				        <input type="text" ng-model="createRiesgo.nivelRiesgo">						
+				    </div>
+				</div>
+			</div>
+		</div>
 </div>
 
 
