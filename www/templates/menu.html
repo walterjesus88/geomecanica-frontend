@@ -13,8 +13,7 @@
     </ion-side-menu-content>
     <ion-side-menu side="right">
         <ion-header-bar class="dark-bg expanded">
-            <span class="avatar" style="background: url('img/logo.jpg'); background-size: cover;"></span>
-            <h2>Milpo</h2>
+            <span class="avatar" style="background: url('img/avatar.jpg'); background-size: cover;"></span>
         </ion-header-bar>
         <ion-content class="stable-bg has-expanded-header">
             <ion-list>
@@ -23,6 +22,9 @@
                 </ion-item>
                 <ion-item nav-clear menu-close ui-sref="tab.home">
                     Inicio
+                </ion-item>
+                <ion-item nav-clear menu-close ui-sref="tabsUsers">
+                    Usuarios
                 </ion-item>
                 <ion-item nav-clear menu-close ng-click="index.salir()" ng-show="index.isAuth">Salir
                 </ion-item>
