@@ -28,8 +28,7 @@ function(Autentificacion, almacenamientoLocal, $state, $scope) {
     $scope.$parent.index.isAuth = false;
   }
 
-  if(almacenamientoLocal.getUsuario() !== 'not saved') {
-    consoele.log('kkkk');
+  if(almacenamientoLocal.getUsuario() !== 'not saved') {    
     login.user = almacenamientoLocal.getUsuario().user;
     login.password = almacenamientoLocal.getUsuario().password;
     login.isRemember = true;
