@@ -24,7 +24,14 @@
                 <ion-item nav-clear menu-close ui-sref="tab.web">
                     web
                 </ion-item>
-                <ion-item nav-clear menu-close ng-click="index.salir()" ng-show="index.isAuth">Salir
+                <ion-item nav-clear menu-close ui-sref="tab.labores">
+                    Labores
+                </ion-item>
+                <ion-item nav-clear menu-close ui-sref="tab.users">
+                    Usuarios
+                </ion-item>
+                <ion-item nav-clear menu-close ng-click="index.salir()" ng-show="index.isAuth">
+                  Salir
                 </ion-item>
 
             </ion-list>

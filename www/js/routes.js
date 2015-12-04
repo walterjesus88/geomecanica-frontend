@@ -63,7 +63,7 @@ angular.module('app.routes', [])
   .state('tab.web', {
     url: "/web",
       views: {
-        'menuContent': {        
+        'menuContent': {
           templateUrl: "templates/web.html",
           controller: 'RiesgoCtrl as createRiesgo'
         },
@@ -85,13 +85,24 @@ angular.module('app.routes', [])
     controller: 'loginCtrl as login'
   })
 
-  .state('tabsUsers.users', {
+  .state('tab.users', {
     url: '/users',
     cache: false,
     views: {
-      'tab1': {
+      'menuContent': {
         templateUrl: 'templates/users.html',
         controller: 'usersCtrl as users'
+      }
+    }
+  })
+
+  .state('tab.labores', {
+    url: '/labores',
+    cache: false,
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/labores.html',
+        controller: 'laboresCtrl as labores'
       }
     }
   })
@@ -111,18 +122,6 @@ angular.module('app.routes', [])
     url: '/adminUsers',
     abstract: true,
     templateUrl: 'templates/tabsUsers.html'
-  })
-
-
-  .state('tabsLabores.labores', {
-    url: '/labores',
-    cache: false,
-    views: {
-      'tab1': {
-        templateUrl: 'templates/labores.html',
-        controller: 'laboresCtrl as labores'
-      }
-    }
   })
 
   .state('tabsLabores.create', {

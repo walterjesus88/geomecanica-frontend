@@ -324,6 +324,7 @@ function(Usuario, Rol, $ionicModal, $scope) {
     });
   }
 
+  //modal para editar el usuario
   $ionicModal.fromTemplateUrl('edit-user-modal.html', {
     scope: $scope,
     animation: 'slide-in-up'
@@ -348,6 +349,7 @@ function(Usuario, Rol, $ionicModal, $scope) {
     users.modal_edit.hide();
   }
 
+  //modal para cambiar la contrasena del usuario
   $ionicModal.fromTemplateUrl('change-password.html', {
     scope: $scope,
     animation: 'slide-in-up'
@@ -373,50 +375,54 @@ function(Usuario, Rol, $ionicModal, $scope) {
     users.modal_pass.hide();
   }
 
-}])
+//modal para crear usuarios
+  $ionicModal.fromTemplateUrl('createUser.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    users.modal_create = modal;
+  });
 
+  users.openCreate = function() {
+    users.modal_create.show();
+  }
 
-
-.controller('createUserCtrl', ['Usuario', '$state', 'Rol',
-function(Usuario, $state, Rol) {
-
-  createUser = this;
-
-  createUser.usuario = {};
-
-  createUser.roles = Rol.query();
-
-  createUser.nuevoUsuario = function() {
+  users.closeCreate = function() {
     var user = new Usuario();
-    user.uid = createUser.usuario.uid;
-    user.dni = createUser.usuario.dni;
-    user.nombre = createUser.usuario.nombre;
-    user.password = createUser.usuario.password;
-    user.rol_id = createUser.usuario.rol_id;
-    user.correo = createUser.usuario.correo;
+    user.uid = users.nuevo.uid;
+    user.dni = users.nuevo.dni;
+    user.nombre = users.nuevo.nombre;
+    user.password = users.nuevo.password;
+    user.rol_id = users.nuevo.rol_id;
+    user.correo = users.nuevo.correo;
     user.$save(function() {
-      $state.go('tabsUsers.users');
+      users.modal_create.hide();
+      users.usuarios = Usuario.query();
     });
   }
 
-  createUser.verificarNombre = function() {
-    if (!/^([a-zA-ZñÑ-áéíóúÁÉÍÓÚ\s])*$/.test(createUser.usuario.nombre)) {
-      createUser.usuario.nombre = createUser.usuario.nombre.slice(0, createUser.usuario.nombre.length - 1);
+  users.cancelCreate = function() {
+    users.modal_create.hide();
+  }
+
+  users.verificarNombre = function() {
+    if (!/^([a-zA-ZñÑ-áéíóúÁÉÍÓÚ\s])*$/.test(users.nuevo.nombre)) {
+      users.nuevo.nombre = users.nuevo.nombre.slice(0, users.nuevo.nombre.length - 1);
     }
   }
 
-  createUser.verificarEmail = function() {
-    if (!/\S+@\S+\.\S+/.test(createUser.usuario.correo)) {
-      createUser.usuario.correo = '';
+  users.verificarEmail = function() {
+    if (!/\S+@\S+\.\S+/.test(users.nuevo.correo)) {
+      users.nuevo.correo = '';
     }
   }
 
-  createUser.verificarDni = function() {
-    if (!/^([0-9])*$/.test(createUser.usuario.dni)) {
-      createUser.usuario.dni = createUser.usuario.dni.slice(0, createUser.usuario.dni.length - 1);
+  users.verificarDni = function() {
+    if (!/^([0-9])*$/.test(users.nuevo.dni)) {
+      users.nuevo.dni = users.nuevo.dni.slice(0, users.nuevo.dni.length - 1);
     }
-    if (createUser.usuario.dni.length > 8) {
-      createUser.usuario.dni = createUser.usuario.dni.slice(0, createUser.usuario.dni.length - 1);
+    if (users.nuevo.dni.length > 8) {
+      users.nuevo.dni = users.nuevo.dni.slice(0, users.nuevo.dni.length - 1);
     }
   }
 
