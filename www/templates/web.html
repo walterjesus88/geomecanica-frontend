@@ -7,16 +7,15 @@
 			<div class="item item-divider">Fecha</div>
 				<ionic-datepicker input-obj="datepickerObject" ng-model="createRiesgo.datepickerObject.inputDate">
 				      <button class="button button-block button-positive"> {{createRiesgo.datepickerObject.inputDate | date:'dd - MMMM - yyyy'}}</button>
-				</ionic-datepicker>			
-			
-
+				</ionic-datepicker>
 		  	<div class="list list-inset">
 				<label class="item item-input item-select">
-					<div class="input-label">
-					    <select class="form-control" ng-model="createRiesgo.labor" ng-change="createRiesgo.cargarTipo()"
-         					 ng-options="c.codigo for c in labores ">
-        				</select>
-					</div>
+					<div class="input-label"> 
+      					Labor
+    				</div>
+					<select class="form-control" ng-model="createRiesgo.labor" ng-change="createRiesgo.cargarTipo()"
+         				ng-options="c.codigo for c in createRiesgo.labores ">
+        			</select>				
 				</label>
 				<label class="item item-input">
 				        <input type="text" placeholder="Nivel" ng-model="createRiesgo.labor.nivel">
@@ -31,14 +30,12 @@
 			    {{ item.text }}
 			</ion-radio>
 		</div>
-
-		<div class="list card stable-bg">
-	
+		<div class="list card stable-bg">	
 			<div class="item item-divider">Tipo de Labor</div>
 			<ion-radio ng-repeat="item in createRiesgo.tipolabor"
-			    ng-value="item.value"
+			    ng-value="item.tipo_id"
 			    ng-model="createRiesgo.labor.tipoTipoId"  name="group_tipolabor">
-			    {{ item.text }}
+			    {{ item.nombre }}
 			</ion-radio>
 		</div>
 	</div>
@@ -48,7 +45,7 @@
 			<div class="row">
 				<ion-radio ng-repeat="item in createRiesgo.empresas"
 				    ng-value="item.empresaid"
-				    ng-model="createRiesgo.insp_empresa.empresa"
+				    ng-model="createRiesgo.labor.empresaEmpresaid"
 				    name="group_empresa">
 				          {{ item.nombre }}
 				</ion-radio>
@@ -59,18 +56,17 @@
 		    	<div class="col col-10">
 			  		<label class="item item-input item-stacked-label">
 				    	<span class="input-label">Ancho</span>
-
 				  	</label>
 			  	</div>
 		  		<div class="col">
 			  		<label class="item item-input item-stacked-label">
-				    	<span class="input-label">PROG</span>
-				    	<input type="text" ng-model="createRiesgo.labor.ancho_pro" >
+				    	<span class="input-label">Prog</span> 				    
+				  		<input type="text" ng-model="createRiesgo.labor.ancho_pro" > 
 				  	</label>
 			  	</div>
 		  		<div class="col">
 				  		<label class="item item-input item-stacked-label">
-				    	<span class="input-label">REAL</span>
+				    	<span class="input-label">Real</span>
 				    	<input type="text" ng-model="createRiesgo.ancho_real"  >
 				  	</label>
 			  	</div>
@@ -97,32 +93,28 @@
 		  		</div>
 		  		<div class="col">
 					<div class="list">
-						<label class="item item-input">
-
+						<label class="item item-input item-stacked-label">
 					    <input type="text" ng-model="createRiesgo.labor.alto_pro">
 					  	</label>
 					</div>
 		  		</div>
 		  		<div class="col">
 					<div class="list">
-						<label class="item item-input">
-
+						<label class="item item-input item-stacked-label">
 					    <input type="text" ng-model="createRiesgo.alto_real">
 					  	</label>
 					</div>
 		  		</div>
 		  		<div class="col">
 					<div class="list">
-						<label class="item item-input">
-
+						<label class="item item-input item-stacked-label">
 					    <input type="text" ng-model="createRiesgo.porcentaje_tabla">
 					  	</label>
 					</div>
 		  		</div>
 		  		<div class="col">
 					<div class="list">
-						<label class="item item-input">
-
+						<label class="item item-input item-stacked-label">
 					    <input type="text" ng-model="createRiesgo.alto_exc_real">
 					  	</label>
 					</div>
@@ -131,16 +123,16 @@
 		</div>
 		<div class="list card stable-bg">
 		  	<div class="row">
-					<div class="col col-10">
-						<input type="text" ng-model="createRiesgo.labor.tipo.nombre" ng-click="createRiesgo.openTablaSostenimiento()">
-					</div>
-		    	<div class="col col-20">
-			    	<label class="item item-input">
-							<select disabled ng-model="createRiesgo.tipo_roca" ng-options="roca.rocaid as roca.codigo for roca in createRiesgo.rocas">
-							</select>
+				<div class="col col-10">
+					<input type="text" ng-model="createRiesgo.labor.tipo.nombre" ng-click="createRiesgo.openTablaSostenimiento()">
+				</div>
+		    	<div class="col">		    	
+			    	<label class="item item-input item-select">
+						<select disabled ng-model="createRiesgo.tipo_roca" ng-options="roca.rocaid as roca.codigo for roca in createRiesgo.rocas">
+						</select>
 			    	</label>
 		    	</div>
-		    	<div class="col ">
+		    	<div class="col">
 			    	<label class="item item-input">
 							<select disabled ng-model="createRiesgo.tipo_sostenimiento"
 							ng-options="sost.sostenimientoid as sost.descripcion for sost in createRiesgo.sostenimientos">
@@ -159,58 +151,45 @@
 		    </div>
 		</div>
 
-		<div class="list card stable-bg">
+		<div class="list card">
 		    <div class="row">
-				<div class="col">
-				    <div class="item item-divider">Responsable de:</div>
+				<div class="col " >		
 				    <label class="item item-input item-select">
 						<div class="input-label">
-						   	<select class="form-control" ng-model="createRiesgo.responsable"
-		         				 ng-options="c.nombre for c in createRiesgo.usuarios ">
-		        			</select>
+							Responsable de:
 						</div>
+						<select class="form-control" ng-model="createRiesgo.responsable"
+		         				 ng-options="c.nombre for c in createRiesgo.usuarios ">
+		        		</select>
 					</label>
-				</div>
-				<div class="col">
-				    <div class="item item-divider">Seguridad </div>
+						
 				    <label class="item item-input item-select">
 					    <div class="input-label">
-					     	<select class="form-control" ng-model="createRiesgo.seguridad"
-	         				 ng-options="c.nombre for c in createRiesgo.usuarios ">
-	        				</select>
+					    	Seguridad
 					    </div>
+					    <select class="form-control" ng-model="createRiesgo.seguridad"
+	         				 ng-options="c.nombre for c in createRiesgo.usuarios ">
+	        			</select>
 					</label>
 				</div>
-				<div class="col">
-				    <div class="item item-divider">Geomecanico</div>
+				<div class="col">				
 				    <label class="item item-input item-select">
 					    <div class="input-label">
-					     	<select class="form-control" ng-model="createRiesgo.geomecanico"
-	         				 ng-options="c.nombre for c in createRiesgo.usuarios ">
-	        				</select>
+					    	Geomecanico
 					    </div>
+					  	<select class="form-control" ng-model="createRiesgo.geomecanico"
+	         				 ng-options="c.nombre for c in createRiesgo.usuarios ">
+	        			</select>
 					</label>
-				</div>
-				<div class="col">
-				    <div class="item item-divider">Operaciones</div>
+						    
 				    <label class="item item-input item-select">
 					    <div class="input-label">
-					     	<select class="form-control" ng-model="createRiesgo.operaciones"
-	         				 ng-options="c.nombre for c in createRiesgo.usuarios ">
-	        				</select>
+					    	 Operaciones 
 					    </div>
+					    <select class="form-control" ng-model="createRiesgo.operaciones"
+	         				ng-options="c.nombre for c in createRiesgo.usuarios ">
+	        			</select>
 					</label>
-				</div>
-				<div class="col">
-					<div class="item item-divider">Nivel de Riesgo</div>
-				    <div class="item item-body">
-				       	<div>
-
-				           	<input type="text" ng-model="createRiesgo.nivelRiesgo">
-							<div>Resultado: {{createRiesgo.nivelRiesgo}}</div>
-
-				    	</div>
-				    </div>
 				</div>
 				<!-- <div >
 					<ion-select label="Placa do Veículo" label-field="nmPlaca" provider="veiculos"  ng-model="veiculo"/>
@@ -255,12 +234,19 @@
 				</ion-radio>
 		</div>
 
-	</div>
+		<div class="list card">
+			<div class="item item-divider">Nivel de Riesgo</div>
+				 <div class="item item-body">
+				    <div>
+				        <input type="text" ng-model="createRiesgo.nivelRiesgo">						
+				    </div>
+				</div>
+			</div>
+		</div>
 </div>
 
 
 <div class="row">
-
 			<div class="col ">
 				<div class="card card-gallery item item-text-wrap">
 					<ion-list>
@@ -283,9 +269,6 @@
 				    </ion-list>
 				</div>
 			</div>
-
-
-
 			<div class="col" >
 				<div class="card card-gallery item item-text-wrap">
 				    <ion-list>

@@ -20,12 +20,33 @@ angular.module('app.routes', [])
     templateUrl: 'templates/menu.html'
   })
 
+  .state('tab.web', {
+    url: "/web",
+      views: {
+        'menuContent': {
+          templateUrl: "templates/web.html",
+          controller: 'RiesgoCtrl as createRiesgo'
+        },
+        'fabContent': {
+          template: '<button id="fab-activity" class="button button-fab button-fab-top-right expanded button-energized-900 flap"><i class="icon ion-paper-airplane"></i></button>',
+          // controller: function ($timeout) {
+          //     $timeout(function () {
+          //       document.getElementById('fab-activity').classList.toggle('on');
+          //   }, 200);
+          // }
+        }
+    }
+  })
+
   .state('tab.home', {
     url: '/home',
     views: {
-      'home-tab': {
+      'menuContent': {
         templateUrl: "templates/home.html",
         controller: 'homeCtrl as home'
+      },
+      'fabContent': {
+        template: ''
       }
     }
   })
@@ -60,23 +81,6 @@ angular.module('app.routes', [])
     }
   })
 
-  .state('tab.web', {
-    url: "/web",
-      views: {
-        'menuContent': {
-          templateUrl: "templates/web.html",
-          controller: 'RiesgoCtrl as createRiesgo'
-        },
-        'fabContent': {
-          template: '<button id="fab-activity" class="button button-fab button-fab-top-right expanded button-energized-900 flap"><i class="icon ion-paper-airplane"></i></button>',
-            controller: function ($timeout) {
-              $timeout(function () {
-                document.getElementById('fab-activity').classList.toggle('on');
-            }, 200);
-          }
-        }
-    }
-  })
 
   .state('login', {
     url: '/login',
@@ -124,6 +128,7 @@ angular.module('app.routes', [])
     templateUrl: 'templates/tabsUsers.html'
   })
 
+
   .state('tabsLabores.create', {
     url: '/create',
     cache: false,
@@ -141,14 +146,9 @@ angular.module('app.routes', [])
     templateUrl: 'templates/tabsLabores.html'
   })
 
-
-
-
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
-
   $httpProvider.interceptors.push('httpInterceptor');
-
 
   // middleware que escucha los eventos de cambio de vista o estado
   $urlRouterProvider.deferIntercept();

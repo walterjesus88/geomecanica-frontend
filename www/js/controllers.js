@@ -43,7 +43,7 @@ function(Autentificacion, almacenamientoLocal, $state, $scope) {
       almacenamientoLocal.guardarDatos('token', data.token);
       $scope.$parent.index.isAuth = true;
 
-      $state.go('tab.home');
+      $state.go('tab.web');
       login.alerta = '';
       if (login.isRemember) {
         almacenamientoLocal.guardarDatos('usuario', {user: login.user, password: login.password});
@@ -52,7 +52,7 @@ function(Autentificacion, almacenamientoLocal, $state, $scope) {
         login.password = '';
         almacenamientoLocal.eliminarDatos('usuario');
       }
-      $state.go('tab.home');
+      $state.go('tab.web');
     })
     .catch(function(err) {
       if (err === 'usuario no existe') {
@@ -140,29 +140,24 @@ function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicMod
   var weekDaysList = ["Sun", "Mon", "Tue", "Wed", "thu", "Fri", "Sat"];
   var monthList = ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
-  createRiesgo.tipolabor = [{ text: "Avance", value:'A', },{ text: "Explotacion", value:'E', }, ];
-  createRiesgo.labor= {tipoTipoId: 'A' };
-
   createRiesgo.preguntasList = Pregunta.query();
   //console.log(createRiesgo.preguntasList);
-
-  $scope.labores = Labor.query();
-  createRiesgo.tipos = Tipo.query();
-  //console.log($scope.labores);
+  createRiesgo.labores = Labor.query();
+  console.log(createRiesgo.labores);
+  // console.log(createRiesgo.tipos);
 
   createRiesgo.usuarios = Usuario.query();
   //console.log(createRiesgo.usuarios);
 
+  //createRiesgo.tipolabor = Tipo.query();
+  //console.log(createRiesgo.tipolabor);
+  createRiesgo.tipolabor = [{ nombre: "Avance", tipo_id:'A', },{ nombre: "Explotacion", tipo_id:'E' }];
+  //createRiesgo.labor = {tipoTipoId: 'A' };
+  
   createRiesgo.empresas= Empresa.query();
-  createRiesgo.insp_empresa = {empresa: 'CMA' };
+  createRiesgo.labor = {empresaEmpresaid: 'CMA'};
   //console.log(createRiesgo.empresas);
 
-
-  createRiesgo.operators =
-  {
-    "value": "suma",
-    "values": ["suma", "resta", "mutliplicacion", "division"]
-  };
 
   createRiesgo.nivelRiesgo='BAJO';
 
@@ -172,7 +167,7 @@ function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicMod
     if(item.preguntaid==8 && item.checked==false)
     {
         console.log('ohhhh');
-        resultado='gg'
+        resultado='CRITICO'
         createRiesgo.slark='C';
     }
     else if(createRiesgo.inps_OL.sostenimiento=='FALSE' )
@@ -244,7 +239,7 @@ function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicMod
     inspeccion.comentario = createRiesgo.comment;
     inspeccion.ancho_real = createRiesgo.ancho_real;
     inspeccion.alto_real= createRiesgo.alto_real;
-    inspeccion.empresaEmpresaid= createRiesgo.insp_empresa.empresa;
+    //inspeccion.empresaEmpresaid= createRiesgo.insp_empresa.empresa;
     inspeccion.fecha= fecha;
     inspeccion.laborCodigo=createRiesgo.labor.codigo;
     inspeccion.recomendacion=createRiesgo.insp_recomendacion.rgeo;
