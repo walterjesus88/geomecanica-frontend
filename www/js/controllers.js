@@ -140,22 +140,22 @@ function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicMod
   var weekDaysList = ["Sun", "Mon", "Tue", "Wed", "thu", "Fri", "Sat"];
   var monthList = ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
-  createRiesgo.tipolabor = [{ text: "Avance", value:'A', },{ text: "Explotacion", value:'E' }];
-  createRiesgo.labor= {tipoTipoId: 'A' };
-
   createRiesgo.preguntasList = Pregunta.query();
   //console.log(createRiesgo.preguntasList);
   createRiesgo.labores = Labor.query();
   console.log(createRiesgo.labores);
-
-  createRiesgo.tipos = Tipo.query();
-  //console.log($scope.labores);
+  // console.log(createRiesgo.tipos);
 
   createRiesgo.usuarios = Usuario.query();
   //console.log(createRiesgo.usuarios);
 
+  //createRiesgo.tipolabor = Tipo.query();
+  //console.log(createRiesgo.tipolabor);
+  createRiesgo.tipolabor = [{ nombre: "Avance", tipo_id:'A', },{ nombre: "Explotacion", tipo_id:'E' }];
+  //createRiesgo.labor = {tipoTipoId: 'A' };
+  
   createRiesgo.empresas= Empresa.query();
-  createRiesgo.labor = {empresaEmpresaid: 'CMA' };
+  createRiesgo.labor = {empresaEmpresaid: 'CMA'};
   //console.log(createRiesgo.empresas);
 
 

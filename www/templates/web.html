@@ -12,11 +12,12 @@
 
 		  	<div class="list list-inset">
 				<label class="item item-input item-select">
-					<div class="input-label">
-					    <select class="form-control" ng-model="createRiesgo.labor" ng-change="createRiesgo.cargarTipo()"
-         					 ng-options="c.codigo for c in createRiesgo.labores ">
-        				</select>
-					</div>
+					<div class="input-label"> 
+      					Labor
+    				</div>
+					<select class="form-control" ng-model="createRiesgo.labor" ng-change="createRiesgo.cargarTipo()"
+         				ng-options="c.codigo for c in createRiesgo.labores ">
+        			</select>				
 				</label>
 				<label class="item item-input">
 				        <input type="text" placeholder="Nivel" ng-model="createRiesgo.labor.nivel">
@@ -32,13 +33,12 @@
 			</ion-radio>
 		</div>
 
-		<div class="list card stable-bg">
-	
+		<div class="list card stable-bg">	
 			<div class="item item-divider">Tipo de Labor</div>
 			<ion-radio ng-repeat="item in createRiesgo.tipolabor"
-			    ng-value="item.value"
+			    ng-value="item.tipo_id"
 			    ng-model="createRiesgo.labor.tipoTipoId"  name="group_tipolabor">
-			    {{ item.text }}
+			    {{ item.nombre }}
 			</ion-radio>
 		</div>
 	</div>
@@ -64,13 +64,13 @@
 			  	</div>
 		  		<div class="col">
 			  		<label class="item item-input item-stacked-label">
-				    	<span class="input-label">PROG</span>
+				    	<span class="input-label">Prog</span>
 				    	<input type="text" ng-model="createRiesgo.labor.ancho_pro" >
 				  	</label>
 			  	</div>
 		  		<div class="col">
 				  		<label class="item item-input item-stacked-label">
-				    	<span class="input-label">REAL</span>
+				    	<span class="input-label">Real</span>
 				    	<input type="text" ng-model="createRiesgo.ancho_real"  >
 				  	</label>
 			  	</div>
@@ -97,32 +97,28 @@
 		  		</div>
 		  		<div class="col">
 					<div class="list">
-						<label class="item item-input">
-
+						<label class="item item-input item-stacked-label">
 					    <input type="text" ng-model="createRiesgo.labor.alto_pro">
 					  	</label>
 					</div>
 		  		</div>
 		  		<div class="col">
 					<div class="list">
-						<label class="item item-input">
-
+						<label class="item item-input item-stacked-label">
 					    <input type="text" ng-model="createRiesgo.alto_real">
 					  	</label>
 					</div>
 		  		</div>
 		  		<div class="col">
 					<div class="list">
-						<label class="item item-input">
-
+						<label class="item item-input item-stacked-label">
 					    <input type="text" ng-model="createRiesgo.porcentaje_tabla">
 					  	</label>
 					</div>
 		  		</div>
 		  		<div class="col">
 					<div class="list">
-						<label class="item item-input">
-
+						<label class="item item-input item-stacked-label">
 					    <input type="text" ng-model="createRiesgo.alto_exc_real">
 					  	</label>
 					</div>
@@ -131,16 +127,16 @@
 		</div>
 		<div class="list card stable-bg">
 		  	<div class="row">
-					<div class="col col-10">
-						<input type="text" ng-model="createRiesgo.labor.tipo.nombre" ng-click="createRiesgo.openTablaSostenimiento()">
-					</div>
-		    	<div class="col col-20">
-			    	<label class="item item-input">
-							<select disabled ng-model="createRiesgo.tipo_roca" ng-options="roca.rocaid as roca.codigo for roca in createRiesgo.rocas">
-							</select>
+				<div class="col col-10">
+					<input type="text" ng-model="createRiesgo.labor.tipo.nombre" ng-click="createRiesgo.openTablaSostenimiento()">
+				</div>
+		    	<div class="col">		    	
+			    	<label class="item item-input item-select">
+						<select disabled ng-model="createRiesgo.tipo_roca" ng-options="roca.rocaid as roca.codigo for roca in createRiesgo.rocas">
+						</select>
 			    	</label>
 		    	</div>
-		    	<div class="col ">
+		    	<div class="col">
 			    	<label class="item item-input">
 							<select disabled ng-model="createRiesgo.tipo_sostenimiento"
 							ng-options="sost.sostenimientoid as sost.descripcion for sost in createRiesgo.sostenimientos">
@@ -199,7 +195,6 @@
 	        			</select>
 					</label>
 				</div>
-
 				<!-- <div >
 					<ion-select label="Placa do Veículo" label-field="nmPlaca" provider="veiculos"  ng-model="veiculo"/>
 				</div>
@@ -256,7 +251,6 @@
 
 
 <div class="row">
-
 			<div class="col ">
 				<div class="card card-gallery item item-text-wrap">
 					<ion-list>
@@ -279,9 +273,6 @@
 				    </ion-list>
 				</div>
 			</div>
-
-
-
 			<div class="col" >
 				<div class="card card-gallery item item-text-wrap">
 				    <ion-list>
