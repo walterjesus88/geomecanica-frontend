@@ -111,22 +111,6 @@ angular.module('app.routes', [])
     }
   })
 
-  .state('tabsUsers.create', {
-    url: '/create',
-    cache: false,
-    views: {
-      'tab2': {
-        templateUrl: 'templates/createUser.html',
-        controller: 'createUserCtrl as createUser'
-      }
-    }
-  })
-
-  .state('tabsUsers', {
-    url: '/adminUsers',
-    abstract: true,
-    templateUrl: 'templates/tabsUsers.html'
-  })
 
 
   .state('tabsLabores.create', {

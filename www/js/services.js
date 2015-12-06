@@ -138,6 +138,12 @@ function($http, $q, servidorAPI, almacenamientoLocal) {
 
 
 
+.factory('Porcentaje', ['$resource', 'servidorAPI', function($resource, servidorAPI) {
+  return $resource(servidorAPI + '/porcentajes');
+}])
+
+
+
 .factory('httpInterceptor', ['$localStorage',
 function($localStorage) {
   return {

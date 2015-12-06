@@ -79,8 +79,10 @@ function(Labor, $scope, $state) {
 }])
 
 
-.controller('RiesgoCtrl',['$scope','$ionicPopup','Usuario','Empresa','Labor','Pregunta','Inspeccion', '$ionicModal', 'Roca', 'Sostenimiento', 'Tipo',
-function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicModal, Roca, Sostenimiento, Tipo) {
+.controller('RiesgoCtrl',['$scope','$ionicPopup','Usuario','Labor',
+'Pregunta','Inspeccion', '$ionicModal', 'Roca', 'Sostenimiento', 'Tipo', 'Porcentaje',
+function($scope,$ionicPopup,Usuario,Labor,Pregunta,Inspeccion,
+  $ionicModal, Roca, Sostenimiento, Tipo, Porcentaje) {
 
   $scope.settings = {
     enableFriends: true
@@ -140,130 +142,121 @@ function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicMod
   var weekDaysList = ["Sun", "Mon", "Tue", "Wed", "thu", "Fri", "Sat"];
   var monthList = ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
-  createRiesgo.preguntasList = Pregunta.query();
-  //console.log(createRiesgo.preguntasList);
+  Pregunta.query().$promise.then(function(preguntas) {
+    createRiesgo.preguntasList = [];
+    createRiesgo.respuestas = [];
+    preguntas.forEach(function(item) {
+      item.isDisabled = true;
+      if (item.posicion < 8) {
+        item.columna = 'left';
+      } else {
+        item.columna = 'right';
+      }
+      createRiesgo.preguntasList.push(item);
+    });
+    createRiesgo.preguntasList[0].isDisabled = false;
+    createRiesgo.respuestas['8'] = false;
+  });
   createRiesgo.labores = Labor.query();
-  console.log(createRiesgo.labores);
-  // console.log(createRiesgo.tipos);
-
   createRiesgo.usuarios = Usuario.query();
-  //console.log(createRiesgo.usuarios);
 
-  //createRiesgo.tipolabor = Tipo.query();
-  //console.log(createRiesgo.tipolabor);
-  createRiesgo.tipolabor = [{ nombre: "Avance", tipo_id:'A', },{ nombre: "Explotacion", tipo_id:'E' }];
-  //createRiesgo.labor = {tipoTipoId: 'A' };
-  
-  createRiesgo.empresas= Empresa.query();
-  createRiesgo.labor = {empresaEmpresaid: 'CMA'};
-  //console.log(createRiesgo.empresas);
+  createRiesgo.calcularPorAncho = function() {
+    createRiesgo.ancho_exc_real = ((createRiesgo.ancho_real * 100) / createRiesgo.labor.ancho_pro) - 100;
+    createRiesgo.calculariesgo();
+  }
 
+  createRiesgo.calcularPorAlto = function() {
+    createRiesgo.alto_exc_real = ((createRiesgo.alto_real * 100) / createRiesgo.labor.alto_pro) - 100;
+    createRiesgo.calculariesgo();
+  }
 
-  createRiesgo.nivelRiesgo='BAJO';
 
   createRiesgo.calculariesgo = function(item)
   {
-    console.log(item);
-    if(item.preguntaid==8 && item.checked==false)
-    {
-        console.log('ohhhh');
-        resultado='CRITICO'
-        createRiesgo.slark='C';
+    createRiesgo.nivelRiesgo='BAJO';
+    //si una de la condicionales relevantes es false entonces es critico
+    if(!createRiesgo.inps_OL.sostenimiento || !createRiesgo.insp_install.resp || !createRiesgo.insp_recomendacion.rgeo) {
+      createRiesgo.slark = 'B';
+      createRiesgo.nivelRiesgo = 'CRITICO';
     }
-    else if(createRiesgo.inps_OL.sostenimiento=='FALSE' )
-    {
-      createRiesgo.slark='B';
-      resultado='CRITICO';
+    //si la pregunta 8 esta en false entonces es critico
+    else if(!createRiesgo.respuestas['8']) {
+      createRiesgo.slark = 'B';
+      createRiesgo.nivelRiesgo = 'CRITICO';
     }
-    else if(createRiesgo.inps_OL.sostenimiento=='TRUE' && createRiesgo.insp_recomendacion.rgeo=='TRUE' && createRiesgo.insp_install.resp=='TRUE')
-    {
-      createRiesgo.slark='B';
-      resultado='BAJO';
+    // dependiendo del porcentaje se calcula el nivel de riesgo
+    else if (createRiesgo.alto_exc_real || createRiesgo.ancho_exc_real) {
+      createRiesgo.slark = 'B';
+      var respuesta = Porcentaje.query({roca: createRiesgo.tipo_roca, porAlto: createRiesgo.alto_exc_real, porAncho: createRiesgo.ancho_exc_real});
+      respuesta.$promise.then(function(porcentaje) {
+        createRiesgo.nivelRiesgo = porcentaje[0].nivel;
+      });
     }
-
-    else if(createRiesgo.inps_OL.sostenimiento=='TRUE' && (createRiesgo.insp_install.resp=='TRUE' || createRiesgo.insp_recomendacion.rgeo=='TRUE'))
-    {
-      createRiesgo.slark='B';
-      resultado='MEDIO';
-    }
-    else if(createRiesgo.inps_OL.sostenimiento=='TRUE' && createRiesgo.insp_install.resp=='FALSE'  && createRiesgo.insp_recomendacion.rgeo=='FALSE')
-    {
-      createRiesgo.slark='B';
-      resultado='CRITICO';
-    }
-
-    createRiesgo.nivelRiesgo=resultado;
-    console.log(createRiesgo.nivelRiesgo);
-
   }
 
-  //$scope.$watch(createRiesgo.calculariesgo);
-  // var items = angular.fromJson($scope.labores);
-  // angular.forEach(items, function(item) {
-  //   //models.push(item);
-  //   console.log(item);
-  // });
+  createRiesgo.habilitarPreguntas = function() {
+    //deshabilitar las preguntas segun las condiciones
+    for (var i = 1; i < createRiesgo.preguntasList.length; i++) {
+      createRiesgo.preguntasList[i].isDisabled = false;
+    }
+    if (createRiesgo.respuestas['1'] === 'SIN PERSONAL') {
+      for (var i = 1; i < 4; i++) {
+        createRiesgo.preguntasList[i].isDisabled = true;
+      }
+    }
+    if (!createRiesgo.respuestas['5']) {
+      createRiesgo.preguntasList[5].isDisabled = true;
+    }
+  }
 
-  // $scope.labores.$promise.then(function(data) {
-  //     console.log(data);
-  //     //console.log(JSON.stringify(data));
-  // });
-
-  // var data = [{id:1,nmPlaca:'IKC-1394'},{id:2,nmPlaca:'IKY-5437'},{id:3,nmPlaca:'IKC-1393'},{id:4,nmPlaca:'IKI-5437'},{id:5,nmPlaca:'IOC-8749'},{id:6,nmPlaca:'IMG-6509'}];
-  // $scope.veiculos = data;
-  // console.log($scope.veiculos);
-
-  createRiesgo.guardia = [{ text: "Dia", value:'DIA', },{ text: "Noche", value:'NOCHE', }, ];
+  createRiesgo.guardia = [{ text: "Día", value:'DIA'}, { text: "Noche", value:'NOCHE'}];
   createRiesgo.insp_guard = {guardia: 'DIA' };
 
-  createRiesgo.opcionlabor = [{ text: "Labor con sostenimiento", value:'TRUE'},{text: "Labor sin sostenimiento", value:'FALSE'}];
-  createRiesgo.inps_OL = {sostenimiento: 'TRUE' };
+  createRiesgo.opcionlabor = [{ text: "Si", value: true},{text: "No", value: false}];
+  createRiesgo.inps_OL = {sostenimiento: true };
 
-  createRiesgo.geomecanica = [{ text: "Cumplio", value:'TRUE'},{text: "No Cumplio", value:'FALSE'}];
-  createRiesgo.insp_recomendacion = {rgeo: 'TRUE' };
+  createRiesgo.geomecanica = [{ text: "Cumplió", value: true},{text: "No Cumplió", value: false}];
+  createRiesgo.insp_recomendacion = {rgeo: true };
 
-  createRiesgo.install = [{ text: "Correcta", value:'TRUE'},{text: "Incorrecta", value:'FALSE'}];
-  createRiesgo.insp_install = {resp: 'TRUE' };
+  createRiesgo.install = [{ text: "Correcta", value: true},{text: "Incorrecta", value: false}];
+  createRiesgo.insp_install = {resp: true };
 
 
   createRiesgo.guardarinspeccion = function() {
 
     fecha = createRiesgo.datepickerObject.inputDate;
+
     var inspeccion = new Inspeccion();
 
-    //console.log(createRiesgo.responsable.uid);
     inspeccion.periodo = createRiesgo.insp_guard.guardia;
     inspeccion.recomendacion = createRiesgo.insp_recomendacion.rgeo;
     inspeccion.instalacion = createRiesgo.insp_install.resp;
-
     inspeccion.comentario = createRiesgo.comment;
     inspeccion.ancho_real = createRiesgo.ancho_real;
-    inspeccion.alto_real= createRiesgo.alto_real;
-    //inspeccion.empresaEmpresaid= createRiesgo.insp_empresa.empresa;
-    inspeccion.fecha= fecha;
-    inspeccion.laborCodigo=createRiesgo.labor.codigo;
-    inspeccion.recomendacion=createRiesgo.insp_recomendacion.rgeo;
-    inspeccion.estado=createRiesgo.inps_OL.sostenimiento;
+    inspeccion.alto_real = createRiesgo.alto_real;
+    inspeccion.fecha = fecha;
+    inspeccion.laborCodigo = createRiesgo.labor.codigo;
+    inspeccion.recomendacion = createRiesgo.insp_recomendacion.rgeo;
+    inspeccion.estado = createRiesgo.inps_OL.sostenimiento;
 
-    inspeccion.ResponsableUid=createRiesgo.responsable.uid;
-    inspeccion.SeguridadUid=createRiesgo.seguridad.uid;
-    inspeccion.GeomecanicoUid=createRiesgo.geomecanico.uid;
-    inspeccion.OperacionesUid=createRiesgo.operaciones.uid;
+    inspeccion.ResponsableUid = createRiesgo.responsable.uid;
+    inspeccion.SeguridadUid = createRiesgo.seguridad.uid;
+    inspeccion.GeomecanicoUid = createRiesgo.geomecanico.uid;
+    inspeccion.OperacionesUid = createRiesgo.operaciones.uid;
 
     inspeccion.tipo = createRiesgo.labor.tipoTipoId;
     inspeccion.RocaId = createRiesgo.tipo_roca;
     inspeccion.SostenimientoId = createRiesgo.tipo_sostenimiento;
+    inspeccion.respuestas = createRiesgo.respuestas;
 
-    console.log(inspeccion);
+    inspeccion.nivel_riesgo = createRiesgo.nivelRiesgo;
 
     inspeccion.$save(function() {
-      //$state.go('tabsUsers.users');
-      console.log('hoolla');
+      alert('Inspeccion Guardada');
     });
   }
 
   //modal de tablas de sostenimiento
-  createRiesgo.tipo = 'A';
   createRiesgo.rocas = Roca.query();
   createRiesgo.sostenimientos = Sostenimiento.query({tipo: createRiesgo.tipo});
 
@@ -468,12 +461,13 @@ function(Labor, $ionicModal, $scope, Tipo) {
 
 
 
-.controller('createLaborCtrl', ['Labor', 'Tipo', '$state',
-function(Labor, Tipo, $state) {
+.controller('createLaborCtrl', ['Labor', 'Tipo', 'Empresa', '$state',
+function(Labor, Tipo, Empresa, $state) {
 
   createLabor = this;
 
   createLabor.tipos = Tipo.query();
+  createLabor.empresas = Empresa.query();
 
   createLabor.nuevaLabor = function() {
 
@@ -484,6 +478,7 @@ function(Labor, Tipo, $state) {
     labor.alto_pro = createLabor.labor.alto_pro;
     labor.ancho_pro = createLabor.labor.ancho_pro;
     labor.tipoTipoId = createLabor.labor.tipoTipoId;
+    labor.empresaEmpresaid = createLabor.labor.empresaEmpresaid;
     labor.$save(function() {
       $state.go('tabsLabores.labores');
     });
