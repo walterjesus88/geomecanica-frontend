@@ -164,7 +164,7 @@ function($scope,$ionicPopup,Usuario,Labor,Pregunta,Inspeccion,
         var valor = '';
       }
       //elementos del array que contendra las respuestas de las preguntas
-      var resp = {value: valor, preguntaid: item.preguntaid};
+      var resp = {value: valor, preguntaid: item.preguntaid, tipo: item.tipo};
       createRiesgo.preguntasList.push(item);
       createRiesgo.respuestas[item.preguntaid] = resp;
     });
