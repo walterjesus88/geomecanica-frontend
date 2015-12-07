@@ -198,8 +198,8 @@
 
     <div class="col col-20">
 		<div class="list card">
-			<div class="item item-divider" ng-class="{'pending-delete': createRiesgo.slark==='C'}">Labor con sostenimiento</div>
-			<ion-radio ng-disabled="createRiesgo.slark==='C'" ng-repeat="item in createRiesgo.opcionlabor"
+			<div class="item item-divider" ng-class="{'pending-delete': createRiesgo.activo==='C'}">Labor con sostenimiento</div>
+			<ion-radio ng-disabled="createRiesgo.activo==='C'" ng-repeat="item in createRiesgo.opcionlabor"
 				    ng-value="item.value"
 				    ng-change="createRiesgo.calculariesgo(item)"
 				    ng-model="createRiesgo.inps_OL.sostenimiento"
@@ -209,8 +209,8 @@
 		</div>
 
 		<div class="list card" >
-		   	<div class="item item-divider" ng-class="{'pending-delete': createRiesgo.slark==='C'}">Recomendacion Geomecánica</div>
-	   		<ion-radio  ng-disabled="createRiesgo.slark==='C'" ng-repeat="item in createRiesgo.geomecanica"
+		   	<div class="item item-divider" ng-class="{'pending-delete': createRiesgo.activo==='C'}">Recomendacion Geomecánica</div>
+	   		<ion-radio  ng-disabled="createRiesgo.activo==='C'" ng-repeat="item in createRiesgo.geomecanica"
 				    ng-value="item.value"
 				    ng-change="createRiesgo.calculariesgo(item)"
 				    ng-model="createRiesgo.insp_recomendacion.rgeo" name="group_recomendacion">
@@ -220,7 +220,7 @@
 
 		<div class="list card">
 		   	<div class="item item-divider">Instalación</div>
-		   		<ion-radio ng-disabled="createRiesgo.slark==='C'" ng-repeat="item in createRiesgo.install"
+		   		<ion-radio ng-disabled="createRiesgo.activo==='C'" ng-repeat="item in createRiesgo.install"
 				    ng-value="item.value"
 				    ng-change="createRiesgo.calculariesgo(item)"
 				    ng-model="createRiesgo.insp_install.resp" name="group_inst">

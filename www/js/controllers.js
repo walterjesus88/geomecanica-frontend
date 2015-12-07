@@ -170,7 +170,9 @@ function($scope,$ionicPopup,Usuario,Labor,Pregunta,Inspeccion,
       createRiesgo.respuestas[item.preguntaid] = resp;
     });
   });
+
   createRiesgo.labores = Labor.query();
+  console.log(createRiesgo.labores);
   createRiesgo.usuarios = Usuario.query();
 
   createRiesgo.calcularPorAncho = function() {
@@ -189,19 +191,20 @@ function($scope,$ionicPopup,Usuario,Labor,Pregunta,Inspeccion,
     createRiesgo.estilo_nivel = estiloRiesgo(createRiesgo.nivelRiesgo);
     //si una de la condicionales relevantes es false entonces es critico
     if(!createRiesgo.inps_OL.sostenimiento || !createRiesgo.insp_install.resp || !createRiesgo.insp_recomendacion.rgeo) {
-      createRiesgo.slark = 'B';
+      createRiesgo.activo = 'B';
       createRiesgo.nivelRiesgo = 'CRITICO';
       createRiesgo.estilo_nivel = estiloRiesgo(createRiesgo.nivelRiesgo);
     }
     //si la pregunta 8 esta en false entonces es critico
     else if(!createRiesgo.respuestas['8'].value) {
-      createRiesgo.slark = 'B';
+      console.log(createRiesgo.respuestas['8'].value);
+      createRiesgo.activo = 'B';
       createRiesgo.nivelRiesgo = 'CRITICO';
       createRiesgo.estilo_nivel = estiloRiesgo(createRiesgo.nivelRiesgo);
     }
     // dependiendo del porcentaje se calcula el nivel de riesgo
     else if (createRiesgo.alto_exc_real || createRiesgo.ancho_exc_real) {
-      createRiesgo.slark = 'B';
+      createRiesgo.activo = 'B';
       //realiza una consulta al servidor para ver que nivel de riesgo le corresponde a los porcentajes dados
       var respuesta = Porcentaje.query({roca: createRiesgo.tipo_roca, porAlto: createRiesgo.alto_exc_real, porAncho: createRiesgo.ancho_exc_real});
       respuesta.$promise.then(function(porcentaje) {
