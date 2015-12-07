@@ -8,18 +8,45 @@ angular.module('app.routes', [])
   // Each state's controller can be found in controllers.js
   $stateProvider
 
+  // .state('tab', {
+  //   url: '/tab',
+  //   abstract: true,
+  //   templateUrl: 'templates/tabs.html'
+  // })
+
   .state('tab', {
     url: '/tab',
     abstract: true,
-    templateUrl: 'templates/tabs.html'
+    templateUrl: 'templates/menu.html'
+  })
+
+  .state('tab.web', {
+    url: "/web",
+      views: {
+        'menuContent': {
+          templateUrl: "templates/web.html",
+          controller: 'RiesgoCtrl as createRiesgo'
+        },
+        'fabContent': {
+          template: '<button id="fab-activity" class="button button-fab button-fab-top-right expanded button-energized-900 flap"><i class="icon ion-paper-airplane"></i></button>',
+          // controller: function ($timeout) {
+          //     $timeout(function () {
+          //       document.getElementById('fab-activity').classList.toggle('on');
+          //   }, 200);
+          // }
+        }
+    }
   })
 
   .state('tab.home', {
     url: '/home',
     views: {
-      'home-tab': {
+      'menuContent': {
         templateUrl: "templates/home.html",
         controller: 'homeCtrl as home'
+      },
+      'fabContent': {
+        template: ''
       }
     }
   })
@@ -54,15 +81,6 @@ angular.module('app.routes', [])
     }
   })
 
-  .state('tab.web', {
-    url: "/web",
-      views: {
-        'tab-web': {
-        templateUrl: "templates/web.html",
-        controller: 'RiesgoCtrl as createRiesgo'
-      }
-    }
-  })
 
   .state('login', {
     url: '/login',
@@ -71,45 +89,29 @@ angular.module('app.routes', [])
     controller: 'loginCtrl as login'
   })
 
-  .state('tabsUsers.users', {
+  .state('tab.users', {
     url: '/users',
     cache: false,
     views: {
-      'tab1': {
+      'menuContent': {
         templateUrl: 'templates/users.html',
         controller: 'usersCtrl as users'
       }
     }
   })
 
-  .state('tabsUsers.create', {
-    url: '/create',
-    cache: false,
-    views: {
-      'tab2': {
-        templateUrl: 'templates/createUser.html',
-        controller: 'createUserCtrl as createUser'
-      }
-    }
-  })
-
-  .state('tabsUsers', {
-    url: '/adminUsers',
-    abstract: true,
-    templateUrl: 'templates/tabsUsers.html'
-  })
-
-
-  .state('tabsLabores.labores', {
+  .state('tab.labores', {
     url: '/labores',
     cache: false,
     views: {
-      'tab1': {
+      'menuContent': {
         templateUrl: 'templates/labores.html',
         controller: 'laboresCtrl as labores'
       }
     }
   })
+
+
 
   .state('tabsLabores.create', {
     url: '/create',
@@ -128,14 +130,9 @@ angular.module('app.routes', [])
     templateUrl: 'templates/tabsLabores.html'
   })
 
-
-
-
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
-
   $httpProvider.interceptors.push('httpInterceptor');
-
 
   // middleware que escucha los eventos de cambio de vista o estado
   $urlRouterProvider.deferIntercept();

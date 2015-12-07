@@ -28,7 +28,9 @@ function(Autentificacion, almacenamientoLocal, $state, $scope) {
     $scope.$parent.index.isAuth = false;
   }
 
-  if(almacenamientoLocal.getUsuario() !== 'not saved') {    
+
+  if(almacenamientoLocal.getUsuario() !== 'not saved') {  
+
     login.user = almacenamientoLocal.getUsuario().user;
     login.password = almacenamientoLocal.getUsuario().password;
     login.isRemember = true;
@@ -42,7 +44,7 @@ function(Autentificacion, almacenamientoLocal, $state, $scope) {
       almacenamientoLocal.guardarDatos('token', data.token);
       $scope.$parent.index.isAuth = true;
 
-      $state.go('tab.home');
+      $state.go('tab.web');
       login.alerta = '';
       if (login.isRemember) {
         almacenamientoLocal.guardarDatos('usuario', {user: login.user, password: login.password});
@@ -51,7 +53,7 @@ function(Autentificacion, almacenamientoLocal, $state, $scope) {
         login.password = '';
         almacenamientoLocal.eliminarDatos('usuario');
       }
-      $state.go('tab.home');
+      $state.go('tab.web');
     })
     .catch(function(err) {
       if (err === 'usuario no existe') {
@@ -78,8 +80,10 @@ function(Labor, $scope, $state) {
 }])
 
 
-.controller('RiesgoCtrl',['$scope','$ionicPopup','Usuario','Empresa','Labor','Pregunta','Inspeccion', '$ionicModal', 'Roca', 'Sostenimiento', 'Tipo',
-function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicModal, Roca, Sostenimiento, Tipo) {
+.controller('RiesgoCtrl',['$scope','$ionicPopup','Usuario','Labor',
+'Pregunta','Inspeccion', '$ionicModal', 'Roca', 'Sostenimiento', 'Tipo', 'Porcentaje',
+function($scope,$ionicPopup,Usuario,Labor,Pregunta,Inspeccion,
+  $ionicModal, Roca, Sostenimiento, Tipo, Porcentaje) {
 
   $scope.settings = {
     enableFriends: true
@@ -139,134 +143,151 @@ function($scope,$ionicPopup,Usuario,Empresa,Labor,Pregunta,Inspeccion, $ionicMod
   var weekDaysList = ["Sun", "Mon", "Tue", "Wed", "thu", "Fri", "Sat"];
   var monthList = ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
-  createRiesgo.tipolabor = [{ text: "Avance", value:'A', },{ text: "Explotacion", value:'E', }, ];
-  createRiesgo.labor= {tipoTipoId: 'A' };
-
-  createRiesgo.preguntasList = Pregunta.query();  
-  //console.log(createRiesgo.preguntasList);
-
-  $scope.labores = Labor.query();
-  createRiesgo.tipos = Tipo.query();
-  //console.log($scope.labores);
-
+  Pregunta.query().$promise.then(function(preguntas) {
+    createRiesgo.preguntasList = [];
+    createRiesgo.respuestas = [];
+    preguntas.forEach(function(item) {
+      //habilitar o deshabilitar las preguntas: false es habilitado
+      item.isDisabled = false;
+      //setear variable que se filtrara en los ngRepeat para dividir en dos columnas
+      //en la vista se realiza el ngRepeat 2 veces, una para cada columna
+      if (item.posicion < 8) {
+        item.columna = 'left';
+      } else {
+        item.columna = 'right';
+      }
+      //valor por defecto de las respuestas
+      if (item.tipo === 'Opciones') {
+        var valor = item.alternativas[0].value;
+      } else if (item.tipo === 'Check') {
+        var valor = false;
+      } else if (item.tipo === 'Compuesto') {
+        var valor = '';
+      }
+      //elementos del array que contendra las respuestas de las preguntas
+      var resp = {value: valor, preguntaid: item.preguntaid, tipo: item.tipo};
+      createRiesgo.preguntasList.push(item);
+      createRiesgo.respuestas[item.preguntaid] = resp;
+    });
+  });
+  createRiesgo.labores = Labor.query();
   createRiesgo.usuarios = Usuario.query();
-  //console.log(createRiesgo.usuarios);
 
-  createRiesgo.empresas= Empresa.query();
-  createRiesgo.insp_empresa = {empresa: 'CMA' };
-  //console.log(createRiesgo.empresas);
-
-
-  createRiesgo.operators =
-  {
-    "value": "suma",
-    "values": ["suma", "resta", "mutliplicacion", "division"]
-  };
-
-  createRiesgo.nivelRiesgo='BAJO'; 
-
-  createRiesgo.calculariesgo = function(item)
-  {   
-    console.log(item);  
-    if(item.preguntaid==8 && item.checked==false)
-    {        
-        console.log('ohhhh');
-        resultado='gg'
-        createRiesgo.slark='C';       
-    } 
-    else if(createRiesgo.inps_OL.sostenimiento=='FALSE' )
-    {
-      createRiesgo.slark='B';
-      resultado='CRITICO';  
-    }     
-    else if(createRiesgo.inps_OL.sostenimiento=='TRUE' && createRiesgo.insp_recomendacion.rgeo=='TRUE' && createRiesgo.insp_install.resp=='TRUE')
-    {
-      createRiesgo.slark='B';      
-      resultado='BAJO';  
-    } 
-
-    else if(createRiesgo.inps_OL.sostenimiento=='TRUE' && (createRiesgo.insp_install.resp=='TRUE' || createRiesgo.insp_recomendacion.rgeo=='TRUE'))
-    {
-      createRiesgo.slark='B';      
-      resultado='MEDIO';
-    }
-    else if(createRiesgo.inps_OL.sostenimiento=='TRUE' && createRiesgo.insp_install.resp=='FALSE'  && createRiesgo.insp_recomendacion.rgeo=='FALSE')
-    {
-      createRiesgo.slark='B';           
-      resultado='CRITICO';
-    }
-
-    createRiesgo.nivelRiesgo=resultado;
-    console.log(createRiesgo.nivelRiesgo);
-
+  createRiesgo.calcularPorAncho = function() {
+    createRiesgo.ancho_exc_real = ((createRiesgo.ancho_real * 100) / createRiesgo.labor.ancho_pro) - 100;
+    createRiesgo.calculariesgo();
   }
 
-  //$scope.$watch(createRiesgo.calculariesgo);
-  // var items = angular.fromJson($scope.labores);
-  // angular.forEach(items, function(item) {
-  //   //models.push(item);
-  //   console.log(item);
-  // });
+  createRiesgo.calcularPorAlto = function() {
+    createRiesgo.alto_exc_real = ((createRiesgo.alto_real * 100) / createRiesgo.labor.alto_pro) - 100;
+    createRiesgo.calculariesgo();
+  }
 
-  // $scope.labores.$promise.then(function(data) {
-  //     console.log(data);
-  //     //console.log(JSON.stringify(data));
-  // });
+  createRiesgo.calculariesgo = function(item)
+  {
+    createRiesgo.nivelRiesgo='BAJO';
+    createRiesgo.estilo_nivel = estiloRiesgo(createRiesgo.nivelRiesgo);
+    //si una de la condicionales relevantes es false entonces es critico
+    if(!createRiesgo.inps_OL.sostenimiento || !createRiesgo.insp_install.resp || !createRiesgo.insp_recomendacion.rgeo) {
+      createRiesgo.slark = 'B';
+      createRiesgo.nivelRiesgo = 'CRITICO';
+      createRiesgo.estilo_nivel = estiloRiesgo(createRiesgo.nivelRiesgo);
+    }
+    //si la pregunta 8 esta en false entonces es critico
+    else if(!createRiesgo.respuestas['8'].value) {
+      createRiesgo.slark = 'B';
+      createRiesgo.nivelRiesgo = 'CRITICO';
+      createRiesgo.estilo_nivel = estiloRiesgo(createRiesgo.nivelRiesgo);
+    }
+    // dependiendo del porcentaje se calcula el nivel de riesgo
+    else if (createRiesgo.alto_exc_real || createRiesgo.ancho_exc_real) {
+      createRiesgo.slark = 'B';
+      //realiza una consulta al servidor para ver que nivel de riesgo le corresponde a los porcentajes dados
+      var respuesta = Porcentaje.query({roca: createRiesgo.tipo_roca, porAlto: createRiesgo.alto_exc_real, porAncho: createRiesgo.ancho_exc_real});
+      respuesta.$promise.then(function(porcentaje) {
+        createRiesgo.nivelRiesgo = porcentaje[0].nivel;
+        createRiesgo.estilo_nivel = estiloRiesgo(createRiesgo.nivelRiesgo);
+      });
+    }
+  }
 
-  // var data = [{id:1,nmPlaca:'IKC-1394'},{id:2,nmPlaca:'IKY-5437'},{id:3,nmPlaca:'IKC-1393'},{id:4,nmPlaca:'IKI-5437'},{id:5,nmPlaca:'IOC-8749'},{id:6,nmPlaca:'IMG-6509'}];
-  // $scope.veiculos = data;
-  // console.log($scope.veiculos);
+  //funcion para cambiar el color del nivel de riesgo
+  function estiloRiesgo(nivel) {
+    if (nivel === 'CRITICO') {
+      return 'button-assertive';
+    } else if (nivel === 'MEDIO') {
+      return 'button-energized';
+    } else if (nivel === 'BAJO') {
+      return 'button-balanced';
+    }
+  }
 
-  createRiesgo.guardia = [{ text: "Dia", value:'DIA', },{ text: "Noche", value:'NOCHE', }, ];
+  //funcion que deshabilitara las preguntas deacuerdo a las restricciones dadas
+  createRiesgo.habilitarPreguntas = function() {
+    //habilitar todas las preguntas
+    for (var i = 1; i < createRiesgo.preguntasList.length; i++) {
+      createRiesgo.preguntasList[i].isDisabled = false;
+    }
+    //deshabilitar las preguntas 2, 3 y 4 si la pregunta 1 es sin personal
+    if (createRiesgo.respuestas['1'] === 'SIN PERSONAL') {
+      for (var i = 1; i < 4; i++) {
+        createRiesgo.preguntasList[i].isDisabled = true;
+      }
+    }
+    //deshabilitar la pregunta 6 si la pregunta 5 es false
+    if (!createRiesgo.respuestas['5']) {
+      createRiesgo.preguntasList[5].isDisabled = true;
+    }
+  }
+
+  createRiesgo.guardia = [{ text: "Día", value:'DIA'}, { text: "Noche", value:'NOCHE'}];
   createRiesgo.insp_guard = {guardia: 'DIA' };
 
-  createRiesgo.opcionlabor = [{ text: "Labor con sostenimiento", value:'TRUE'},{text: "Labor sin sostenimiento", value:'FALSE'}];
-  createRiesgo.inps_OL = {sostenimiento: 'TRUE' };
+  createRiesgo.opcionlabor = [{ text: "Si", value: true},{text: "No", value: false}];
+  createRiesgo.inps_OL = {sostenimiento: true };
 
-  createRiesgo.geomecanica = [{ text: "Cumplio", value:'TRUE'},{text: "No Cumplio", value:'FALSE'}];
-  createRiesgo.insp_recomendacion = {rgeo: 'TRUE' };
+  createRiesgo.geomecanica = [{ text: "Cumplió", value: true},{text: "No Cumplió", value: false}];
+  createRiesgo.insp_recomendacion = {rgeo: true };
 
-  createRiesgo.install = [{ text: "Correcta", value:'TRUE'},{text: "Incorrecta", value:'FALSE'}];
-  createRiesgo.insp_install = {resp: 'TRUE' };
+  createRiesgo.install = [{ text: "Correcta", value: true},{text: "Incorrecta", value: false}];
+  createRiesgo.insp_install = {resp: true };
 
 
   createRiesgo.guardarinspeccion = function() {
 
     fecha = createRiesgo.datepickerObject.inputDate;
+
     var inspeccion = new Inspeccion();
 
-    //console.log(createRiesgo.responsable.uid);
     inspeccion.periodo = createRiesgo.insp_guard.guardia;
     inspeccion.recomendacion = createRiesgo.insp_recomendacion.rgeo;
     inspeccion.instalacion = createRiesgo.insp_install.resp;
-
     inspeccion.comentario = createRiesgo.comment;
     inspeccion.ancho_real = createRiesgo.ancho_real;
-    inspeccion.alto_real= createRiesgo.alto_real;
-    inspeccion.empresaEmpresaid= createRiesgo.insp_empresa.empresa;
-    inspeccion.fecha= fecha;
-    inspeccion.laborCodigo=createRiesgo.labor.codigo;
-    inspeccion.recomendacion=createRiesgo.insp_recomendacion.rgeo;
-    inspeccion.estado=createRiesgo.inps_OL.sostenimiento;
+    inspeccion.alto_real = createRiesgo.alto_real;
+    inspeccion.fecha = fecha;
+    inspeccion.laborCodigo = createRiesgo.labor.codigo;
+    inspeccion.recomendacion = createRiesgo.insp_recomendacion.rgeo;
+    inspeccion.estado = createRiesgo.inps_OL.sostenimiento;
 
-    inspeccion.ResponsableUid=createRiesgo.responsable.uid;
-    inspeccion.SeguridadUid=createRiesgo.seguridad.uid;
-    inspeccion.GeomecanicoUid=createRiesgo.geomecanico.uid;
-    inspeccion.OperacionesUid=createRiesgo.operaciones.uid;  
+    inspeccion.ResponsableUid = createRiesgo.responsable.uid;
+    inspeccion.SeguridadUid = createRiesgo.seguridad.uid;
+    inspeccion.GeomecanicoUid = createRiesgo.geomecanico.uid;
+    inspeccion.OperacionesUid = createRiesgo.operaciones.uid;
 
+    inspeccion.tipo = createRiesgo.labor.tipoTipoId;
     inspeccion.RocaId = createRiesgo.tipo_roca;
     inspeccion.SostenimientoId = createRiesgo.tipo_sostenimiento;
+    inspeccion.respuestas = createRiesgo.respuestas;
 
-    console.log(inspeccion);
+    inspeccion.nivel_riesgo = createRiesgo.nivelRiesgo;
 
     inspeccion.$save(function() {
-      //$state.go('tabsUsers.users');
-      console.log('hoolla');
+      alert('Inspeccion Guardada');
     });
   }
 
   //modal de tablas de sostenimiento
-  createRiesgo.tipo = 'A';
   createRiesgo.rocas = Roca.query();
   createRiesgo.sostenimientos = Sostenimiento.query({tipo: createRiesgo.tipo});
 
@@ -322,6 +343,7 @@ function(Usuario, Rol, $ionicModal, $scope) {
     });
   }
 
+  //modal para editar el usuario
   $ionicModal.fromTemplateUrl('edit-user-modal.html', {
     scope: $scope,
     animation: 'slide-in-up'
@@ -346,6 +368,7 @@ function(Usuario, Rol, $ionicModal, $scope) {
     users.modal_edit.hide();
   }
 
+  //modal para cambiar la contrasena del usuario
   $ionicModal.fromTemplateUrl('change-password.html', {
     scope: $scope,
     animation: 'slide-in-up'
@@ -371,50 +394,54 @@ function(Usuario, Rol, $ionicModal, $scope) {
     users.modal_pass.hide();
   }
 
-}])
+//modal para crear usuarios
+  $ionicModal.fromTemplateUrl('createUser.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    users.modal_create = modal;
+  });
 
+  users.openCreate = function() {
+    users.modal_create.show();
+  }
 
-
-.controller('createUserCtrl', ['Usuario', '$state', 'Rol',
-function(Usuario, $state, Rol) {
-
-  createUser = this;
-
-  createUser.usuario = {};
-
-  createUser.roles = Rol.query();
-
-  createUser.nuevoUsuario = function() {
+  users.closeCreate = function() {
     var user = new Usuario();
-    user.uid = createUser.usuario.uid;
-    user.dni = createUser.usuario.dni;
-    user.nombre = createUser.usuario.nombre;
-    user.password = createUser.usuario.password;
-    user.rol_id = createUser.usuario.rol_id;
-    user.correo = createUser.usuario.correo;
+    user.uid = users.nuevo.uid;
+    user.dni = users.nuevo.dni;
+    user.nombre = users.nuevo.nombre;
+    user.password = users.nuevo.password;
+    user.rol_id = users.nuevo.rol_id;
+    user.correo = users.nuevo.correo;
     user.$save(function() {
-      $state.go('tabsUsers.users');
+      users.modal_create.hide();
+      users.usuarios = Usuario.query();
     });
   }
 
-  createUser.verificarNombre = function() {
-    if (!/^([a-zA-ZñÑ-áéíóúÁÉÍÓÚ\s])*$/.test(createUser.usuario.nombre)) {
-      createUser.usuario.nombre = createUser.usuario.nombre.slice(0, createUser.usuario.nombre.length - 1);
+  users.cancelCreate = function() {
+    users.modal_create.hide();
+  }
+
+  users.verificarNombre = function() {
+    if (!/^([a-zA-ZñÑ-áéíóúÁÉÍÓÚ\s])*$/.test(users.nuevo.nombre)) {
+      users.nuevo.nombre = users.nuevo.nombre.slice(0, users.nuevo.nombre.length - 1);
     }
   }
 
-  createUser.verificarEmail = function() {
-    if (!/\S+@\S+\.\S+/.test(createUser.usuario.correo)) {
-      createUser.usuario.correo = '';
+  users.verificarEmail = function() {
+    if (!/\S+@\S+\.\S+/.test(users.nuevo.correo)) {
+      users.nuevo.correo = '';
     }
   }
 
-  createUser.verificarDni = function() {
-    if (!/^([0-9])*$/.test(createUser.usuario.dni)) {
-      createUser.usuario.dni = createUser.usuario.dni.slice(0, createUser.usuario.dni.length - 1);
+  users.verificarDni = function() {
+    if (!/^([0-9])*$/.test(users.nuevo.dni)) {
+      users.nuevo.dni = users.nuevo.dni.slice(0, users.nuevo.dni.length - 1);
     }
-    if (createUser.usuario.dni.length > 8) {
-      createUser.usuario.dni = createUser.usuario.dni.slice(0, createUser.usuario.dni.length - 1);
+    if (users.nuevo.dni.length > 8) {
+      users.nuevo.dni = users.nuevo.dni.slice(0, users.nuevo.dni.length - 1);
     }
   }
 
@@ -465,12 +492,13 @@ function(Labor, $ionicModal, $scope, Tipo) {
 
 
 
-.controller('createLaborCtrl', ['Labor', 'Tipo', '$state',
-function(Labor, Tipo, $state) {
+.controller('createLaborCtrl', ['Labor', 'Tipo', 'Empresa', '$state',
+function(Labor, Tipo, Empresa, $state) {
 
   createLabor = this;
 
   createLabor.tipos = Tipo.query();
+  createLabor.empresas = Empresa.query();
 
   createLabor.nuevaLabor = function() {
 
@@ -481,6 +509,7 @@ function(Labor, Tipo, $state) {
     labor.alto_pro = createLabor.labor.alto_pro;
     labor.ancho_pro = createLabor.labor.ancho_pro;
     labor.tipoTipoId = createLabor.labor.tipoTipoId;
+    labor.empresaEmpresaid = createLabor.labor.empresaEmpresaid;
     labor.$save(function() {
       $state.go('tabsLabores.labores');
     });

@@ -1,4 +1,4 @@
-<ion-view title="Users">
+<ion-view title="Labores">
   <ion-content padding="'true'" class="has-header">
     <div class="list list-inset">
       <label class="item item-input">
@@ -30,6 +30,10 @@
         <p>
           <span>Tipo: </span>
           {{labor.tipo.nombre}}
+        </p>
+        <p>
+          <span>Empresa: </span>
+          {{labor.empresa.nombre}}
         </p>
         <button class="button button-energized button-outline button-small"
         ng-click="labores.openEditLabor(labor)">Editar</button>

@@ -186,6 +186,7 @@ angular.module('app.directives', [])
 			rocas: '=',
 			tiporoca: '=',
 			tiposostenimiento: '=',
+			porcentaje: '=',
 			close: '&'
 		},
 		link: function($scope, element) {
@@ -257,6 +258,7 @@ angular.module('app.directives', [])
 						rocas.forEach(function(roca) {
 							if (roca.codigo === cuadro) {
 								$scope.tiporoca = roca.rocaid;
+								$scope.porcentaje = roca.porcentaje;
 								defered.resolve();
 							}
 						});
