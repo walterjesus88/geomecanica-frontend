@@ -174,15 +174,18 @@ function($scope,$ionicPopup,Usuario,Labor,Pregunta,Inspeccion,
   createRiesgo.calculariesgo = function(item)
   {
     createRiesgo.nivelRiesgo='BAJO';
+    createRiesgo.estilo_nivel = estiloRiesgo(createRiesgo.nivelRiesgo);
     //si una de la condicionales relevantes es false entonces es critico
     if(!createRiesgo.inps_OL.sostenimiento || !createRiesgo.insp_install.resp || !createRiesgo.insp_recomendacion.rgeo) {
       createRiesgo.slark = 'B';
       createRiesgo.nivelRiesgo = 'CRITICO';
+      createRiesgo.estilo_nivel = estiloRiesgo(createRiesgo.nivelRiesgo);
     }
     //si la pregunta 8 esta en false entonces es critico
     else if(!createRiesgo.respuestas['8']) {
       createRiesgo.slark = 'B';
       createRiesgo.nivelRiesgo = 'CRITICO';
+      createRiesgo.estilo_nivel = estiloRiesgo(createRiesgo.nivelRiesgo);
     }
     // dependiendo del porcentaje se calcula el nivel de riesgo
     else if (createRiesgo.alto_exc_real || createRiesgo.ancho_exc_real) {
@@ -190,7 +193,18 @@ function($scope,$ionicPopup,Usuario,Labor,Pregunta,Inspeccion,
       var respuesta = Porcentaje.query({roca: createRiesgo.tipo_roca, porAlto: createRiesgo.alto_exc_real, porAncho: createRiesgo.ancho_exc_real});
       respuesta.$promise.then(function(porcentaje) {
         createRiesgo.nivelRiesgo = porcentaje[0].nivel;
+        createRiesgo.estilo_nivel = estiloRiesgo(createRiesgo.nivelRiesgo);
       });
+    }
+  }
+
+  function estiloRiesgo(nivel) {
+    if (nivel === 'CRITICO') {
+      return 'button-assertive';
+    } else if (nivel === 'MEDIO') {
+      return 'button-energized';
+    } else if (nivel === 'BAJO') {
+      return 'button-balanced';
     }
   }
 
