@@ -232,7 +232,7 @@
 			<div class="item item-divider">Nivel de Riesgo</div>
 				 <div class="item item-body">
 				    <div>
-							<button type="button" class="button button-block" ng-class="createRiesgo.estilo_nivel" 
+							<button type="button" class="button button-block" ng-class="createRiesgo.estilo_nivel"
 							ng-bind="createRiesgo.nivelRiesgo"></button>
 				    </div>
 				</div>
@@ -249,14 +249,14 @@
 				<ion-item ng-if="pregunta.tipo === 'Opciones'">
 	        <label class="item item-input item-select">
 	          <span class="input-label">{{pregunta.posicion + 1}} .- {{pregunta.descripcion}}</span>
-	          <select class="form-control" ng-model="createRiesgo.respuestas[pregunta.preguntaid]"
+	          <select class="form-control" ng-model="createRiesgo.respuestas[pregunta.preguntaid].value"
 	             ng-options="c.value as c.nombre for c in pregunta.alternativas"
 	             ng-change="createRiesgo.calculariesgo(); createRiesgo.habilitarPreguntas()"
 							 ng-disabled="pregunta.isDisabled">
 	          </select>
 	        </label>
 	      </ion-item>
-	      <ion-toggle ng-if="pregunta.tipo === 'Check'" ng-model="createRiesgo.respuestas[pregunta.preguntaid]"
+	      <ion-toggle ng-if="pregunta.tipo === 'Check'" ng-model="createRiesgo.respuestas[pregunta.preguntaid].value"
 	      ng-true-value="true" ng-false-value="false"  ng-change="createRiesgo.calculariesgo(); createRiesgo.habilitarPreguntas()"
 				ng-disabled="pregunta.isDisabled">
 	        <span class="input-label">{{pregunta.posicion + 1}} .- {{ pregunta.descripcion }}</span>
@@ -273,14 +273,14 @@
 				<ion-item ng-if="pregunta.tipo === 'Opciones'">
 	        <label class="item item-input item-select">
 	          <span class="input-label">{{pregunta.posicion + 1}} .- {{pregunta.descripcion}}</span>
-	          <select class="form-control" ng-model="createRiesgo.respuestas[pregunta.preguntaid]"
+	          <select class="form-control" ng-model="createRiesgo.respuestas[pregunta.preguntaid].value"
 	             ng-options="c.value as c.nombre for c in pregunta.alternativas"
 	             ng-change="createRiesgo.calculariesgo()"
 							 ng-disabled="pregunta.isDisabled">
 	          </select>
 	        </label>
 	      </ion-item>
-	      <ion-toggle ng-if="pregunta.tipo === 'Check'" ng-model="createRiesgo.respuestas[pregunta.preguntaid]"
+	      <ion-toggle ng-if="pregunta.tipo === 'Check'" ng-model="createRiesgo.respuestas[pregunta.preguntaid].value"
 	      ng-true-value="true" ng-false-value="false"  ng-change="createRiesgo.calculariesgo()"
 				ng-disabled="pregunta.isDisabled">
 	        <span class="input-label">{{pregunta.posicion + 1}} .- {{ pregunta.descripcion }}</span>

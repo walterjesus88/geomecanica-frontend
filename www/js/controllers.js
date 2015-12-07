@@ -146,16 +146,28 @@ function($scope,$ionicPopup,Usuario,Labor,Pregunta,Inspeccion,
     createRiesgo.preguntasList = [];
     createRiesgo.respuestas = [];
     preguntas.forEach(function(item) {
-      item.isDisabled = true;
+      //habilitar o deshabilitar las preguntas: false es habilitado
+      item.isDisabled = false;
+      //setear variable que se filtrara en los ngRepeat para dividir en dos columnas
+      //en la vista se realiza el ngRepeat 2 veces, una para cada columna
       if (item.posicion < 8) {
         item.columna = 'left';
       } else {
         item.columna = 'right';
       }
+      //valor por defecto de las respuestas
+      if (item.tipo === 'Opciones') {
+        var valor = item.alternativas[0].value;
+      } else if (item.tipo === 'Check') {
+        var valor = false;
+      } else if (item.tipo === 'Compuesto') {
+        var valor = '';
+      }
+      //elementos del array que contendra las respuestas de las preguntas
+      var resp = {value: valor, preguntaid: item.preguntaid};
       createRiesgo.preguntasList.push(item);
+      createRiesgo.respuestas[item.preguntaid] = resp;
     });
-    createRiesgo.preguntasList[0].isDisabled = false;
-    createRiesgo.respuestas['8'] = false;
   });
   createRiesgo.labores = Labor.query();
   createRiesgo.usuarios = Usuario.query();
@@ -170,7 +182,6 @@ function($scope,$ionicPopup,Usuario,Labor,Pregunta,Inspeccion,
     createRiesgo.calculariesgo();
   }
 
-
   createRiesgo.calculariesgo = function(item)
   {
     createRiesgo.nivelRiesgo='BAJO';
@@ -182,7 +193,7 @@ function($scope,$ionicPopup,Usuario,Labor,Pregunta,Inspeccion,
       createRiesgo.estilo_nivel = estiloRiesgo(createRiesgo.nivelRiesgo);
     }
     //si la pregunta 8 esta en false entonces es critico
-    else if(!createRiesgo.respuestas['8']) {
+    else if(!createRiesgo.respuestas['8'].value) {
       createRiesgo.slark = 'B';
       createRiesgo.nivelRiesgo = 'CRITICO';
       createRiesgo.estilo_nivel = estiloRiesgo(createRiesgo.nivelRiesgo);
@@ -190,6 +201,7 @@ function($scope,$ionicPopup,Usuario,Labor,Pregunta,Inspeccion,
     // dependiendo del porcentaje se calcula el nivel de riesgo
     else if (createRiesgo.alto_exc_real || createRiesgo.ancho_exc_real) {
       createRiesgo.slark = 'B';
+      //realiza una consulta al servidor para ver que nivel de riesgo le corresponde a los porcentajes dados
       var respuesta = Porcentaje.query({roca: createRiesgo.tipo_roca, porAlto: createRiesgo.alto_exc_real, porAncho: createRiesgo.ancho_exc_real});
       respuesta.$promise.then(function(porcentaje) {
         createRiesgo.nivelRiesgo = porcentaje[0].nivel;
@@ -198,6 +210,7 @@ function($scope,$ionicPopup,Usuario,Labor,Pregunta,Inspeccion,
     }
   }
 
+  //funcion para cambiar el color del nivel de riesgo
   function estiloRiesgo(nivel) {
     if (nivel === 'CRITICO') {
       return 'button-assertive';
@@ -208,16 +221,19 @@ function($scope,$ionicPopup,Usuario,Labor,Pregunta,Inspeccion,
     }
   }
 
+  //funcion que deshabilitara las preguntas deacuerdo a las restricciones dadas
   createRiesgo.habilitarPreguntas = function() {
-    //deshabilitar las preguntas segun las condiciones
+    //habilitar todas las preguntas
     for (var i = 1; i < createRiesgo.preguntasList.length; i++) {
       createRiesgo.preguntasList[i].isDisabled = false;
     }
+    //deshabilitar las preguntas 2, 3 y 4 si la pregunta 1 es sin personal
     if (createRiesgo.respuestas['1'] === 'SIN PERSONAL') {
       for (var i = 1; i < 4; i++) {
         createRiesgo.preguntasList[i].isDisabled = true;
       }
     }
+    //deshabilitar la pregunta 6 si la pregunta 5 es false
     if (!createRiesgo.respuestas['5']) {
       createRiesgo.preguntasList[5].isDisabled = true;
     }
