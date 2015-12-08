@@ -111,8 +111,6 @@ angular.module('app.routes', [])
     }
   })
 
-
-
   .state('tabsLabores.create', {
     url: '/create',
     cache: false,
@@ -136,7 +134,4 @@ angular.module('app.routes', [])
 
   // middleware que escucha los eventos de cambio de vista o estado
   $urlRouterProvider.deferIntercept();
-
-
-
 })

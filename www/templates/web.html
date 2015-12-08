@@ -5,7 +5,7 @@
 	<div class="row">
 
 		<div class="col col-20">
-			<div class="list card">
+			<div class="list card button-outline">
 				<div class="item item-divider">Fecha</div>
 				<ionic-datepicker input-obj="datepickerObject" ng-model="createRiesgo.datepickerObject.inputDate">
 				  <button class="button button-block button-positive"> {{createRiesgo.datepickerObject.inputDate | date:'dd - MMMM - yyyy'}}</button>
@@ -131,18 +131,8 @@
 	    </div>
 
 
-<!--  <label class="item item-input item-select">
-    <div class="input-label">
-      Lightsaber
-    </div>
-    <select>
-      <option>Blue</option>
-      <option selected>Green</option>
-      <option>Red</option>
-    </select>
-  </label>
- -->
-			<div class="row">
+
+		<div class="row">
 				<div class="col">
 		    	<label class="item item-input">
 						<span class="input-label">Sostenimiento</span>
@@ -154,7 +144,7 @@
 			</div>
 	  	<div class="row">
 	    	<div class="col ">
-		    	<label class="item item-input item-stacked-label">
+		    	<label class="item item-input item-stacked-label ">
 	    			<span class="input-label">Recomendación Geomecánica</span>
 	    			<textarea name="comment" id="comment-textarea"  ng-model="createRiesgo.comment">
 					</textarea>
@@ -210,7 +200,7 @@
     </div>
 
     <div class="col col-20">
-		<div class="list card">
+		<div class="list card button-outline">
 			<div class="item item-divider" ng-class="{'pending-delete': createRiesgo.activo==='C'}">Labor con sostenimiento</div>
 			<ion-radio ng-disabled="createRiesgo.activo==='C'" ng-repeat="item in createRiesgo.opcionlabor"
 				    ng-value="item.value"
@@ -221,7 +211,7 @@
 			</ion-radio>
 		</div>
 
-		<div class="list card" >
+		<div class="list card button-outline" >
 		   	<div class="item item-divider" ng-class="{'pending-delete': createRiesgo.activo==='C'}">Recomendacion Geomecánica</div>
 	   		<ion-radio  ng-disabled="createRiesgo.activo==='C'" ng-repeat="item in createRiesgo.geomecanica"
 				    ng-value="item.value"
@@ -231,7 +221,7 @@
 				</ion-radio>
 		</div>
 
-		<div class="list card">
+		<div class="list card button-outline">
 		   	<div class="item item-divider">Instalación</div>
 		   		<ion-radio ng-disabled="createRiesgo.activo==='C'" ng-repeat="item in createRiesgo.install"
 				    ng-value="item.value"
@@ -241,11 +231,11 @@
 				</ion-radio>
 		</div>
 
-		<div class="list card">
+		<div class="list card button-outline">
 			<div class="item item-divider">Nivel de Riesgo</div>
 				 <div class="item item-body">
 				    <div>
-							<button type="button" class="button button-block" ng-class="createRiesgo.estilo_nivel"
+						<button type="button" class="button button-block" ng-class="createRiesgo.estilo_nivel"
 							ng-bind="createRiesgo.nivelRiesgo"></button>
 				    </div>
 				</div>
@@ -255,9 +245,9 @@
 
 
 
-<div class="card card-gallery item">
+<div class="card card-gallery item card stable-bg ink ink-dark">
 	<div class="row responsive-md responsive-sm">
-		<div class="col col-50">
+		<div class="col col-50 ">
 			<div ng-repeat="pregunta in createRiesgo.preguntasList | filter: {columna: 'left'}">
 				<ion-item ng-if="pregunta.tipo === 'Opciones'">
 	        <label class="item item-input item-select">
@@ -318,11 +308,7 @@
 	</div>
 
 
-   	<select ng-class="createRiesgo.estilo_nivel">
-      <option>Blue</option>
-      <option selected>Green</option>
-      <option>Red</option>
-    </select>
+
 
   <!-- <multi-select-date name="birthdate" ng-model="user.birthdate" year-order="desc" start-year="1980" end-year="2050" required>aqujjjjjjjjjjjjjjjjjjjjjjjjjjjji</multi-select-date> -->
 
