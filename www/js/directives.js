@@ -186,6 +186,7 @@ angular.module('app.directives', [])
 			rocas: '=',
 			tiporoca: '=',
 			tiposostenimiento: '=',
+			color: '=',
 			porcentaje: '=',
 			close: '&'
 		},
@@ -269,6 +270,29 @@ angular.module('app.directives', [])
 						sostenimientos.forEach(function(sost) {
 							if (sost.color === color) {
 								$scope.tiposostenimiento = sost.sostenimientoid;
+								switch(color) 
+					            {  
+					                case 'YELLOW':
+										$scope.color = 'button-energized';					              		
+					                break;
+					                case 'RED':               
+										$scope.color = 'button-assertive';
+					                break;
+					                case 'GREEN':              
+										$scope.color = 'button-balanced';					                                    
+					                break;         
+					               	case 'CYAN':              
+										$scope.color = 'button-calm';					                                    
+					                break;         
+					                case 'BLUE':              
+										$scope.color = 'button-positive';					                                    
+					                break; 
+					                case 'PURPLE':              
+										$scope.color = 'button-royal';					                                    
+					                break;	
+					                default:  
+										$scope.color = 'button-light';        
+					            }
 								defered1.resolve();
 							}
 						});

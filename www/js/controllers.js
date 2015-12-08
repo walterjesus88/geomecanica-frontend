@@ -172,7 +172,7 @@ function($scope,$ionicPopup,Usuario,Labor,Pregunta,Inspeccion,
   });
 
   createRiesgo.labores = Labor.query();
-  console.log(createRiesgo.labores);
+  createRiesgo.opcion=true;
   createRiesgo.usuarios = Usuario.query();
 
   createRiesgo.calcularPorAncho = function() {

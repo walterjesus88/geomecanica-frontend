@@ -116,19 +116,32 @@
 		<div class="list card stable-bg">
 	  	<div class="row">
 				<div class="col">
-					<label class="item item-input">
+					<label class="item item-input ">
 						<span class="input-label">Tipo de labor</span>
 				    <input type="text" ng-model="createRiesgo.labor.tipo.nombre" ng-click="createRiesgo.openTablaSostenimiento()">
 			  	</label>
 				</div>
     		<div class="col">
-		    	<label class="item item-input">
+		    	<label class="item item-input ">
 						<span class="input-label">GSI</span>
-						<select disabled ng-model="createRiesgo.tipo_roca" ng-options="roca.rocaid as roca.codigo for roca in createRiesgo.rocas">
+						<select ng-class="createRiesgo.color"   ng-model="createRiesgo.tipo_roca" ng-options="roca.rocaid as roca.codigo for roca in createRiesgo.rocas">
 						</select>
 		    	</label>
 	    	</div>
 	    </div>
+
+
+<!--  <label class="item item-input item-select">
+    <div class="input-label">
+      Lightsaber
+    </div>
+    <select>
+      <option>Blue</option>
+      <option selected>Green</option>
+      <option>Red</option>
+    </select>
+  </label>
+ -->
 			<div class="row">
 				<div class="col">
 		    	<label class="item item-input">
@@ -304,10 +317,12 @@
 		</div>
 	</div>
 
-	<div>
-	</div>
 
-
+   	<select ng-class="createRiesgo.estilo_nivel">
+      <option>Blue</option>
+      <option selected>Green</option>
+      <option>Red</option>
+    </select>
 
   <!-- <multi-select-date name="birthdate" ng-model="user.birthdate" year-order="desc" start-year="1980" end-year="2050" required>aqujjjjjjjjjjjjjjjjjjjjjjjjjjjji</multi-select-date> -->
 
@@ -349,9 +364,10 @@
     <ion-content>
 			<canvas id="canvas" width="800" height="600" tb-sostenimiento
 			sostenimientos="createRiesgo.sostenimientos"
-      rocas="createRiesgo.rocas"
-      tiporoca="createRiesgo.tipo_roca"
-      tiposostenimiento="createRiesgo.tipo_sostenimiento"
+      		rocas="createRiesgo.rocas"
+      		color="createRiesgo.color"
+     		tiporoca="createRiesgo.tipo_roca"
+      		tiposostenimiento="createRiesgo.tipo_sostenimiento"
 			porcentaje="createRiesgo.porcentaje_tabla"
 			close="createRiesgo.closeTablaSostenimiento()">
 			Utilice un navegador que soporte canvas para visualizar la tabla de sostenimiento.
